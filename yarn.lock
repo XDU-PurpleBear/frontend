@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@types/prop-types@^15.5.2":
+  version "15.5.2"
+  resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.5.2.tgz#3c6b8dceb2906cc87fe4358e809f9d20c8d59be1"
+
 "@types/react-dom@^15.5.5":
   version "15.5.6"
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-15.5.6.tgz#7794ff7822882b59b899c30294e1b1e62e97757e"
