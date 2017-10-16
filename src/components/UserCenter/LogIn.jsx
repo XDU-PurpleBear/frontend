@@ -28,7 +28,7 @@ class LogIn extends React.Component {
         })(
             <Select>
                 <Option value="userName">User Name</Option>
-                <Option value="telNumber">Tel-number</Option>
+                <Option value="tel">Tel-number</Option>
             </Select>
         );
 

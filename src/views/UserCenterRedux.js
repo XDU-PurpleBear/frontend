@@ -28,16 +28,17 @@ const USERINFO_CHANGE_SECCEED = "USERINFO_CHANGE_SECCEED";
 const USERINFO_CHANGE_ERROR = "USERINFO_CHANGE_ERROR";
 
 
-function logIn({userKey, password}) {
+function logIn({userKey, password, logInInfoType}) {
     return {
         type: USER_LOGIN,
         userKey,
+        userType: logInInfoType,
         password,
     }
 }
 function* logInAjax(action){
     try{
-        const {userKey, password} = action;
+        const {userKey, password, userType} = action;
         const url = "/api/login";
 
         const response = yield call(axios.post, url, null, {
@@ -46,6 +47,7 @@ function* logInAjax(action){
                 "Content-Type": "application/x-www-form-urlencoded",                
                 "userKey": userKey,
                 "password": password,
+                "userType": userType
             }
         });
         if(response.data.type === "succeed"){
