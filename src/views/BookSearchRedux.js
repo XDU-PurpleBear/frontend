@@ -30,13 +30,14 @@ function* loadBookListAjax(action){
     yield put({
         type: BOOKLIST_LOAD_PENDING,
     });
-
     try{
         const {searchType, searchValue} = action;
         const url = `/api/book/query?${searchType}=${searchValue}`;
         let options = {
             responsetype: "json",
-            headers: {},
+            headers: {
+                "Cache-Control": "no-cache, no-store"
+            },
         };
         const token = Cookies.get("token");
         if(token && token.length !== 0){

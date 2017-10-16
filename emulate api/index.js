@@ -4,6 +4,7 @@ const path = require("path");
 
 http.createServer((request, response) => {
     const url = request.url;
+    console.log(url);
     if (url.includes("/api/login")) {
         response.writeHead(200, {
             "Content-Type": "text/plain",

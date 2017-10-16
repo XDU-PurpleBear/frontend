@@ -14,8 +14,8 @@ class Main extends React.Component{
         return (
             // <div className={styles.main} >
                 <Link to="/booksearch" className={styles.main}>
-                    <h1>World’s Best Online Library System</h1>
-                    <h3>ttttttttt</h3>
+                    <h1>World's Best Online Library System</h1>
+                    <h3>Stay hungry, stay foolish</h3>
                 </Link>
          /* </div>    */
         );

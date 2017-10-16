@@ -44,7 +44,8 @@ function* logInAjax(action){
         const response = yield call(axios.post, url, null, {
             responsetype: "json",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",                
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cache-Control": "no-cache, no-store",
                 "userKey": userKey,
                 "password": password,
                 "userType": userType
@@ -105,7 +106,8 @@ function* logOutAjax(){
         const response = yield call(axios.post, url, null, {
             responsetype: "json",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded",                
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Cache-Control": "no-cache, no-store",
                 "token": token,
             }
         });
@@ -150,7 +152,7 @@ function signUp({userName, password, tel, telPrefix}) {
         type: USER_SIGNUP,
         userName,
         password,
-        tel: telPrefix+tel,
+        tel: tel,
     }
 }
 function* signUpAjax(action){
@@ -162,6 +164,7 @@ function* signUpAjax(action){
             responsetype: "json",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
+                "Cache-Control": "no-cache, no-store",
                 "userName": userName,
                 "password": password,
                 "tel": tel
