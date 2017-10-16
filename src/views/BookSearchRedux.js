@@ -33,8 +33,7 @@ function* loadBookListAjax(action){
 
     try{
         const {searchType, searchValue} = action;
-        // const url = `/api/book/query?${searchType}=${searchValue}`;
-        const url = `http://localhost:8085/api/book/query?${searchType}=${searchValue}`;
+        const url = `/api/book/query?${searchType}=${searchValue}`;
         let options = {
             responsetype: "json",
             headers: {},

@@ -38,8 +38,7 @@ function logIn({userKey, password}) {
 function* logInAjax(action){
     try{
         const {userKey, password} = action;
-        // const url = "/api/login";
-        const url = "http://localhost:8085/api/login";
+        const url = "/api/login";
 
         const response = yield call(axios.post, url, null, {
             responsetype: "json",
@@ -99,8 +98,7 @@ function logOut() {
 function* logOutAjax(){
     try{
         const token = Cookies.get("token");
-        // const url = "/api/logout";
-        const url = "http://localhost:8085/api/logout";
+        const url = "/api/logout";
         
         const response = yield call(axios.post, url, null, {
             responsetype: "json",
@@ -156,8 +154,7 @@ function signUp({userName, password, tel, telPrefix}) {
 function* signUpAjax(action){
     try{
         const {userName, password, tel} = action;
-        // const url = "/api/signup";
-        const url = "http://localhost:8085/api/signup";
+        const url = "/api/signup";
         
         const response = yield call(axios.post, url, null, {
             responsetype: "json",
