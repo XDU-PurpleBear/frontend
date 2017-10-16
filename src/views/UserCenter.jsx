@@ -12,13 +12,13 @@ import UserInfo from "../components/UserCenter/UserInfo.jsx";
 class UserCenter extends React.Component {
 
     render(){
-        const {dispatch}  = this.props;
+        const {dispatch, userType, userName}  = this.props;
         return (
             <div className={styles.userCenter}>
                 {
                     this.props.userType==="visitor"?
                         <LogInOrSignUp dispatch={dispatch}/>
-                        :<UserInfo dispatch={dispatch}/>
+                        :<UserInfo userType={userType} userName={userName} dispatch={dispatch}/>
                 }
             </div>
         );

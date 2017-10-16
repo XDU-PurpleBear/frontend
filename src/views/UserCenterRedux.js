@@ -9,6 +9,7 @@ const initialState = {
     userType: Cookies.get("userType") && Cookies.get("userType")!=="undefined"? Cookies.get("userType") : "visitor",
     error: false,
     errorReason: "",
+    userName: null,
 }
 
 const USER_LOGIN = "USER_LOGIN";
@@ -52,7 +53,7 @@ function* logInAjax(action){
             }
         });
         if(response.data.type === "succeed"){
-            const {token, tokendate, usertype} = response.headers;
+            const {token, tokendate, usertype, username} = response.headers;
             Cookies.set("token", token, {
                 expires: tokendate/60/60/24,
                 path: "/",
@@ -64,6 +65,7 @@ function* logInAjax(action){
             yield put({
                 type: USER_LOGIN_SUCCEED,
                 userKey: userKey,
+                userName: username,
                 userType: usertype
             });
         }
@@ -207,7 +209,8 @@ function userCenterReducer(state = initialState, action) {
                 error: false,
                 errorReason: null,
                 userKey: action.userKey,
-                userType: action.userType
+                userType: action.userType,
+                userName: action.userName,
             };
         } break;
         case USER_LOGIN_ERROR: {
