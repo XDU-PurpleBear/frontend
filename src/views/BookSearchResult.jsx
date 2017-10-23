@@ -13,7 +13,7 @@ import BookList from "../components/BookSearch/BookList.jsx";
         ...(state.BookSearch.default),
     };
 })
-class BookSearch extends React.Component{
+class BookSearchResult extends React.Component{
     static propTypes = {
         bookList: PropTypes.array,
         dispatch: PropTypes.func,
@@ -59,4 +59,4 @@ class BookSearch extends React.Component{
     }
 }
 
-export default BookSearch;
+export default BookSearchResult;

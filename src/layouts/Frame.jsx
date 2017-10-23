@@ -6,8 +6,10 @@ const { Header, Sider, Content } = Layout;
 
 import styles from "./Frame.scss";
 
-import BookSearch from "../views/BookSearch.jsx";
-import UserCenter from "../views/UserCenter.jsx";
+// import BookSearchResult from "../views/BookSearchResult.jsx";
+import SearchForm from "../components/Frame/SearchForm.jsx";
+import UserEntry from "../components/Frame/UserEntry.jsx";
+// import UserCenter from "../views/UserCenter.jsx";
 import Main from "../views/Main.jsx";
 import Detail from "../views/Detail.jsx";
 import NotFound from "../views/NotFound.jsx";
@@ -42,36 +44,19 @@ class Frame extends React.Component {
         return (
             <div className={styles.frame}>
                 <Layout className={styles.navLayout}>
-                    <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
-                        <div theme="dark" className={styles.navLayoutToggle} onClick={this.toggle}>
-                            <Icon style={iconStyle} type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}  />
-                        </div>
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={defaultSelectedKeys}>
-                            <Menu.Item key="/booksearch">
-                                <Link to="/booksearch">
-                                    <Icon type="search" />
-                                    <span>Search Book</span>
-                                </Link>                                                                    
-                            </Menu.Item>
-                            <Menu.Item key="/usercenter">
-                                <Link to="/usercenter">
-                                    <Icon type="user" />
-                                    <span>User Center</span>
-                                </Link>                                
-                            </Menu.Item>
-
-                        </Menu>
-                    </Sider>
-                    <Layout>
-                        <Content className={styles.navContent}>
-                            <Switch>
-                                <Route exact path="/" component={Main}/>
-                                <Route path="/booksearch" component={BookSearch}/>
-                                <Route path="/usercenter" component={UserCenter}/>
-                                <Route component={NotFound} />
-                            </Switch>
-                        </Content>
-                    </Layout>
+                    <Header className={styles.navHeader}>
+                        <span className={styles.title} onClick={this.toggle}>XDU Library</span>
+                        <SearchForm />
+                        <UserEntry />
+                    </Header>
+                    <Content className={styles.navContent}>
+                        <Switch>
+                            <Route exact path="/" component={Main}/>
+                            {/* <Route path="/booksearchreault" component={BookSearchReault}/> */}
+                            {/* <Route path="/usercenter" component={UserCenter}/> */}
+                            <Route component={NotFound} />
+                        </Switch>
+                    </Content>
                 </Layout>
             </div>
         );

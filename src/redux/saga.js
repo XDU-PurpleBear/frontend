@@ -1,7 +1,7 @@
 import {fork} from "redux-saga/effects";
 
 import {bookSearchSagas} from "../views/BookSearchRedux.js";
-import {userCenterSagas} from "../views/UserCenterRedux.js";
+import {userCenterSagas} from "../components/Frame/UserCenterRedux.js";
 
 function* rootSaga () {
     const sagasObj = {

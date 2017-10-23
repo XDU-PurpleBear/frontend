@@ -35,27 +35,29 @@ class LogIn extends React.Component {
         const logInInfoType = this.props.form.getFieldValue("logInInfoType");
 
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <FormItem>
-                    {getFieldDecorator("userKey", {
-                        rules: [{ required: true, message: "Please input your userName or telNumber" }],
-                    })(
-                        <Input prefix={<Icon type="user" />} placeholder={logInInfoType} addonBefore={logInInfoTypeSelector}/>
-                    )}
-                </FormItem>
-                <FormItem>
-                    {getFieldDecorator("password", {
-                        rules: [{ required: true, message: "Please input your Password!" }],
-                    })(
-                        <Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />
-                    )}
-                </FormItem>
-                <FormItem>
-                    <Button type="primary" htmlType="submit">
-                        Log in
-                    </Button>
-                </FormItem>
-            </Form>
+            <div>
+                <Form onSubmit={this.handleSubmit}>
+                    <FormItem>
+                        {getFieldDecorator("userKey", {
+                            rules: [{ required: true, message: "Please input your userName or telNumber" }],
+                        })(
+                            <Input prefix={<Icon type="user" />} placeholder={logInInfoType} addonBefore={logInInfoTypeSelector}/>
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        {getFieldDecorator("password", {
+                            rules: [{ required: true, message: "Please input your Password!" }],
+                        })(
+                            <Input prefix={<Icon type="lock" />} type="password" placeholder="Password" />
+                        )}
+                    </FormItem>
+                    <FormItem>
+                        <Button type="primary" htmlType="submit">
+                            Log in
+                        </Button>
+                    </FormItem>
+                </Form>
+            </div>
         );
     }
 }
