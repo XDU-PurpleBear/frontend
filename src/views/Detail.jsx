@@ -137,7 +137,7 @@ class Detail extends React.Component{
             return <div></div>;
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         const { ISBN } = this.props.match.params;
         const {token, userType, userName} = this.props; 
         const url = `/api/book/info?ISBN=${ISBN}`;

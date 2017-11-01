@@ -92,11 +92,6 @@ class UserEntry extends React.Component {
         if(userType === "admin"){
             menu = (
                 <Menu>
-                    {/* <MenuItem key="/usercenter/info" disabled>
-                        <Link to="/usercenter/info">
-                            <span>UserInfo</span>
-                        </Link>
-                    </MenuItem> */}
                     <MenuDivider/>
                     <MenuItem key="/usercenter/bookapply">
                         <Link to="/usercenter/bookapply">

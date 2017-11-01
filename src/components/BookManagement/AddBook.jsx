@@ -64,6 +64,7 @@ class AddBook extends React.Component {
         }
         reader.onload = e => {
             const image = e.target.result;
+            
             console.log({"image":image});
             axios.post("/api/book/add", {
                 name: name,

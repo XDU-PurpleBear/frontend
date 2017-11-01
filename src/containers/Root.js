@@ -3,8 +3,11 @@ import MockAdapter from "axios-mock-adapter";
 
 let axios = normalAxios.create();
 
-let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"]
+let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
+let orderStatus = ["Applying", "Borrowing ", "Finished", "Overdue", "Invalid"];
+
+let bookCopyStatus = ["Available", "Unavailable", "Borrowed", "Reserved"];
 
 let mock = new MockAdapter(axios);
 
@@ -19,7 +22,7 @@ mock.onPost(/\/api\/login/).reply(config=>{
         headers:{
             userKey: "userKey",
             password: "password",
-            userType: "userType"
+            userType: "userType" // tel or studentID
         },
         body:{
             
@@ -63,7 +66,7 @@ mock.onPost(/\/api\/logout/).reply(config=>{
         200,
         //body
         {
-            type: "succeed"
+            type: "succeed" // need jump main page
         },
         //headers
         {},
@@ -74,7 +77,7 @@ mock.onGet(/\/api\/book\/query\?(bookName|bookType|authorName)\=(.*)/).reply(con
     //bookType in [tags]
     //config like
     let request = {
-        url: "/api/book/query?searchType=searchValue",
+        url: "/api/book/query?<searchType=searchValue>",
         headers:{
             token: "" //?
         },
@@ -94,10 +97,14 @@ mock.onGet(/\/api\/book\/query\?(bookName|bookType|authorName)\=(.*)/).reply(con
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
-                    position: ["101", "2"],
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    language: [""],
+                    theme: [""],
                     amount: 1,
                     image: "",
-                    tags: ["", ""] 
                 }],
                 filter:{
                     language: ["",""],
@@ -113,6 +120,7 @@ mock.onGet(/\/api\/book\/query\?(bookName|bookType|authorName)\=(.*)/).reply(con
     ];
 });
 
+// need add history
 mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
     //config like
     let request = {
@@ -137,18 +145,23 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
                     auth: ["bookinfo1"],
                     version: ["v1"],
                     ISBN: "bookinfo1",
+                    publisher: "",
                     language: ["chiness",""],
-                    tags: [""],
-                    position: ["101", "2"],
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    theme: [""],
+                    CLC: "",
                     amount: "3",
                     image: "",
                     description: "this is desc",
                     copys: [{
                             uuid: "111111",
-                            status: "available" //available, borrowed, unavailable, reserved
+                            status: "Available" //Available, Borrowed, Unavailable, Reserved
                         },{
                             uuid: "222222",
-                            status: "borrowed"
+                            status: "Borrowed"
                         }
                     ],
                 }
@@ -161,14 +174,124 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
     ];
 });
 
+mock.onGet(/\/res\/image\/name/).reply(config=>{
+    //config like
+    let request = {
+        url: "/res/image/<johnshitImage>",
+        headers:{},
+        body:{
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        "asdasda1278agd8sd", //二进制数据
+        //headers
+        {
+            "content-type": ""
+        },
+    ];
+});
+
+
+// 2017/11/1
+// TODO: check
+mock.onGet(/\/api\/user\/info/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/user/info",
+        headers:{
+            token: ""
+        },
+        body:{
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                userInfo: {
+                    userName: "",
+                    uuid: "",
+                    studentID: "",
+                    tel: "",
+                    balance: 300,
+                    userImage: "",
+                    orderNumber: "",
+                    fine: 100,
+                    /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
+                           if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
+                    */
+                }
+            }
+        },
+        //headers
+        {
+            tokendate: 300
+        },
+    ];
+});
+
+
+// only admin
+mock.onGet(/\/api\/user\/searchinfo/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/user/info",
+        headers:{
+            token: "",
+            studentID: "",
+        },
+        body:{
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                userInfo: {
+                    userName: "",
+                    uuid: "",
+                    studentID: "",
+                    tel: "",
+                    balance: 300,
+                    userImage: "",
+                }
+            }
+        },
+        //headers
+        {
+            tokendate: 300
+        },
+    ];
+});
+
+
+// only admin
 mock.onPost(/\/api\/signup/).reply(config=>{
     //config like
     let request = {
         url: "/api/signup",
         headers:{
-            userName: "userName",
+            userName: "userName", //not only
+            studentID: "",//only
+            balance: "",
+            deposit: 300, // only value
             password: "password",
-            tel: "tel",
+            tel: "tel",//only
             token: "",
         },
         body:{
@@ -191,11 +314,45 @@ mock.onPost(/\/api\/signup/).reply(config=>{
     ];
 });
 
-mock.onGet(/\/res\/image\/name/).reply(config=>{
+// only admin
+mock.onPost(/\/api\/user\/editinfo/).reply(config=>{
     //config like
     let request = {
-        url: "/res/image/bookimage",
-        headers:{},
+        url: "/api/user/editinfo",
+        headers:{
+            balance: "",
+            password: "password",
+            uuid: "",
+            token: "",
+        },
+        body:{
+            
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            
+        },
+        //headers
+        {
+            tokendate: 300, 
+        },
+    ];
+});
+
+mock.onGet(/\/api\/book\/recommend/).reply(config=>{
+    //bookType in [tags]
+    //config like
+    let request = {
+        url: "/api/book/recommend",
+        headers:{
+            token: "" //?
+        },
         body:{
 
         }
@@ -205,25 +362,90 @@ mock.onGet(/\/res\/image\/name/).reply(config=>{
         //status
         200,
         //body
-        "asdasda1278agd8sd", //二进制数据
+        {
+            type: "succeed",
+            data:{
+                bookList:[{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "",
+                    image: "",
+                }]
+            }
+        },
         //headers
         {
-            "content-type": "image/jpeg" //写死的
+            tokendate: 300 //?
         },
     ];
 });
 
+// only admin
+mock.onPost(/\/api\/book\/add/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/book/add",
+        headers:{
+            token: ""
+        },
+        body:{
+            name: "",
+            auth: ["", ""],
+            ISBN: "",
+            publisher: "",
+            CLC: "",
+            version: "",
+            description: "",
+            language: [""],
+            theme: [""],
+            amount: "",
+            image: {
+                data: "", //二进制格式。默认格式jpg
+                type: ""
+            } 
 
-// 2017/11/1
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                bookInfo: {
+                    name: "bookinfo",
+                    auth: ["bookinfo1"],
+                    version: ["v1"],
+                    ISBN: "bookinfo1",
+                    publisher: "",
+                    language: ["chiness",""],
+                    position: ["101", "2"],
+                    theme: [""],
+                    CLC: "",
+                    amount: "3",
+                    image: "",
+                    description: "this is desc",
+                    copys: [{
+                            uuid: "111111",
+                            status: "available" //available, borrowed, unavailable, reserved
+                        },{
+                            uuid: "222222",
+                            status: "borrowed"
+                        }
+                    ],
+                }
+            }
+        },
+        //headers
+        {
+            tokendate: 300
+        },
+    ];
+});
 
-
-
-
-
-
-
-
-
+// only admin
 mock.onPost(/\/api\/book\/addcopy/).reply(config=>{
     //config like
     let request = {
@@ -253,6 +475,8 @@ mock.onPost(/\/api\/book\/addcopy/).reply(config=>{
     ];
 });
 
+// only admin
+// borrowed can't be deleted
 mock.onPost(/\/api\/book\/deletecopy/).reply(config=>{
     //config like
     let request = {
@@ -261,7 +485,7 @@ mock.onPost(/\/api\/book\/deletecopy/).reply(config=>{
             token: ""
         },
         body:{
-            uuid: ""
+            uuid: "" //book's copy uuid
         }
     }
     //response
@@ -279,26 +503,18 @@ mock.onPost(/\/api\/book\/deletecopy/).reply(config=>{
     ];
 });
 
-mock.onPost(/\/api\/book\/add/).reply(config=>{
+// only admin
+// check bookcopy status
+mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
     //config like
     let request = {
-        url: "/api/book/add",
+        url: "/api/book/deletecopy",
         headers:{
             token: ""
         },
         body:{
-            name: "",
-            auth: "",
-            ISBN: "",
-            edition: "",
-            publisher: "",
-            CLC: "",
-            version: "",
-            description: "",
-            image: {
-                data: "", //二进制格式。默认格式jpg
-            } 
-
+            uuid: "", //book's copy uuid
+            status: ""
         }
     }
     //response
@@ -311,24 +527,24 @@ mock.onPost(/\/api\/book\/add/).reply(config=>{
         },
         //headers
         {
-            tokendate: 300
+            tokendate: ""
         },
     ];
 });
 
-mock.onDelete(/\/api\/book\/delete/).reply(config=>{
+// only customer
+mock.onPost(/\/api\/user\/editimage/).reply(config=>{
     //config like
     let request = {
-        url: "/api/book/delete",
+        url: "/api/user/editimage",
         headers:{
             token: ""
         },
         body:{
-            ISBN: ""
+            image: "",
+            type: ""
         }
     }
-    console.log("delete book");
-    console.log(config);
     //response
     return [
         //status
@@ -339,42 +555,44 @@ mock.onDelete(/\/api\/book\/delete/).reply(config=>{
         },
         //headers
         {
-            tokendate: 300
+            tokendate: ""
         },
     ];
 });
 
-mock.onPost(/\/api\/book\/edit/).reply(config=>{
+
+// TODO: check for db
+mock.onGet(/\/api\/user\/queryhistory/).reply(config=>{
     //config like
     let request = {
-        url: "api/book/edit",
+        url: "/api/user/queryhistory",
         headers:{
-            token: ""
+            token: "",
         },
         body:{
-            name: "",
-            auth: "",
-            ISBN: "",
-            edition: "",
-            publisher: "",
-            CLC: "",
-            version: "",
-            description: "",
-            image: {
-                data: "", //二进制格式
-            } 
 
         }
     }
-    console.log("edit book");
-    console.log(config);
     //response
     return [
         //status
         200,
         //body
         {
-            type: "succeed"
+            type: "succeed",
+            data: {
+                bookList:[{
+                    name: "apply1",
+                    ISBN: "apply1",
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    theme: [""],
+                    language: [""],
+                    image: "",
+                }]
+            }
         },
         //headers
         {
@@ -382,6 +600,31 @@ mock.onPost(/\/api\/book\/edit/).reply(config=>{
         },
     ];
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 mock.onGet(/\/api\/user\/applylist/).reply(config=>{
     //config like
@@ -613,12 +856,7 @@ mock.onPost(/\/api\/user\/borrow/).reply(config=>{
 });
 
 
-
-
-
-
-
-
 export {
     axios
 };
+
