@@ -1,33 +1,5 @@
 .main{
     width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: rgb(16, 146, 233);
-    cursor:pointer;
-    h1{
-        color: rgb(16, 146, 233);
-    
-        font-size: 3rem;
-        margin: auto;
-        justify-content: center;
-        align-content: center;
-        font-family: Helvetica Arial;
-        cursor:pointer;
-    }
-    h3{
-        color: rgb(16, 146, 233);
-        font-size: 2rem;
-        margin: auto;
-        font-family: Helvetica Arial;
-        justify-content: center;
-        align-content: center;
-        cursor:pointer;
-    }
+    height: 99%;
+    box-sizing: content-box;
 }

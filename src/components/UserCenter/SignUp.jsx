@@ -2,6 +2,7 @@ import * as React from "react";
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from "antd";
 const FormItem = Form.Item;
 const Option = Select.Option;
+import sha256 from "sha256";
 
 import {userCenterActions} from "../../views/UserCenterRedux.js";
 
@@ -22,7 +23,9 @@ class SignUp extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                this.props.dispatch(userCenterActions.signUp(values));
+                let {userName, password, tel, telPrefix} = values;
+                password = sha256(password);
+                this.props.dispatch(userCenterActions.signUp({userName, password, tel}));
                 // console.log("Received values of form: ", values);
             }
         });
@@ -71,14 +74,14 @@ class SignUp extends React.Component {
             <Form onSubmit={this.handleSubmit}>
                 <FormItem {...formItemLayout} label="User Name" hasFeedback>
                     {getFieldDecorator("userName", {
-                        rules: [{ required: true, message: "Please input your user name!", whitespace: true }],
+                        rules: [{ required: true, message: "Please input your userName, userName's length less than 16 and more than 6!", whitespace: true, min: 6, max: 16,}],
                     })(
                         <Input />
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label="Phone Number">
                     {getFieldDecorator("tel", {
-                        rules: [{ required: true, message: "Please input your phone number!" }],
+                        rules: [{ required: true, message: "Please input your telNumber, tel's length is 11!", pattern: /^\d{11}$/,}],
                     })(
                         <Input addonBefore={telPrefixSelector} style={{ width: "100%" }} />
                     )}
@@ -86,7 +89,10 @@ class SignUp extends React.Component {
                 <FormItem {...formItemLayout} label="Password" hasFeedback>
                     {getFieldDecorator("password", {
                         rules: [{
-                            required: true, message: "Please input your password!",
+                            required: true,
+                            message: "Please input your Password, passworld's length less than 16 and more than 6!",
+                            min: 6,
+                            max: 16
                         }, {
                             validator: this.checkConfirm,
                         }],

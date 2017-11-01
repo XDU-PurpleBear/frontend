@@ -6,54 +6,54 @@ const { Header, Sider, Content } = Layout;
 
 import styles from "./Frame.scss";
 
-// import BookSearchResult from "../views/BookSearchResult.jsx";
 import SearchForm from "../components/Frame/SearchForm.jsx";
 import UserEntry from "../components/Frame/UserEntry.jsx";
 // import UserCenter from "../views/UserCenter.jsx";
 import Main from "../views/Main.jsx";
+import BookSearchReault from "../views/BookSearchResult.jsx";
 import Detail from "../views/Detail.jsx";
+import AddBook from "../components/BookManagement/AddBook.jsx";
+import EditBook from "../components/BookManagement/EditBook.jsx";
+import BookApply from "../components/UserCenter/BookApply.jsx";
+import BookBorrow from "../components/UserCenter/BookBorrow.jsx";
+import BookReturn from "../components/UserCenter/BookReturn.jsx";
+
 import NotFound from "../views/NotFound.jsx";
 
 @connect(state => {
     return {
-        ...(state.UserCenter.default.userType),
+        userType: state.UserCenter.default.userType,
     };
 })
 class Frame extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            collapsed: true,
-        }
-        this.toggle = this.toggle.bind(this);
-    }
-    toggle() {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
     }
     render() {
-        const defaultSelectedKeys = [this.props.location.pathname];
-        const iconStyle = {
-            fontSize:"x-large",
-            width: "100%",
-            height: "100%",
-            color: "white",
-            marginTop: "5px",
-        };
+        const {history} = this.props;
         return (
             <div className={styles.frame}>
                 <Layout className={styles.navLayout}>
                     <Header className={styles.navHeader}>
-                        <span className={styles.title} onClick={this.toggle}>XDU Library</span>
-                        <SearchForm />
-                        <UserEntry />
+                        <span className={styles.title}>XDU Library</span>
+                        <SearchForm history={history} />
+                        <UserEntry className={styles.UserEntry}/>
                     </Header>
                     <Content className={styles.navContent}>
                         <Switch>
                             <Route exact path="/" component={Main}/>
-                            {/* <Route path="/booksearchreault" component={BookSearchReault}/> */}
-                            {/* <Route path="/usercenter" component={UserCenter}/> */}
+                            <Route exact path="/booksearchresult/:searchType/:searchValue" component={BookSearchReault}/>
+                            <Route exact path="/detail/:ISBN" component={Detail}/>
+
+                            <Route exact path="/bookmanagement/add" component={AddBook}/>
+                            <Route exact path="/bookmanagement/edit" component={EditBook}/>
+
+                            {/* <Route path="/usercenter/info" component={UserCenter}/> */}
+
+                            <Route path="/usercenter/bookapply" component={BookApply}/>
+                            <Route path="/usercenter/bookreturn" component={BookReturn}/>
+                            <Route path="/usercenter/bookborrow" component={BookBorrow}/>
+
                             <Route component={NotFound} />
                         </Switch>
                     </Content>

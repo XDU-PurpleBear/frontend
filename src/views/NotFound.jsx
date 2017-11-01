@@ -1,6 +1,6 @@
 import React from "react";
 const NotFound = ()=> (
-    <span>404 Not Found</span>
+    <h1>404 Not Found</h1>
 );
 
 export default NotFound;

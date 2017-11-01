@@ -1,0 +1,35 @@
+.item{
+    width: 50vw;
+    height: 12vh;
+    display: grid;
+    grid-template-columns: 5% 20% 5% 10% 30% 25% 5%;
+    grid-template-rows: 5% 15% 15% 30% 15% 15% 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: white;
+}
+.image {
+    grid-area: 2 / 2 / 7 / 3 ;
+}
+.bookName {
+    grid-area: 2 / 4 / 4 / 7;
+}
+.author {
+    grid-area: 4 / 4 / 5 / 7;
+}
+.position {
+    grid-area: 5 / 4 / 7 / 5;
+}
+.number {
+    grid-area: 5 / 5 / 7 / 6;
+}
+.apply {
+    color: black;
+    grid-area: 3 / 6 / 6 / 7;
+    background-color: #DDAC21;
+}
+.apply:disabled{
+    color: white;
+    grid-area: 3 / 6 / 6 / 7;
+    background-color: #D7D7D7;
+}

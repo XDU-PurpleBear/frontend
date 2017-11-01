@@ -34,6 +34,7 @@
     "@types/react-dom": "^15.5.5",
     "antd": "^2.13.5",
     "axios": "^0.16.2",
+    "axios-mock-adapter": "^1.9.0",
     "classnames": "^2.2.5",
     "history": "^4.7.2",
     "js-cookie": "^2.1.4",
@@ -44,7 +45,8 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sha256": "^0.2.0"
   },
   "scripts": {
     "build": "webpack",

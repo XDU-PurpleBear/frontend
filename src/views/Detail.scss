@@ -1,0 +1,111 @@
+.detail {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 80vw 20vw;
+    grid-template-rows: 100%;
+    background-color: #D7D7D7;
+}
+
+.info {
+    width: 100%;
+    margin: 0 auto;
+    grid-area: 1 / 1 / 2 / 2;
+    display: grid;
+    grid-template-rows: 5% 10% 7% 7% 7% 7% 7% 10% 35% 5%;
+    grid-template-columns: 5% 25% 5% 10% 50% 5%;
+}
+
+.command {
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    grid-area: 1 / 2 / 2 / 3;
+    display: flex;
+    flex-direction: column;
+    div {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        button{
+            width: 50%;
+            margin: 0 auto;
+            background-color: black;
+            a{
+                width: 100%;
+                span{
+                    width: 100%;
+                }
+            }
+        }
+
+        span{
+            font-size: 1.5rem;
+            color: #E3960F;
+            width: 100%;
+            text-align: center;
+            background: black;
+        }
+        dl{
+            background-color: #4A494A;
+            dd{
+                margin: 5px;
+                div{
+                    width: 100%;
+                    display: grid;
+                    grid-template-columns: 50% 50%;
+                    span{
+                        margin: auto;
+                        grid-column: 1 / 2;
+                        background: black;
+                        color: #E3960F;
+                        // float: left;
+                    }
+                    button{
+                        margin: auto;
+                        grid-column: 2 / 3;
+                        background: #E3960F;
+                        color: black;
+                    }
+                }
+            }
+        }
+    }
+}
+.image{
+    grid-area: 2 / 2 / 8 / 3;
+}
+.name{
+    grid-area: 2 / 4 / 3 / 6;
+}
+.author {
+    li{
+        display: inline-block;
+        margin: 0 0.5rem;
+    }
+    grid-area: 3 / 4 / 4 / 6;
+}
+.version {
+    grid-area: 4 / 4 / 5 / 6;
+}
+.isbn {
+    grid-area: 5 / 4 / 6 / 6;
+}
+.language {
+    grid-area: 6 / 4 / 7 / 6;
+}
+.position {
+    grid-area: 7 / 4 / 8 / 5;
+}
+.number {
+    grid-area: 7 / 5 / 8 / 6;
+}
+.description {
+    background-color: black;
+    color: #F4C52E;
+    grid-area: 8 / 2 / 9 / 4;
+}
+.descriptionInfo{
+    grid-area: 9 / 2 / 10 / 6;    
+}

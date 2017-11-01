@@ -6,10 +6,14 @@ const MenuItem = Menu.Item;
 const MenuDivider = Menu.Divider;
 
 import styles from "./UserEntry.scss";
-// import LogInOrSignUp from "../components/UserCenter/LogInOrSignUp.jsx";
-// import UserInfo from "../components/UserCenter/UserInfo.jsx";
+import LogInOrSignUp from "../UserCenter/LogInOrSignUp.jsx";
+
+import {userCenterActions} from "../../views/UserCenterRedux.js";
+
+import userIcon from "../../res/icon/user.png";
 
 @connect(state => {
+    console.log(state);
     return {
         ...(state.UserCenter.default),
     };
@@ -20,55 +24,66 @@ class UserEntry extends React.Component {
         this.state = {
             visibility: false,            
         }
-        this.handleHideLogInOrSignUp = this.handleHideLogInOrSignUp.bind(this);
-        this.handleShowLogInOrSignUp = this.handleShowLogInOrSignUp.bind(this);
+        this.handleHide = this.handleHide.bind(this);
+        this.handleShow = this.handleShow.bind(this);
+        this.handleLogOut = this.handleLogOut.bind(this);
     }
-    handleShowLogInOrSignUp(){
+    handleShow(){
         this.setState({
             visibility: true,
         });
     }
-    handleHideLogInOrSignUp(){
+    handleHide(){
         this.setState({
             visibility: false,
         });
     }
+    handleLogOut(){
+        const {dispatch} = this.props;
+        dispatch(userCenterActions.logOut());
+    }
     init(userType, userName){
         if(userType === "visitor"){
             return (
-                <span onClick={this.handleShowLogInOrSignUp}>Sign in | Log in</span>
+                <span onClick={this.handleShow}>Log in</span>
             );
         }
         let menu = null;
         if(userType === "customer"){
             menu = (
                 <Menu>
-                    <MenuItem key="/usercenter/info">
+                    {/* <MenuItem key="/usercenter/info" disabled>
                         <Link to="/usercenter/info">
                             <span>UserInfo</span>
                         </Link>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/BookApply">
+                    <MenuItem key="/usercenter/bookapply">
                         <Link to="/usercenter/bookapply">
                             <span>BookApply</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/BookReturn">
+                    <MenuItem key="/usercenter/bookreturn">
                         <Link to="/usercenter/bookreturn">
                             <span>BookReturn</span>
                         </Link>
                     </MenuItem>
-                    <MenuDivider/>
-                    <MenuItem key="/usercenter/notify">
-                        <Link to="/usercenter/notify">
-                            <span>Notify</span>
+                    <MenuDivider/>                    
+                    <MenuItem key="/usercenter/BookBorrow">
+                        <Link to="/usercenter/bookborrow">
+                            <span>BookBorrow</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
+                    {/* <MenuItem key="/usercenter/notify" disabled>
+                        <Link to="/usercenter/notify">
+                            <span>Notify</span>
+                        </Link>
+                    </MenuItem> */}
+                    <MenuDivider/>
                     <MenuItem>
-                        <span>Log Out</span>
+                        <span onClick={this.handleLogOut}>Log Out</span>
                     </MenuItem>
                     <MenuDivider/>
                 </Menu>
@@ -77,44 +92,44 @@ class UserEntry extends React.Component {
         if(userType === "admin"){
             menu = (
                 <Menu>
-                    <MenuItem key="/usercenter/info">
+                    {/* <MenuItem key="/usercenter/info" disabled>
                         <Link to="/usercenter/info">
                             <span>UserInfo</span>
                         </Link>
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/BookApply">
+                    <MenuItem key="/usercenter/bookapply">
                         <Link to="/usercenter/bookapply">
                             <span>BookApply</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/BookReturn">
+                    <MenuItem key="/usercenter/bookreturn">
                         <Link to="/usercenter/bookreturn">
                             <span>BookReturn</span>
                         </Link>
                     </MenuItem>
-                    <MenuDivider/>
-                    <MenuItem key="/usercenter/notify">
-                        <Link to="/usercenter/notify">
-                            <span>Notify</span>
+                    <MenuDivider/>                    
+                    <MenuItem key="/usercenter/bookborrow">
+                        <Link to="/usercenter/bookborrow">
+                            <span>BookBorrow</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
-                    <MenuItem key="/management/add">
-                        <Link to="/management/add">
+                    {/* <MenuItem key="/usercenter/notify" disabled>
+                        <Link to="/usercenter/notify">
+                            <span>Notify</span>
+                        </Link>
+                    </MenuItem> */}
+                    <MenuDivider/>
+                    <MenuItem key="/bookmanagement/add">
+                        <Link to="/bookmanagement/add">
                             <span>Add Book</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
-                    <MenuItem key="/management/edit">
-                        <Link to="/management/edit">
-                            <span>Edit/Delete Book</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuDivider/>
                     <MenuItem>
-                        <span>Log Out</span>
+                        <span onClick={this.handleLogOut}>Log Out</span>
                     </MenuItem>
                     <MenuDivider/>
                 </Menu>
@@ -127,17 +142,41 @@ class UserEntry extends React.Component {
             </Dropdown>
         );
     }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps);
+        if(nextProps.userName !== null && this.props.userName === null){
+            this.setState({
+                visibility: false,
+            });
+            return;
+        }
+        if(nextProps.userName === null && this.props.userName !== null){
+            this.setState({
+                visibility: false,
+            });
+            return;
+        }
+    }
     render(){
-        const {dispatch, userType, userName}  = this.props;
-        const {visibility} = this.state;
+        const {dispatch, userType, userName, userImage}  = this.props;
+        let {visibility} = this.state;
+        
+        const userSignIAndLogInStyle = {
+            display: visibility? "flex" : "none",
+        }
+        const userImageStyle = {
+            backgroundImage: userImage === "" ? `url(${userIcon})` : `url(${userImage})`,
+            display: userType === "visitor" ? "none" : "inline-block"
+        };
         return (
             <div className={styles.userEntry}>
                 {
                     this.init(userType, userName)
                 }
-                <div className={styles.userSignIAndLogIn} style={{
-                    display: (visibility? "flex" : "none"),
-                }}>
+                <div className={styles.userImage} style={userImageStyle}></div>
+                <div className={styles.userSignIAndLogIn} style={userSignIAndLogInStyle}>
+                    <LogInOrSignUp dispatch={dispatch}/>
+                    <Icon className={styles.closeButton} type="close" onClick={this.handleHide}/>
                 </div>
             </div>
         );

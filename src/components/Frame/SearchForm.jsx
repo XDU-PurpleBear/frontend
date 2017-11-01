@@ -1,14 +1,11 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Form, Input, Button, Icon, Select} from "antd";
-import {message} from "antd";
+import {Form, Input, Icon, Select, message} from "antd";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 import styles from "./SearchForm.scss";
-
-import {bookSearchActions} from "../../views/BookSearchRedux.js";
 
 @Form.create({})
 class SearchForm extends React.Component{
@@ -30,7 +27,7 @@ class SearchForm extends React.Component{
     }
 
     handlechangeSearchType(e){
-        const searchType = e.target.value;
+        const searchType = e;
         this.setState({
             searchType: searchType,
         });
@@ -45,26 +42,30 @@ class SearchForm extends React.Component{
 
     searchBook(){
         const {searchType, searchValue} = this.state;
-        this.props.dispatch(bookSearchActions.loadBookList(searchType, searchValue));
+        if(searchValue && searchValue !== ""){
+            this.props.history.push(`/booksearchresult/${searchType}/${searchValue}`);
+        }
+        else{
+            message.error("Please input " + searchType);
+        }
     }
 
     render(){
         const {getFieldDecorator} = this.props.form;
-        const {searchType, searchValue} = this.state;
         const SearchTypeSelector = getFieldDecorator("searchType", {
             initialValue: "bookName",
         })(
-            <Select>
-                <Option value="bookname">Book Name</Option>
-                <Option value="booktype">Book Type</Option>
+            <Select onChange={this.handlechangeSearchType}>
+                <Option value="bookName">Book Name</Option>
+                {/* <Option value="bookType">Book Type</Option> */}
                 <Option value="authorName">Author Name</Option>
-                <Option value="ISBN">Book's ISBN</Option>
+                {/* <Option value="ISBN">Book's ISBN</Option> */}
             </Select>
         );
         return (
             <Form layout="inline" className={styles.form}>
                 <FormItem>
-                    <Input type="text" addonBefore={SearchTypeSelector} suffix={<Icon type="search" />} onChange={this.handlechangeSearchValue} onPressEnter={this.searchBook}/>
+                    <Input type="text" addonBefore={SearchTypeSelector} addonAfter={<Icon type="search" onClick={this.searchBook}/>} onChange={this.handlechangeSearchValue} onPressEnter={this.searchBook}/>                 
                 </FormItem>
             </Form>
         );
