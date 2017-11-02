@@ -13,7 +13,7 @@ let mock = new MockAdapter(axios);
 
 //All failed response body is {type: "failed", errorReason: "errorReason"} headers is {"tokendate": 300}
 
-
+// all url is lower
 
 // 2017/10/31
 mock.onPost(/\/api\/login/).reply(config=>{
@@ -74,7 +74,7 @@ mock.onPost(/\/api\/logout/).reply(config=>{
     ];
 });
 
-mock.onGet(/\/api\/book\/query\?(bookName|bookType|authorName)\=(.*)/).reply(config=>{
+mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(config=>{
     //bookType in [tags]
     //config like
     let request = {
@@ -157,6 +157,8 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
                     amount: "3",
                     image: "",
                     description: "this is desc",
+                    // if user is admin, copy's status is all
+                    // if user is customer, copy's status only is Available
                     copys: [{
                             uuid: "111111",
                             status: "Available" //Available, Borrowed, Unavailable, Reserved
@@ -323,8 +325,10 @@ mock.onPost(/\/api\/user\/editinfo/).reply(config=>{
         headers:{
             balance: "",
             password: "password",
-            uuid: "",
-            token: "",
+            uuid: "", // customer's uuid
+            token: "", // admin's token
+            // balance is added balance
+            // if not change password , the password is ""
         },
         body:{
             
@@ -382,6 +386,7 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
 });
 
 // only admin
+// TODO: check
 mock.onPost(/\/api\/book\/add/).reply(config=>{
     //config like
     let request = {
@@ -533,6 +538,8 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
     ];
 });
 
+
+// TODO: check
 // only customer
 mock.onPost(/\/api\/user\/editimage/).reply(config=>{
     //config like
@@ -562,7 +569,6 @@ mock.onPost(/\/api\/user\/editimage/).reply(config=>{
 });
 
 
-// TODO: check for db
 mock.onGet(/\/api\/user\/queryhistory/).reply(config=>{
     //config like
     let request = {
@@ -602,31 +608,226 @@ mock.onGet(/\/api\/user\/queryhistory/).reply(config=>{
     ];
 });
 
+// only customer
+// need check whether he can apply
+mock.onPost(/\/api\/user\/apply/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/user/apply",
+        headers:{
+            token: ""
+        },
+        body:{
+            uuid: "", // bookcopy's uuid
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
+
+// only admin
+mock.onPost(/\/api\/admin\/borrow/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/borrow",
+        headers:{
+            token: ""
+        },
+        body:{
+            uuid: "", // order uuid
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
+
+// only admin
+mock.onPost(/\/api\/admin\/return/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/return",
+        headers:{
+            token: ""
+        },
+        body:{
+            uuid: "", // order uuid
+            newBalance: "",
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
 
 
+// only admin
+mock.onPost(/\/api\/admin\/refuse/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/refuse",
+        headers:{
+            token: ""
+        },
+        body:{
+            uuid: "", // order uuid
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
 
 
+// only admin
+// failed； system error or studentID error
+mock.onGet(/\/api\/admin\/checkborrow/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/checkborrow",
+        headers:{
+            token: "",
+            studentID: "",
+            uuids: [""] // bookcopy's uuid, one or two
+        },
+        body:{
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+
+                    ISBN: "",
+                    bookName: "",
+                    image: "",
+                    auth: [""],
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
+
+                }], // 0 or 1 or 2
+            }
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
 
 
+// only admin
+mock.onGet(/\/api\/admin\/checkreturn/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/checkreturn",
+        headers:{
+            token: "",
+            studentID: "",
+            uuids: [""] // bookcopy's uuid, one or two
+        },
+        body:{
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    fine: 250,
+                    days: 31,
+
+                    borrowDate: "",
+                    ISBN: "",
+                    bookName: "",
+                    image: "",
+                    auth: [""],
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
+
+                }], // 0 or 1 or 2
+            }
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// admin : all order that status is applying
+// cutomer: self's order that status is applying 
 mock.onGet(/\/api\/user\/applylist/).reply(config=>{
     //config like
     let request = {
@@ -646,60 +847,25 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
         {
             type: "succeed",
             data: {
-                bookList:[{
-                    name: "apply1",
-                    ISBN: "apply1",
-                    auth: ["a1"],
-                    position: "b111",
-                    amount: 1,
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    applyTime: "",
+                    
+                    ISBN: "",
+                    bookName: "",
+                    auth: [""],
                     image: "",
-                    timeLimits: "1",
-                    uuid: "uuid1",
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2",
-                    uuid: "uuid2",
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2",
-                    uuid: "uuid2",
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2",
-                    uuid: "uuid2",
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2",
-                    uuid: "uuid2",
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2",
-                    uuid: "uuid2",
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    bookid: "",
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
                 }]
             }
         },
@@ -729,22 +895,26 @@ mock.onGet(/\/api\/user\/returnlist/).reply(config=>{
         {
             type: "succeed",
             data: {
-                bookList:[{
-                    name: "apply1",
-                    ISBN: "apply1",
-                    auth: ["a1"],
-                    position: "b111",
-                    amount: 1,
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    
+                    ISBN: "",
+                    returnDate: "",
+                    holdDays: 12, // returnDate - borrowDate
+                    bookName: "",
+                    auth: [""],
                     image: "",
-                    timeLimits: "1"
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2"
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    bookid: "",
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
                 }]
             }
         },
@@ -774,22 +944,26 @@ mock.onGet(/\/api\/user\/borrowlist/).reply(config=>{
         {
             type: "succeed",
             data: {
-                bookList:[{
-                    name: "apply1",
-                    ISBN: "apply1",
-                    auth: ["a1"],
-                    position: "b111",
-                    amount: 1,
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    
+                    ISBN: "",
+                    borrowDate: "",
+                    timeLeft: "", //now - borrowDate
+                    bookName: "",
+                    auth: [""],
                     image: "",
-                    timeLimits: "1"
-                },{
-                    name: "apply2",
-                    ISBN: "apply2",
-                    auth: ["a2"],
-                    position: "b222",
-                    amount: 2,
-                    image: "",
-                    timeLimits: "2"
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    bookid: "",
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
                 }]
             }
         },
@@ -800,19 +974,18 @@ mock.onGet(/\/api\/user\/borrowlist/).reply(config=>{
     ];
 });
 
-mock.onPost(/\/api\/user\/apply/).reply(config=>{
+"Overdue", "Invalid"
+mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
     //config like
     let request = {
-        url: "/api/user/apply",
+        url: "/api/user/overduelist",
         headers:{
-            token: ""
+            token: "",
         },
         body:{
-            uuids: [""],
 
         }
     }
-    console.log(config);
     //response
     return [
         //status
@@ -820,27 +993,51 @@ mock.onPost(/\/api\/user\/apply/).reply(config=>{
         //body
         {
             type: "succeed",
+            data: {
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    
+                    ISBN: "",
+                    borrowDate: "",
+                    overDays: 12, //now - borrowDate - 30
+                    fine: 12,
+                    bookName: "",
+                    auth: [""],
+                    image: "",
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    bookid: "",
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
+                }]
+            }
         },
         //headers
         {
-            tokendate: ""
+            tokendate: 300
         },
     ];
 });
 
-mock.onPost(/\/api\/user\/borrow/).reply(config=>{
+
+// fitst check apply, then check invaild
+mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
     //config like
     let request = {
-        url: "/api/user/borrow",
+        url: "/api/user/invalidlist",
         headers:{
-            token: ""
+            token: "",
         },
         body:{
-            uuids: [""],
 
         }
     }
-    console.log(config);
     //response
     return [
         //status
@@ -848,14 +1045,35 @@ mock.onPost(/\/api\/user\/borrow/).reply(config=>{
         //body
         {
             type: "succeed",
+            data: {
+                orderList:[{
+                    orderid: "",
+                    applyDate: "",
+                    
+                    ISBN: "",
+                    bookName: "",
+                    invaildDate: "",
+                    auth: [""],
+                    image: "",
+                    position: {
+                        room: "",
+                        shelf: "",
+                    },
+                    bookid: "",
+                    amount: "",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
+                }]
+            }
         },
         //headers
         {
-            tokendate: ""
+            tokendate: 300
         },
     ];
 });
-
 
 export {
     axios
