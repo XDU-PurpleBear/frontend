@@ -14,6 +14,7 @@ let mock = new MockAdapter(axios);
 //All failed response body is {type: "failed", errorReason: "errorReason"} headers is {"tokendate": 300}
 
 
+
 // 2017/10/31
 mock.onPost(/\/api\/login/).reply(config=>{
     //config like
