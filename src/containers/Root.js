@@ -1,8 +1,23 @@
 import normalAxios from "axios";
+import Cookies from "js-cookie";
 import MockAdapter from "axios-mock-adapter";
 
 let axios = normalAxios.create();
 
+function updateCookie(token, userName, userType, tokendate){
+    Cookies.set("token", token, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+    Cookies.set("userType", userType, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+    Cookies.set("userName", userName, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+}
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
 let orderStatus = ["Applying", "Borrowing ", "Finished", "Overdue", "Invalid"];
@@ -99,8 +114,8 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "B",
+                        shelf: "22",
                     },
                     language: [""],
                     theme: [""],
@@ -222,13 +237,13 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "",
-                    uuid: "",
-                    studentID: "",
-                    tel: "",
+                    userName: "test",
+                    uuid: "aaaaaaa",
+                    studentID: "1123123123",
+                    tel: "112313123",
                     balance: 300,
                     userImage: "",
-                    orderNumber: "",
+                    orderNumber: "2",
                     fine: 100,
                     /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
                            if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
@@ -371,10 +386,25 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
             type: "succeed",
             data:{
                 bookList:[{
+                    name: "name1name1",
+                    ISBN: "isbn1",
+                    description: "name1nam",
+                    image: "aaaaaaa",
+                },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
-                    description: "",
-                    image: "",
+                    description: "description",
+                    image: "aaaaaaa",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
                 }]
             }
         },
@@ -1076,6 +1106,7 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
 });
 
 export {
-    axios
+    axios,
+    updateCookie,
 };
 
