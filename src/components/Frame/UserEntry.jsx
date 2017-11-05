@@ -6,6 +6,9 @@ const MenuItem = Menu.Item;
 const MenuDivider = Menu.Divider;
 
 import styles from "./UserEntry.scss";
+
+import {getCookie} from "../../containers/Root.js";
+
 import LogInOrSignUp from "../UserCenter/LogInOrSignUp.jsx";
 
 import {userCenterActions} from "../../views/UserCenterRedux.js";
@@ -13,9 +16,8 @@ import {userCenterActions} from "../../views/UserCenterRedux.js";
 import userIcon from "../../res/icon/user.png";
 
 @connect(state => {
-    console.log(state);
     return {
-        ...(state.UserCenter.default),
+        ...getCookie(),
     };
 })
 class UserEntry extends React.Component {
@@ -39,8 +41,8 @@ class UserEntry extends React.Component {
         });
     }
     handleLogOut(){
-        const {dispatch} = this.props;
-        dispatch(userCenterActions.logOut());
+        const {dispatch, history} = this.props;
+        dispatch(userCenterActions.logOut(history));
     }
     init(userType, userName){
         if(userType === "visitor"){
@@ -52,11 +54,11 @@ class UserEntry extends React.Component {
         if(userType === "customer"){
             menu = (
                 <Menu>
-                    {/* <MenuItem key="/usercenter/info" disabled>
+                    <MenuItem key="/usercenter/info" disabled>
                         <Link to="/usercenter/info">
                             <span>UserInfo</span>
                         </Link>
-                    </MenuItem> */}
+                    </MenuItem>
                     <MenuDivider/>
                     <MenuItem key="/usercenter/bookapply">
                         <Link to="/usercenter/bookapply">
@@ -93,9 +95,9 @@ class UserEntry extends React.Component {
             menu = (
                 <Menu>
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/bookapply">
-                        <Link to="/usercenter/bookapply">
-                            <span>BookApply</span>
+                    <MenuItem key="/admincenter/createreader">
+                        <Link to="/admincenter/createreader">
+                            <span>Create Reader</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
@@ -130,7 +132,7 @@ class UserEntry extends React.Component {
                 </Menu>
             );
         }
-
+        console.log(userName);
         return (
             <Dropdown overlay={menu}>
                 <span>{userName} <Icon type="down" /></span>
@@ -138,7 +140,7 @@ class UserEntry extends React.Component {
         );
     }
     componentWillReceiveProps(nextProps){
-        console.log(nextProps);
+        console.log(this);
         if(nextProps.userName !== null && this.props.userName === null){
             this.setState({
                 visibility: false,

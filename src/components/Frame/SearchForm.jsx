@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Form, Input, Icon, Select, message} from "antd";
+import {Form, Input, Icon, Select, message, AutoComplete} from "antd";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -15,9 +15,11 @@ class SearchForm extends React.Component{
             searchType: "bookName",
             searchValue: "",
         };
+        this.dataSource = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
         this.searchBook = this.searchBook.bind(this);
         this.handlechangeSearchType = this.handlechangeSearchType.bind(this);
         this.handlechangeSearchValue = this.handlechangeSearchValue.bind(this);
+        this.handlechangeThemeValue = this.handlechangeThemeValue.bind(this);
     }
     static propTypes = {
         dispatch: PropTypes.func.isRequired,
@@ -25,11 +27,16 @@ class SearchForm extends React.Component{
     static defaultProps ={
         dispatch: ()=>{},
     }
-
     handlechangeSearchType(e){
         const searchType = e;
         this.setState({
             searchType: searchType,
+        });
+    }
+    handlechangeThemeValue(e){
+        const searchValue = e;
+        this.setState({
+            searchValue: searchValue,
         });
     }
 
@@ -52,20 +59,40 @@ class SearchForm extends React.Component{
 
     render(){
         const {getFieldDecorator} = this.props.form;
+        const {searchType} = this.state;
         const SearchTypeSelector = getFieldDecorator("searchType", {
             initialValue: "bookName",
         })(
             <Select onChange={this.handlechangeSearchType}>
-                <Option value="bookName">Book Name</Option>
-                {/* <Option value="bookType">Book Type</Option> */}
+                <Option value="bookName">Book's Name</Option>
+                <Option value="theme">Genre</Option>
                 <Option value="authorName">Author Name</Option>
-                {/* <Option value="ISBN">Book's ISBN</Option> */}
+                <Option value="ISBN">Book ISBN</Option>
             </Select>
         );
         return (
             <Form layout="inline" className={styles.form}>
                 <FormItem>
-                    <Input type="text" addonBefore={SearchTypeSelector} addonAfter={<Icon type="search" onClick={this.searchBook}/>} onChange={this.handlechangeSearchValue} onPressEnter={this.searchBook}/>                 
+                    {getFieldDecorator("searchType", {
+                        initialValue: "bookName",
+                    })(
+                        <Select onChange={this.handlechangeSearchType}>
+                            <Option value="bookName">Book's Name</Option>
+                            <Option value="theme">Book's Genre</Option>
+                            <Option value="authorName">Author Name</Option>
+                            <Option value="ISBN">Book's ISBN</Option>
+                        </Select>
+                    )}
+                </FormItem>
+                <FormItem >
+                    {
+                        searchType !== "theme"?
+                        <Input style={{width: "20vw"}} type="text" addonAfter={<Icon type="search" onClick={this.searchBook}/>} onChange={this.handlechangeSearchValue} onPressEnter={this.searchBook} />
+                        :
+                        <AutoComplete  dataSource={this.dataSource} onChange={this.handlechangeThemeValue} >
+                            <Input type="text" addonAfter={<Icon type="search" onClick={this.searchBook}/>} onChange={this.handlechangeSearchValue} onPressEnter={this.searchBook} />
+                        </AutoComplete >
+                    }
                 </FormItem>
             </Form>
         );

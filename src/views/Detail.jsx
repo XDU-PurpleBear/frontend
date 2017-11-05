@@ -1,5 +1,5 @@
 import React from "react";
-import {axios} from "../containers/Root.js";
+import {axios, getCookie, updateCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import {message} from "antd";
@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 import styles from "./Detail.scss";
 @connect(state => {
     return {
-        ...state.UserCenter.default,
+        ...getCookie(),
     };
 })
 class Detail extends React.Component{
@@ -30,6 +30,7 @@ class Detail extends React.Component{
         };
         this.initCommand = this.initCommand.bind(this);
         this.handleApply = this.handleApply.bind(this);
+        const { ISBN } = props.match.params;
     }
     handleApply(e){
         const uuid = e.target.getAttribute("uuid");
@@ -52,18 +53,7 @@ class Detail extends React.Component{
         .then((response)=>{
             if (response.data.type === "succeed") {
                 const {tokendate} = response.headers;
-                Cookies.set("token", token, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userType", userType, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userName", userName, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
+                updateCookie(tokendate);
                 message.success("Apply Book Success!.");
             }
             else if (response.data.type === "failed") {
@@ -155,18 +145,7 @@ class Detail extends React.Component{
                 if (response.data.type === "succeed") {
                     if (token && token.length !== 0) {
                         const {tokendate} = response.headers;
-                        Cookies.set("token", token, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userType", userType, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userName", userName, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
+                        updateCookie(tokendate);
                     }
                     this.setState({
                         bookInfo: response.data.data.bookInfo,

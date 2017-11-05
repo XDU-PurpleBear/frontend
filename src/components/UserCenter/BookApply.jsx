@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {axios} from "../../containers/Root.js";
+import {axios, getCookie, updateCookie} from "../../containers/Root.js";
 import Cookies from "js-cookie";
 import {message} from "antd";
 
@@ -9,7 +9,7 @@ import styles from "./BookApply.scss";
 
 @connect(state => {
     return {
-        ...state.UserCenter.default,
+        ...getCookie(),
     };
 })
 class BookApply extends React.Component {
@@ -53,18 +53,7 @@ class BookApply extends React.Component {
         .then((response)=>{
             if (response.data.type === "succeed") {
                 const {tokendate} = response.headers;
-                Cookies.set("token", token, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userType", userType, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userName", userName, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
+                updateCookie(tokendate);
                 message.success("Borrow Book Success!.");
             }
             else if (response.data.type === "failed") {
@@ -92,18 +81,7 @@ class BookApply extends React.Component {
             }).then(response => {
                 if (response.data.type === "succeed") {
                     const { tokendate } = response.headers;
-                    Cookies.set("token", token, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
-                    Cookies.set("userType", userType, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
-                    Cookies.set("userName", userName, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
+                    updateCookie(tokendate);
                     this.setState({
                         bookList: response.data.data.bookList,
                     });

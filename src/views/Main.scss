@@ -1,5 +1,51 @@
 .main{
     width: 100%;
-    height: 99%;
+    height: 100%;
     box-sizing: content-box;
+    background-image: url("../res/image/mainBackground.jpg");
+    background-size: cover;
+    z-index: 1;
+    position: relative;
+}
+
+.recommend{
+    width: 20%;
+    height: 100%;
+    float: right;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    grid-template-columns: 100%;
+    z-index: 3;
+    position: relative;
+}
+.recommendBack{
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    top: 10vh;
+    right: 0;  
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.4);
+    filter: blur(5px);
+}
+
+.recommendTitle{
+    width: 100%;
+    height: 100%;
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    span{
+        font-size: 2rem;
+        color: #F7BA00;
+        margin: auto;
+        padding: 0 5%;
+        background-color: #4A494A;
+    }
+}
+
+.recommendContent{
+    grid-area: 2 / 1 / 3 / 2;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
 }

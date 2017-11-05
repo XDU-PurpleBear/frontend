@@ -21,9 +21,9 @@ class LogInOrSignUp extends React.Component {
                     <TabPane tab="Log In" key="1" >
                         <LogIn dispatch={dispatch}/>
                     </TabPane>
-                    <TabPane tab="Sign Up" key="2">
+                    {/* <TabPane tab="Sign Up" key="2">
                         <SignUp dispatch={dispatch}/>
-                    </TabPane>
+                    </TabPane> */}
                 </Tabs>
             </div>
         );

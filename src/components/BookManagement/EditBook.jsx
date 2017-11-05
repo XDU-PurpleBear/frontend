@@ -1,14 +1,13 @@
 import * as React from "react";
 import { message } from "antd";
 import { connect } from "react-redux";
-import Cookies from "js-cookie";
-import { axios } from "../../containers/Root.js"
+import { axios, getCookie, updateCookie } from "../../containers/Root.js"
 
 import styles from "./EditBook.scss";
 
 @connect(state => {
     return {
-        ...state.UserCenter.default,
+        ...getCookie(),
     };
 })
 class EditBook extends React.Component {
@@ -46,18 +45,7 @@ class EditBook extends React.Component {
         .then((response)=>{
             if (response.data.type === "succeed") {
                 const {tokendate} = response.headers;
-                Cookies.set("token", token, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userType", userType, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userName", userName, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
+                updateCookie(tokendate);
                 this.setState({
                     copys: this.state.copys.filter(copy => copy.uuid !== uuid)
                 });
@@ -96,19 +84,7 @@ class EditBook extends React.Component {
             if (response.data.type === "succeed") {
                 const {tokendate} = response.headers;
                 const {uuid} = response.data.data;
-                console.log(response);
-                Cookies.set("token", token, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userType", userType, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
-                Cookies.set("userName", userName, {
-                    expires: tokendate/60/60/24,
-                    path: "/",
-                });
+                updateCookie(tokendate);
                 this.setState({
                     copys: this.state.copys.concat(uuid)
                 });
@@ -161,18 +137,7 @@ class EditBook extends React.Component {
             }).then(response => {
                 if (response.data.type === "succeed") {
                     const { tokendate } = response.headers;
-                    Cookies.set("token", token, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
-                    Cookies.set("userType", userType, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
-                    Cookies.set("userName", userName, {
-                        expires: tokendate / 60 / 60 / 24,
-                        path: "/",
-                    });
+                    updateCookie(tokendate);
                     message.success("Delete Book Success!");
                 }
                 else if (response.data.type === "failed") {
@@ -243,18 +208,7 @@ class EditBook extends React.Component {
                 }).then(response => {
                     if (response.data.type === "succeed") {
                         const { tokendate } = response.headers;
-                        Cookies.set("token", token, {
-                            expires: tokendate / 60 / 60 / 24,
-                            path: "/",
-                        });
-                        Cookies.set("userType", userType, {
-                            expires: tokendate / 60 / 60 / 24,
-                            path: "/",
-                        });
-                        Cookies.set("userName", userName, {
-                            expires: tokendate / 60 / 60 / 24,
-                            path: "/",
-                        });
+                        updateCookie(tokendate);
                         message.success("Edit Book Success!");
                     }
                     else if (response.data.type === "failed") {

@@ -1,52 +1,7 @@
 import normalAxios from "axios";
-import Cookies from "js-cookie";
 import MockAdapter from "axios-mock-adapter";
 
 let axios = normalAxios.create();
-
-function getCookie(){
-    const token = Cookies.get("token") || null;
-    const userType = Cookies.get("userType") || "visitor";
-    const userName = Cookies.get("userName") || null;
-    const userImage = Cookies.get("userImage") || "";
-    console.log(...{token, userName, userType, userImage});
-    return {token, userName, userType, userImage};
-}
-
-function updateCookie(tokendate){
-    const {token, userName, userType, userImage} = getCookie();
-    Cookies.set("token", token, {
-        expires: tokendate/60/60/24,
-        path: "/",
-    });
-    Cookies.set("userType", userType, {
-        expires: tokendate/60/60/24,
-        path: "/",
-    });
-    Cookies.set("userName", userName, {
-        expires: tokendate/60/60/24,
-        path: "/",
-    });
-    Cookies.set("userImage", userImage, {
-        expires: tokendate/60/60/24,
-        path: "/",
-    });
-}
-
-function removeCookie(){
-    Cookies.remove("token", {
-        path: "/",
-    });
-    Cookies.remove("userType", {
-        path: "/",
-    });
-    Cookies.remove("userName", {
-        path: "/",
-    });
-    Cookies.remove("userImage", {
-        path: "/",
-    });
-}
 
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
@@ -144,8 +99,8 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
                     position: {
-                        room: "B",
-                        shelf: "22",
+                        room: "",
+                        shelf: "",
                     },
                     language: [""],
                     theme: [""],
@@ -267,13 +222,13 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "test",
-                    uuid: "aaaaaaa",
-                    studentID: "1123123123",
-                    tel: "112313123",
+                    userName: "",
+                    uuid: "",
+                    studentID: "",
+                    tel: "",
                     balance: 300,
                     userImage: "",
-                    orderNumber: "2",
+                    orderNumber: "",
                     fine: 100,
                     /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
                            if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
@@ -334,8 +289,8 @@ mock.onPost(/\/api\/signup/).reply(config=>{
     let request = {
         url: "/api/signup",
         headers:{
-            username: "userName", //not only
-            studentid: "",//only
+            userName: "userName", //not only
+            studentID: "",//only
             balance: "",
             deposit: 300, // only value
             password: "password",
@@ -416,25 +371,10 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
             type: "succeed",
             data:{
                 bookList:[{
-                    name: "name1name1",
-                    ISBN: "isbn1",
-                    description: "name1nam",
-                    image: "aaaaaaa",
-                },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
-                    description: "description",
-                    image: "aaaaaaa",
-                },{
-                    name: "name1name1name1name1name1name1.。。",
-                    ISBN: "isbn1",
-                    description: "description",
-                    image: "aaaaaaa",
-                },{
-                    name: "name1name1name1name1name1name1.。。",
-                    ISBN: "isbn1",
-                    description: "description",
-                    image: "aaaaaaa",
+                    description: "",
+                    image: "",
                 }]
             }
         },
@@ -1136,9 +1076,6 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
 });
 
 export {
-    axios,
-    getCookie,
-    updateCookie,
-    removeCookie
+    axios
 };
 

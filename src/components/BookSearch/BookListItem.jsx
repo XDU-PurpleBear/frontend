@@ -4,9 +4,11 @@ import {connect} from "react-redux";
 
 import styles from "./BookListItem.scss";
 
+import {getCookie} from "../../containers/Root.js";
+
 @connect(state => {
     return {
-        userType: state.UserCenter.default.userType,
+        ...getCookie(),
     };
 })
 class BookListItem extends React.Component {
@@ -21,7 +23,7 @@ class BookListItem extends React.Component {
                 <span className={styles.author} >
                     {item.auth.join()}
                 </span>
-                <span className={styles.position}>{item.position}</span>
+                <span className={styles.position}>{item.position.room + item.position.shelf}</span>
                 <span className={styles.number}>{item.amount} Books Left</span>
                 {
                     // userType === "visitor" ?

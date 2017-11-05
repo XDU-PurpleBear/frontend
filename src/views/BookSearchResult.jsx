@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { message } from "antd";
 import { connect } from "react-redux";
-import {axios} from "../containers/Root.js";
+import {axios, getCookie, updateCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
 
 import BookListItem from "../components/BookSearch/BookListItem.jsx";
@@ -11,7 +11,7 @@ import styles from "./BookSearchResult.scss";
 
 @connect(state => {
     return {
-        ...state.UserCenter.default,
+        ...getCookie(),
     };
 })
 class BookSearchResult extends React.Component {
@@ -46,18 +46,7 @@ class BookSearchResult extends React.Component {
                 if (response.data.type === "succeed") {
                     if (token && token.length !== 0) {
                         const {tokendate} = response.headers;
-                        Cookies.set("token", token, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userType", userType, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userName", userName, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
+                        updateCookie(tokendate);
                     }
                     this.setState({
                         searchType: searchType,
@@ -95,18 +84,7 @@ class BookSearchResult extends React.Component {
                 if (response.data.type === "succeed") {
                     if (token && token.length !== 0) {
                         const {tokendate} = response.headers;
-                        Cookies.set("token", token, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userType", userType, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
-                        Cookies.set("userName", userName, {
-                            expires: tokendate/60/60/24,
-                            path: "/",
-                        });
+                        updateCookie(tokendate);
                     }
                     this.setState({
                         searchType: searchType,

@@ -1,14 +1,13 @@
 import * as React from "react";
 import {message} from "antd";
-import {axios} from "../../containers/Root.js";
+import {axios, getCookie, updateCookie} from "../../containers/Root.js";
 import {connect} from "react-redux";
-import Cookies from "js-cookie";
 
 import styles from "./AddBook.scss";
 
 @connect(state => {
     return {
-        ...state.UserCenter.default,
+        ...getCookie(),
     };
 })
 class AddBook extends React.Component {
@@ -86,18 +85,7 @@ class AddBook extends React.Component {
             }).then(response=>{
                 if(response.data.type === "succeed"){
                     const {tokendate} = response.headers;
-                    Cookies.set("token", token, {
-                        expires: tokendate/60/60/24,
-                        path: "/",
-                    });
-                    Cookies.set("userType", userType, {
-                        expires: tokendate/60/60/24,
-                        path: "/",
-                    });
-                    Cookies.set("userName", userName, {
-                        expires: tokendate/60/60/24,
-                        path: "/",
-                    });
+                    updateCookie(tokendate)
                     message.success("Add Book Success!");
                 }
                 else if(response.data.type === "failed"){

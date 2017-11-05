@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import {call, put, takeLatest} from "redux-saga/effects";
-import {axios} from "../containers/Root.js";
+import {axios, removeCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
 import {message} from "antd";
 
@@ -106,13 +106,15 @@ function* logInSaga(){
 }
 
 
-function logOut() {
+function logOut(history) {
     return {
         type: USER_LOGOUT,
+        history: history,
     }
 }
-function* logOutAjax(){
+function* logOutAjax(action){
     try{
+        const {history} = action;
         const token = Cookies.get("token");
         const url = "/api/logout";
         
@@ -125,20 +127,10 @@ function* logOutAjax(){
             }
         });
         if(response.data.type === "succeed"){
-            Cookies.remove("token", {
-                path: "/",
-            });
-            Cookies.remove("userType", {
-                path: "/",
-            });
-            Cookies.remove("userName", {
-                path: "/",
-            });
-            Cookies.remove("userImage", {
-                path: "/",
-            });
+            removeCookie();
             yield put({
                 type: USER_LOGOUT_SUCCEED,
+                history: history,
             });
         }
         else if(response.data.type === "failed"){
@@ -260,7 +252,9 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_LOGOUT_SUCCEED: {
-            message.success("Logout Succeed.");
+            const {history} = action;
+            history.push("/");
+            // message.success("Logout Succeed.");
             
             return {
                 error: false,
