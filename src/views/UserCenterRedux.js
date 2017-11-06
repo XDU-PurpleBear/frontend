@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import {call, put, takeLatest} from "redux-saga/effects";
-import {axios, removeCookie} from "../containers/Root.js";
+import {axios, removeCookie, updateCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
 import {message} from "antd";
 
@@ -55,7 +55,7 @@ function* logInAjax(action){
         });
         if(response.data.type === "succeed"){
             const {token, tokendate, usertype, username} = response.headers;
-            const {userImage} = response.data.data;
+            const {image} = response.data.data;
             Cookies.set("token", token, {
                 expires: tokendate/60/60/24,
                 path: "/",
@@ -68,7 +68,7 @@ function* logInAjax(action){
                 expires: tokendate/60/60/24,
                 path: "/",
             });
-            Cookies.set("userImage", userImage, {
+            Cookies.set("userImage", image, {
                 expires: tokendate/60/60/24,
                 path: "/",
             });
@@ -77,7 +77,7 @@ function* logInAjax(action){
                 userName: username,
                 userType: usertype,
                 token: token,
-                userImage: userImage,
+                userImage: image,
             });
         }
         else if(response.data.type === "failed"){

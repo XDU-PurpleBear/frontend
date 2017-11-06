@@ -13,8 +13,6 @@ import LogInOrSignUp from "../UserCenter/LogInOrSignUp.jsx";
 
 import {userCenterActions} from "../../views/UserCenterRedux.js";
 
-import userIcon from "../../res/icon/user.png";
-
 @connect(state => {
     return {
         ...getCookie(),
@@ -54,7 +52,7 @@ class UserEntry extends React.Component {
         if(userType === "customer"){
             menu = (
                 <Menu>
-                    <MenuItem key="/usercenter/info" disabled>
+                    <MenuItem key="/usercenter/info" >
                         <Link to="/usercenter/info">
                             <span>UserInfo</span>
                         </Link>
@@ -101,6 +99,12 @@ class UserEntry extends React.Component {
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
+                    <MenuItem key="/admincenter/editreader">
+                        <Link to="/admincenter/editreader">
+                            <span>Edit Reader</span>
+                        </Link>
+                    </MenuItem>
+                    <MenuDivider/>
                     <MenuItem key="/usercenter/bookreturn">
                         <Link to="/usercenter/bookreturn">
                             <span>BookReturn</span>
@@ -132,7 +136,6 @@ class UserEntry extends React.Component {
                 </Menu>
             );
         }
-        console.log(userName);
         return (
             <Dropdown overlay={menu}>
                 <span>{userName} <Icon type="down" /></span>
@@ -140,7 +143,6 @@ class UserEntry extends React.Component {
         );
     }
     componentWillReceiveProps(nextProps){
-        console.log(this);
         if(nextProps.userName !== null && this.props.userName === null){
             this.setState({
                 visibility: false,
@@ -162,7 +164,7 @@ class UserEntry extends React.Component {
             display: visibility? "flex" : "none",
         }
         const userImageStyle = {
-            backgroundImage: userImage === "" ? `url(${userIcon})` : `url(${userImage})`,
+            backgroundImage: userImage === "" ? "url(\"/res/icon/user.png\")" : `url(${userImage})`,
             display: userType === "visitor" ? "none" : "inline-block"
         };
         return (

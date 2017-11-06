@@ -82,14 +82,14 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             "type": "succeed",
             data:{
-                image:"",
+                image:"/res/icon/user.png",
             }
         },
         //headers
         {
             token:"testtoken",
             tokendate: 300, 
-            usertype: "admin", //admin ,customer
+            usertype: "customer", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -293,7 +293,7 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
 mock.onGet(/\/api\/user\/searchinfo/).reply(config=>{
     //config like
     let request = {
-        url: "/api/user/info",
+        url: "/api/user/searchinfo",
         headers:{
             token: "",
             studentID: "",
@@ -311,10 +311,10 @@ mock.onGet(/\/api\/user\/searchinfo/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "",
-                    uuid: "",
-                    studentID: "",
-                    tel: "",
+                    userName: "testname",
+                    uuid: "11111111",
+                    studentID: "11111111111",
+                    tel: "22222222222",
                     balance: 300,
                     userImage: "",
                 }
@@ -419,12 +419,12 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
                     name: "name1name1",
                     ISBN: "isbn1",
                     description: "name1nam",
-                    image: "aaaaaaa",
+                    image: "",
                 },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     description: "description",
-                    image: "aaaaaaa",
+                    image: "",
                 },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
@@ -652,11 +652,21 @@ mock.onGet(/\/api\/user\/queryhistory/).reply(config=>{
                     name: "apply1",
                     ISBN: "apply1",
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "b",
+                        shelf: "111",
                     },
-                    theme: [""],
-                    language: [""],
+                    theme: ["Arts"],
+                    language: ["English"],
+                    image: "",
+                },{
+                    name: "apply2",
+                    ISBN: "apply2",
+                    position: {
+                        room: "c",
+                        shelf: "222",
+                    },
+                    theme: ["Arts"],
+                    language: ["English"],
                     image: "",
                 }]
             }

@@ -1,8 +1,8 @@
 .main{
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 90vh;
     box-sizing: content-box;
-    background-image: url("../res/image/mainBackground.jpg");
+    background-image: url("/res/image/mainBackground.jpg");
     background-size: cover;
     z-index: 1;
     position: relative;
@@ -10,17 +10,17 @@
 
 .recommend{
     width: 20%;
-    height: 100%;
-    float: right;
+    height: 90vh;
+    right: 0;
     display: grid;
     grid-template-rows: 10% 90%;
     grid-template-columns: 100%;
     z-index: 3;
-    position: relative;
+    position: fixed;
 }
 .recommendBack{
     width: 20%;
-    height: 100%;
+    height: 90vh;
     position: fixed;
     top: 10vh;
     right: 0;  
@@ -31,14 +31,16 @@
 
 .recommendTitle{
     width: 100%;
-    height: 100%;
+    height: 10vh;
     grid-area: 1 / 1 / 2 / 2;
     display: flex;
+    text-align: center;
     span{
-        font-size: 2rem;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.5rem;
         color: #F7BA00;
         margin: auto;
-        padding: 0 5%;
         background-color: #4A494A;
     }
 }

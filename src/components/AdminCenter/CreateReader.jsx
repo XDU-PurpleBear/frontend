@@ -6,6 +6,8 @@ import {notification} from "antd";
 
 import styles from "./CreateReader.scss";
 
+import backgroundImage from "../../res/image/adminBack.jpg";
+
 @connect(state => {
     return {
         ...getCookie(),
@@ -21,6 +23,7 @@ class CreateReader extends React.Component {
         }
 
         this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
 
         this.handleCheckUserName = this.handleCheckUserName.bind(this);
         this.handleCheckStudentID = this.handleCheckStudentID.bind(this);
@@ -88,12 +91,14 @@ class CreateReader extends React.Component {
         })
         .catch(err => {
             notification.error({
-                message: err.message,
+                message: "Create Account Failed Because " + err.message,
                 duration: 2
             });
         });
     }
-
+    handleCancel(){
+        this.props.history.goBack();
+    }
     handleUpdateRegister() {
         let allCheckResult = this.references.policy.checked && this.allChecks.map(check => check()).every(checkResult => checkResult.status);
         this.setState({
@@ -169,7 +174,7 @@ class CreateReader extends React.Component {
         const {allCheckResult} = this.state;
         return (
             <div className={styles.createReader}>
-                <img className={styles.image} />
+                <img className={styles.image} src="/res/icon/user.png" />
                 <div className={styles.title}><div>Create Account</div></div>
 
                 <div className={styles.password}>
@@ -204,7 +209,7 @@ class CreateReader extends React.Component {
                     <input type="checkbox" id="policy" onChange={this.handleUpdateRegister} ref={policy => { this.references.policy = policy; }} /><label htmlFor="balance">I agree to all items for usage and private policy.</label>
                 </div>
                 <div className={styles.cancel}>
-                    <button type="button">Cancel</button>
+                    <button type="button" onClick={this.handleCancel}>Cancel</button>
                 </div>
                 <div className={styles.register}>
                     { allCheckResult ? <button type="button" ref={register => { this.references.register = register; }} onClick={this.handleSignUp}>Register</button> : <button type="button" disabled ref={register => { this.references.register = register; }}>Register</button>}

@@ -1,0 +1,213 @@
+.main{
+    width: 100%;
+    height: 100vh;
+    //border: 1px solid #888888;
+    background: url('/../../res/image/background.jpg') no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100% 100%;
+    margin-top: -10vh;
+}
+
+.img{
+    float: left;
+    margin-left: 10%;
+    width: 10%;
+    margin-top: 15vh;
+    //border: 1px solid #888888;
+    text-align: center;
+}
+
+.readerIcon{
+    //border: 1px solid #888888;
+    width: 15vh;
+    height: 15vh;
+    margin-left: auto;
+    margin-right: auto;
+    //border: 0;
+}
+.readerImage{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.button{
+    position: relative;
+    //border: 1px solid #888888;
+}
+//.select{
+//    color: white;
+//    font_weight: bold;
+//    font-size: 0.9rem;
+//}
+.file{
+    //position:absolute;clip:rect(0 0 0 0);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 6vh;
+    filter:alpha(opacity=0);
+    opacity: 0;
+}
+
+.info{
+    border: 1px solid #888888;
+    margin-left: 2%;
+    margin-top: 15vh;
+    width: 30%;
+    height: 36vh;
+    background-color: white;
+    float: left;
+    margin-bottom: 5vh;
+    display: grid;
+    grid-template-columns: 15% 30% 10% 30% 15%;
+    grid-template-rows: 25% 25% 25% 25%;
+}
+.userName{
+    grid-area: 1/2/2/3;
+}
+.nameValue{
+    grid-area: 1/4/2/5;
+}
+.studentID{
+    grid-area: 2/2/3/3;
+}
+.IDValue{
+    grid-area: 2/4/3/5;
+}
+.telphone{
+    grid-area: 3/2/4/3;
+}
+.telValue{
+    grid-area: 3/4/4/5;
+}
+.balance{
+    grid-area: 4/2/5/3;
+}
+.balanceValue{
+    grid-area: 4/4/5/5;
+}
+//.table{
+//    width: 80%;
+//    margin-left: 10%;
+//}
+//td{
+//    font-size: 1.5rem;
+//    height: 8.5vh;
+//}
+//.name{
+//    font-weight: bold;
+//}
+
+.overdue{
+    margin-left: 22%;
+    width: 50%;
+    height: 40vh;
+    //border: 1px solid #888888;
+    clear: both;
+    display: grid;
+    grid-template-rows: 12.5% 12.5% 75%;
+    grid-template-columns: 65% 20% 15%;
+}
+.dueTip{
+
+    border: 1px solid #888888;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    background-color: darkgrey;
+    line-height: 5vh;
+}
+h3{
+    font-size: 1rem;
+}
+a{
+    text-decoration: none;
+    color: red;
+}
+.prop{
+    //border: 1px solid #888888;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    display: grid;
+    grid-template-columns: 65% 20% 15%;
+    background-color: grey;
+    line-height: 5vh;
+}
+.overdueList{
+    border: 1px solid #888888;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    background-color: white;
+    display: grid;
+}
+
+.overdueListItem{
+    width: 100%;
+    height: 13vh;
+    box-sizing: border-box;
+    padding: 1vh;
+    display: grid;
+    grid-template-rows: 30% 35% 35%;
+    grid-template-columns: 10% 15% 20% 21% 20% 14%;
+    background-color: white;
+    margin-top: 1vh;
+}
+
+.image{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    border: 1px solid #888888;
+    margin-top: 10%;
+}
+.bookName{
+    grid-column-start: 2;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    font-size: 1.1rem;
+    margin-left: 4%;
+    color: blue;
+    font-weight: bold;
+}
+.ISBN{
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    margin-left: 6.3%;
+}
+.position{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    margin-left: 14.6%;
+}
+.amount{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+.time{
+    grid-column-start: 5;
+    grid-column-end: 6;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.fineMoney{
+    grid-column-start: 6;
+    grid-column-end: 7;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}

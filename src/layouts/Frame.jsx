@@ -10,7 +10,9 @@ import {getCookie} from "../containers/Root.js";
 
 import SearchForm from "../components/Frame/SearchForm.jsx";
 import UserEntry from "../components/Frame/UserEntry.jsx";
-// import UserCenter from "../views/UserCenter.jsx";
+
+import ReaderInfo from "../components/UserCenter/ReaderInfo.jsx";
+
 import Main from "../views/Main.jsx";
 import BookSearchReault from "../views/BookSearchResult.jsx";
 import Detail from "../views/Detail.jsx";
@@ -22,6 +24,7 @@ import BookBorrow from "../components/UserCenter/BookBorrow.jsx";
 import BookReturn from "../components/UserCenter/BookReturn.jsx";
 
 import CreateReader from "../components/AdminCenter/CreateReader.jsx";
+import EditReader from "../components/AdminCenter/EditReader.jsx";
 
 import NotFound from "../views/NotFound.jsx";
 
@@ -33,6 +36,10 @@ import NotFound from "../views/NotFound.jsx";
 class Frame extends React.Component {
     constructor(props) {
         super(props);
+        this.handleToMain = this.handleToMain.bind(this);
+    }
+    handleToMain(){
+        this.props.history.push("/");
     }
     render() {
         const {history, userType} = this.props;
@@ -40,7 +47,7 @@ class Frame extends React.Component {
             <div className={styles.frame}>
                 <Layout className={styles.navLayout}>
                     <Header className={styles.navHeader}>
-                        <span className={styles.title}>XDU Library</span>
+                        <span className={styles.title} onClick={this.handleToMain}>XDU Library</span>
                         <SearchForm history={history} />
                         <UserEntry history={history} className={styles.UserEntry}/>
                     </Header>
@@ -53,13 +60,14 @@ class Frame extends React.Component {
                             <Route exact path="/bookmanagement/add" render={() => userType==="visitor"?<Redirect to="/"/>:<AddBook />}/>
                             <Route exact path="/bookmanagement/edit" component={EditBook}/>
 
-                            {/* <Route path="/usercenter/info" component={UserCenter}/> */}
+                            {<Route path="/usercenter/info" component={ReaderInfo}/>}
 
                             <Route path="/usercenter/bookapply" component={BookApply}/>
                             <Route path="/usercenter/bookreturn" component={BookReturn}/>
                             <Route path="/usercenter/bookborrow" component={BookBorrow}/>
 
                             <Route path="/admincenter/createreader" component={CreateReader}/>
+                            <Route path="/admincenter/editreader" component={EditReader}/>
 
                             <Route component={NotFound} />
                         </Switch>
