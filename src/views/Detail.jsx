@@ -21,7 +21,10 @@ class Detail extends React.Component{
                 version: [],
                 ISBN: "",
                 language: "",
-                position: "",
+                position: {
+                    room: "",
+                    shelf: "",
+                },
                 amount: "",
                 image: "",
                 description: "",
@@ -179,7 +182,7 @@ class Detail extends React.Component{
                     <span className={styles.version}>{bookInfo.version}</span>
                     <span className={styles.isbn}>{bookInfo.ISBN}</span>
                     <span className={styles.language}>Language: {bookInfo.language}</span>
-                    <span className={styles.position}>{bookInfo.position}</span>
+                    <span className={styles.position}>{bookInfo.position.room + bookInfo.position.shelf}</span>
                     <span className={styles.number}>{bookInfo.amount} Books Left</span>
                     <div className={styles.description}>Description</div>
                     <article className={styles.descriptionInfo}>{bookInfo.description}</article>

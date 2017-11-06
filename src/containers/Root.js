@@ -89,7 +89,7 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             token:"testtoken",
             tokendate: 300, 
-            usertype: "customer", //admin ,customer
+            usertype: "admin", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -602,6 +602,9 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
 // TODO: check
 // only customer
 mock.onPost(/\/api\/user\/editimage/).reply(config=>{
+    console.log(config);
+    console.log(config.data.get("name"));
+    console.log(config.data.get("image"));
     //config like
     let request = {
         url: "/api/user/editimage",

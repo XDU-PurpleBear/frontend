@@ -46,42 +46,54 @@ class ReaderInfo extends React.Component {
             this.props.history.push("/");
             return;
         }
-        let reader = new FileReader();
-        reader.readAsBinaryString(this.references.selectImage.files[0]);
-        reader.onerror = e => {
-            message.error("Upload Error because: " + e.message);
-        }
-        reader.onload = e => {
-            const image = e.target.result;
-            axios.post("/api/user/editimage", {
-                image:{
-                    data: image
-                }
-            }, {
-                responsetype: "json",
-                headers: {
-                    "token": token 
-                }
-            }).then(response=>{
-                if(response.data.type === "succeed"){
-                    const {tokendate} = response.headers;
-                    updateCookie(tokendate);
-                    message.success("Modify Icon Success!");
-                }
-                else if(response.data.type === "failed"){
-                    throw {
-                        message: response.data.errorReason
-                    };
-                }
-                else{
-                    throw {
-                        message: "Network Error",
-                    };
-                }
-            }).catch(err=>{
-                message.error("Modify Icon Error because " + err.message);
-            });
-        };
+        let data = new FormData();
+        data.append("name", "userName");
+        data.append("image", this.references.selectImage.files[0]);
+        axios.post("/api/user/editimage",data,{
+            headers:{
+                token: token,
+            }
+        }).then(response => {
+            console.log(response);
+        }).catch(e => {
+            console.log(e);
+        });
+        // let reader = new FileReader();
+        // reader.readAsBinaryString(this.references.selectImage.files[0]);
+        // reader.onerror = e => {
+        //     message.error("Upload Error because: " + e.message);
+        // }
+        // reader.onload = e => {
+        //     const image = e.target.result;
+        //     axios.post("/api/user/editimage", {
+        //         image:{
+        //             data: image
+        //         }
+        //     }, {
+        //         responsetype: "json",
+        //         headers: {
+        //             "token": token 
+        //         }
+        //     }).then(response=>{
+        //         if(response.data.type === "succeed"){
+        //             const {tokendate} = response.headers;
+        //             updateCookie(tokendate);
+        //             message.success("Modify Icon Success!");
+        //         }
+        //         else if(response.data.type === "failed"){
+        //             throw {
+        //                 message: response.data.errorReason
+        //             };
+        //         }
+        //         else{
+        //             throw {
+        //                 message: "Network Error",
+        //             };
+        //         }
+        //     }).catch(err=>{
+        //         message.error("Modify Icon Error because " + err.message);
+        //     });
+        // };
     }
 
     componentDidMount() {
