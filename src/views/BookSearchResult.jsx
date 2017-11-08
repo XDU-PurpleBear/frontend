@@ -6,6 +6,7 @@ import {axios, getCookie, updateCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
 
 import BookListItem from "../components/BookSearch/BookListItem.jsx";
+import FilterTags from "../components/BookSearch/FilterTags";
 
 import styles from "./BookSearchResult.scss";
 
@@ -21,6 +22,9 @@ class BookSearchResult extends React.Component {
             searchType: null,
             searchValue: null,
             bookList: [],
+            language: [],
+            room: [],
+            theme: [],
         };
     }
     componentDidUpdate(){
@@ -52,6 +56,9 @@ class BookSearchResult extends React.Component {
                         searchType: searchType,
                         searchValue: searchValue,
                         bookList: response.data.data.bookList,
+                        language: response.data.data.filter.language,
+                        room: response.data.data.filter.room,
+                        theme: response.data.data.filter.theme,
                     })
                 }
                 else if (response.data.type === "failed") {
@@ -90,6 +97,9 @@ class BookSearchResult extends React.Component {
                         searchType: searchType,
                         searchValue: searchValue,
                         bookList: response.data.data.bookList,
+                        language: response.data.data.filter.language,
+                        room: response.data.data.filter.room,
+                        theme: response.data.data.filter.theme,
                     })
                 }
                 else if (response.data.type === "failed") {
@@ -105,10 +115,29 @@ class BookSearchResult extends React.Component {
     }
     render() {
         console.log("ender");
-        const {bookList} = this.state;
+        const {bookList,language,room,theme} = this.state;
+        if(language.length > 3)
+            language.length =3;
+        if(room.length > 3)
+            room.length =3;
+        if(theme.length > 3)
+            theme.length =3;
         return (
             <div className={styles.bookSearchResult}>
-                <div className={styles.filter}></div>
+                <div className={styles.filter}>
+                    <div className={styles.language}>
+                        <div className={styles.title}>Language</div>
+                        {language.map((item,index) => <FilterTags item={item} key={index}/>)}
+                    </div>
+                    <div className={styles.room}>
+                        <div className={styles.title}>Floor</div>
+                        {room.map((item,index) => <FilterTags item={item} key={index}/>)}
+                    </div>
+                    <div className={styles.theme}>
+                        <div className={styles.title}>Theme</div>
+                        {theme.map((item,index) => <FilterTags item={item} key={index}/>)}
+                    </div>
+                </div>
                 <div className={styles.bookList}>
                     <span>{bookList.length} Results.</span>
                     <dl>

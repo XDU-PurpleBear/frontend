@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import RecommendItem from "../components/Main/RecommendItem.jsx";
 import styles from "./Main.scss";
 
-import background from"../res/image/mainBackground.jpg";
+import background from "../res/image/mainBackground.jpg";
 
 @connect(state => {
     return {

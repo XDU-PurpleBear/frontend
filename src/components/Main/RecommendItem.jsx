@@ -5,10 +5,9 @@ import {Link} from "react-router-dom";
 import styles from "./RecommendItem.scss";
 
 const RecommendItem = props => {
-    const {bookInfo, key} = props;
-    console.log(key);
+    const {bookInfo} = props;
     return (
-        <dd className={styles.recommandItem} key={key}>
+        <dd className={styles.recommandItem}>
             <Link to={`/detail/${bookInfo.ISBN}`}>
                 <img className={styles.image} src={bookInfo.image}/>
                 <Popover content={bookInfo.name} placement="left">

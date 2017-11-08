@@ -1,0 +1,19 @@
+
+
+.onetag{
+    width:20vw;
+    height:6vh;
+    input[type=checkbox]{
+      vertical-align: middle;
+    }
+    display: grid;
+    grid-template-columns: 10% 55% 35%;
+    line-height: 6vh;
+    //border: 1px solid #888888;
+}
+.checkbox{
+    grid-area: 1/1/2/2;
+    margin-top: 2vh;
+    height: 2vh;
+    width: 2vh;
+}

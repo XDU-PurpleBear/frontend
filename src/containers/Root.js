@@ -153,10 +153,10 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                     image: "",
                 }],
                 filter:{
-                    language: ["",""],
-                    room: [""],
-                    theme: ["", ""],
-                }
+                    language: ["Chinese","English"],
+                    room: ["1th Floor", "2th Floor", "4th Floor" ,"3th Floor"],
+                    theme: ["Data Science", "Computer Science", "Social Science"],
+                },
             }
         },
         //headers
@@ -244,9 +244,6 @@ mock.onGet(/\/res\/image\/name/).reply(config=>{
     ];
 });
 
-
-// 2017/11/1
-// TODO: check
 mock.onGet(/\/api\/user\/info/).reply(config=>{
     //config like
     let request = {
@@ -267,18 +264,34 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "test",
-                    uuid: "aaaaaaa",
-                    studentID: "1123123123",
-                    tel: "112313123",
+                    userName: "Magnus Xu",
+                    studentID: "1415362489",
+                    tel: "1856475986",
                     balance: 300,
                     userImage: "",
                     orderNumber: "2",
-                    fine: 100,
+                    fine: 123,
                     /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
-                           if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
-                    */
-                }
+                     if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
+                     */
+                },
+                // overdueBook: [{
+                //     image: "",
+                //     name: "Thinking in Java",
+                //     ISBN: "11111111",
+                //     position: "B-101",
+                //     amount: 2,
+                //     time: 20,
+                //     fine: 103,
+                // },{
+                //     image: "",
+                //     name: "Python Machine Learning Improve Book",
+                //     ISBN: "8565758465",
+                //     position: "B-125",
+                //     amount: 5,
+                //     time: 10,
+                //     fine: 20,
+                // }]
             }
         },
         //headers
@@ -287,6 +300,50 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
         },
     ];
 });
+
+
+// 2017/11/1
+// TODO: check
+// mock.onGet(/\/api\/user\/info/).reply(config=>{
+//     //config like
+//     let request = {
+//         url: "/api/user/info",
+//         headers:{
+//             token: ""
+//         },
+//         body:{
+//
+//         }
+//     }
+//     //response
+//     return [
+//         //status
+//         200,
+//         //body
+//         {
+//             type: "succeed",
+//             data: {
+//                 userInfo: {
+//                     userName: "test",
+//                     uuid: "aaaaaaa",
+//                     studentID: "1123123123",
+//                     tel: "112313123",
+//                     balance: 300,
+//                     userImage: "",
+//                     orderNumber: "2",
+//                     fine: 100,
+//                     /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
+//                            if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
+//                     */
+//                 }
+//             }
+//         },
+//         //headers
+//         {
+//             tokendate: 300
+//         },
+//     ];
+// });
 
 
 // only admin
@@ -416,9 +473,9 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
             type: "succeed",
             data:{
                 bookList:[{
-                    name: "name1name1",
-                    ISBN: "isbn1",
-                    description: "name1nam",
+                    name: "Thinking in C++",
+                    ISBN: "46546789",
+                    description: "This is a book about the study of C++,You can have a knowledge of using C++",
                     image: "",
                 },{
                     name: "name1name1name1name1name1name1.。。",
@@ -1071,19 +1128,40 @@ mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
                     orderid: "",
                     applyDate: "",
                     
-                    ISBN: "",
+                    ISBN: "4546487855",
                     borrowDate: "",
                     overDays: 12, //now - borrowDate - 30
                     fine: 12,
-                    bookName: "",
+                    bookName: "Thinking in Java",
                     auth: [""],
                     image: "",
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "B",
+                        shelf: "102",
                     },
                     bookid: "",
-                    amount: "",
+                    amount: "5",
+
+                    userid: "",
+                    userName: "",
+                    balance: 250,
+                },{
+                    orderid: "",
+                    applyDate: "",
+
+                    ISBN: "4667875",
+                    borrowDate: "",
+                    overDays: 2, //now - borrowDate - 30
+                    fine: 12,
+                    bookName: "Python Learning Imporve Book",
+                    auth: [""],
+                    image: "",
+                    position: {
+                        room: "B",
+                        shelf: "125",
+                    },
+                    bookid: "",
+                    amount: "4",
 
                     userid: "",
                     userName: "",

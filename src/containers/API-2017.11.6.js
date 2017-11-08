@@ -1,7 +1,52 @@
 import normalAxios from "axios";
+import Cookies from "js-cookie";
 import MockAdapter from "axios-mock-adapter";
 
 let axios = normalAxios.create();
+
+function getCookie(){
+    const token = Cookies.get("token") || null;
+    const userType = Cookies.get("userType") || "visitor";
+    const userName = Cookies.get("userName") || null;
+    const userImage = Cookies.get("userImage") || "";
+    console.log(...{token, userName, userType, userImage});
+    return {token, userName, userType, userImage};
+}
+
+function updateCookie(tokendate){
+    const {token, userName, userType, userImage} = getCookie();
+    Cookies.set("token", token, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+    Cookies.set("userType", userType, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+    Cookies.set("userName", userName, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+    Cookies.set("userImage", userImage, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+}
+
+function removeCookie(){
+    Cookies.remove("token", {
+        path: "/",
+    });
+    Cookies.remove("userType", {
+        path: "/",
+    });
+    Cookies.remove("userName", {
+        path: "/",
+    });
+    Cookies.remove("userImage", {
+        path: "/",
+    });
+}
 
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
@@ -15,7 +60,6 @@ let mock = new MockAdapter(axios);
 
 // all url is lower
 
-// 2017/10/31
 mock.onPost(/\/api\/login/).reply(config=>{
     //config like
     let request = {
@@ -37,14 +81,14 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             "type": "succeed",
             data:{
-                image:"",
+                image:"/res/icon/user.png",
             }
         },
         //headers
         {
             token:"testtoken",
             tokendate: 300, 
-            usertype: "admin", //admin ,customer
+            usertype: "customer", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -99,8 +143,8 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "B",
+                        shelf: "22",
                     },
                     language: [""],
                     theme: [""],
@@ -200,8 +244,7 @@ mock.onGet(/\/res\/image\/name/).reply(config=>{
 });
 
 
-// 2017/11/1
-// TODO: check
+//only customer
 mock.onGet(/\/api\/user\/info/).reply(config=>{
     //config like
     let request = {
@@ -222,16 +265,16 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "",
-                    uuid: "",
-                    studentID: "",
-                    tel: "",
+                    userName: "test",
+                    uuid: "aaaaaaa",
+                    studentID: "1123123123",
+                    tel: "112313123",
                     balance: 300,
                     userImage: "",
-                    orderNumber: "",
+                    orderNumber: "2",
                     fine: 100,
-                    /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
-                           if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
+                    /* 
+                      if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
                     */
                 }
             }
@@ -248,7 +291,7 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
 mock.onGet(/\/api\/user\/searchinfo/).reply(config=>{
     //config like
     let request = {
-        url: "/api/user/info",
+        url: "/api/user/searchinfo",
         headers:{
             token: "",
             studentID: "",
@@ -266,10 +309,10 @@ mock.onGet(/\/api\/user\/searchinfo/).reply(config=>{
             type: "succeed",
             data: {
                 userInfo: {
-                    userName: "",
-                    uuid: "",
-                    studentID: "",
-                    tel: "",
+                    userName: "testname",
+                    uuid: "11111111",
+                    studentID: "11111111111",
+                    tel: "22222222222",
                     balance: 300,
                     userImage: "",
                 }
@@ -289,8 +332,8 @@ mock.onPost(/\/api\/signup/).reply(config=>{
     let request = {
         url: "/api/signup",
         headers:{
-            userName: "userName", //not only
-            studentID: "",//only
+            username: "userName", //not only
+            studentid: "",//only
             balance: "",
             deposit: 300, // only value
             password: "password",
@@ -371,10 +414,25 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
             type: "succeed",
             data:{
                 bookList:[{
+                    name: "name1name1",
+                    ISBN: "isbn1",
+                    description: "name1nam",
+                    image: "",
+                },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
-                    description: "",
+                    description: "description",
                     image: "",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
                 }]
             }
         },
@@ -386,7 +444,6 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
 });
 
 // only admin
-// TODO: check
 mock.onPost(/\/api\/book\/add/).reply(config=>{
     //config like
     let request = {
@@ -394,23 +451,23 @@ mock.onPost(/\/api\/book\/add/).reply(config=>{
         headers:{
             token: ""
         },
-        body:{
-            name: "",
-            auth: ["", ""],
-            ISBN: "",
-            publisher: "",
-            CLC: "",
-            version: "",
-            description: "",
-            language: [""],
-            theme: [""],
-            amount: "",
-            image: {
-                data: "", //二进制格式。默认格式jpg
-                type: ""
-            } 
-
-        }
+        body:{ // body is a FormData
+            form: {
+                name: "",
+                auth: ["a1", "a2"], // backend get value like 'a1,a2'
+                ISBN: "",
+                publisher: "",
+                CLC: "",
+                version: "",
+                description: "",
+                language: [""],
+                theme: [""],
+                amount: "",
+            },
+            files:{ // files's item is a key-value, key is string, value is a Python FileStorage Object
+                "image": {}
+            }
+        },
     }
     //response
     return [
@@ -539,7 +596,6 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
 });
 
 
-// TODO: check
 // only customer
 mock.onPost(/\/api\/user\/editimage/).reply(config=>{
     //config like
@@ -548,9 +604,10 @@ mock.onPost(/\/api\/user\/editimage/).reply(config=>{
         headers:{
             token: ""
         },
-        body:{
-            image: "",
-            type: ""
+        body:{ // body is a FormData
+            files:{ // files's item is a key-value, key is string, value is a Python FileStorage Object
+                "image": {}
+            }
         }
     }
     //response
@@ -592,11 +649,21 @@ mock.onGet(/\/api\/user\/queryhistory/).reply(config=>{
                     name: "apply1",
                     ISBN: "apply1",
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "b",
+                        shelf: "111",
                     },
-                    theme: [""],
-                    language: [""],
+                    theme: ["Arts"],
+                    language: ["English"],
+                    image: "",
+                },{
+                    name: "apply2",
+                    ISBN: "apply2",
+                    position: {
+                        room: "c",
+                        shelf: "222",
+                    },
+                    theme: ["Arts"],
+                    language: ["English"],
                     image: "",
                 }]
             }
@@ -974,7 +1041,6 @@ mock.onGet(/\/api\/user\/borrowlist/).reply(config=>{
     ];
 });
 
-"Overdue", "Invalid"
 mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
     //config like
     let request = {
@@ -1076,6 +1142,9 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
 });
 
 export {
-    axios
+    axios,
+    getCookie,
+    updateCookie,
+    removeCookie
 };
 

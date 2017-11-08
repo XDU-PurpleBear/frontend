@@ -7,14 +7,52 @@
 }
 
 .filter {
-    margin: 0 auto;
-    grid-column: 1 2;
+    grid-column: 1/2;
     height: 90vh;
+    background-color: #ECB823;
+    display: grid;
+    grid-template-rows: 33.3% 33.3% 33.4%;
 }
 
+.language{
+    grid-row: 1/1;
+    padding-left: 5vw;
+    background-color: #F7BA00;
+    .title{
+        display: table-cell;
+        vertical-align: bottom;
+        font-size: 1.5rem;
+        width: 10vw;
+        height:9vh;
+    }
+}
+.room{
+    grid-row: 2/2;
+    background-color: #9B9B9B;
+    padding-left: 5vw;
+    .title{
+        display: table-cell;
+        vertical-align: bottom;
+        font-size: 1.5rem;
+        width: 10vw;
+        height:9vh;
+    }
+}
+.theme{
+    grid-row: 3/3;
+    background-color: #E9D581;
+    padding-left: 5vw;
+    .title{
+        display: table-cell;
+        vertical-align: bottom;
+        font-size: 1.5rem;
+        width: 10vw;
+        height:9vh;
+    }
+}
 .bookList {
     margin: 0 auto;
-    grid-column: 2 3;
+    grid-column: 2/3;
     height: 90vh;
     span{
         height: 5vh;

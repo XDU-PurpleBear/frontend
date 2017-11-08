@@ -12,5 +12,11 @@
 <body>
     <div id="root"></div>
     <script type="text/javascript" src="/build/bundle.js"></script>
+    <script type="text/javascript">
+        var clientHeight = window.screen.height;
+        var fontSize = clientHeight * 0.023;
+        var html = document.getElementsByTagName("html");
+        html[0].style.fontSize = fontSize + "px";
+    </script>
 </body>
 </html>

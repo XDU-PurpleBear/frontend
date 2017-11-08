@@ -167,6 +167,7 @@ class Detail extends React.Component{
     }
     render(){
         const {bookInfo} = this.state;
+
         return (
             <div className={styles.detail}>
                 <div className={styles.info}>
