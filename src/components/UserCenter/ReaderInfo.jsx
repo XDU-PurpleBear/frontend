@@ -50,6 +50,7 @@ class ReaderInfo extends React.Component {
         data.append("name", "userName");
         data.append("image", this.references.selectImage.files[0]);
         axios.post("/api/user/editimage",data,{
+            "Content-Type": "multipart/form-data",
             headers:{
                 token: token,
             }

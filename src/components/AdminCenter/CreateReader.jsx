@@ -6,8 +6,6 @@ import {notification} from "antd";
 
 import styles from "./CreateReader.scss";
 
-import backgroundImage from "../../res/image/adminBack.jpg";
-
 @connect(state => {
     return {
         ...getCookie(),

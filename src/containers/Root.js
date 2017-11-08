@@ -60,7 +60,6 @@ let mock = new MockAdapter(axios);
 
 // all url is lower
 
-// 2017/10/31
 mock.onPost(/\/api\/login/).reply(config=>{
     //config like
     let request = {
@@ -88,7 +87,7 @@ mock.onPost(/\/api\/login/).reply(config=>{
         //headers
         {
             token:"testtoken",
-            tokendate: 300, 
+            tokendate: 30000, 
             usertype: "admin", //admin ,customer
             username: "testcustomer"
         },
@@ -188,24 +187,24 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
             data: {
                 bookInfo: {
                     name: "bookinfo",
-                    auth: ["bookinfo1"],
-                    version: ["v1"],
+                    auth: ["bookinfo1","bookinfo1","bookinfo1"],
+                    version: ["v1", "v2"],
                     ISBN: "bookinfo1",
                     publisher: "",
-                    language: ["chiness",""],
+                    language: ["chiness","english"],
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "bb",
+                        shelf: "121212",
                     },
-                    theme: [""],
+                    theme: ["a", "b", "c"],
                     CLC: "",
                     amount: "3",
-                    image: "",
+                    image: "/res/image/test3.gif",
                     description: "this is desc",
                     // if user is admin, copy's status is all
                     // if user is customer, copy's status only is Available
                     copys: [{
-                            uuid: "111111",
+                            uuid: "11111111111111111111111111",
                             status: "Available" //Available, Borrowed, Unavailable, Reserved
                         },{
                             uuid: "222222",
@@ -245,8 +244,7 @@ mock.onGet(/\/res\/image\/name/).reply(config=>{
 });
 
 
-// 2017/11/1
-// TODO: check
+//only customer
 mock.onGet(/\/api\/user\/info/).reply(config=>{
     //config like
     let request = {
@@ -275,8 +273,8 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
                     userImage: "",
                     orderNumber: "2",
                     fine: 100,
-                    /* ps: if user is admin, the orderNumber is all Applying order and Overdue order, the fine NaN
-                           if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
+                    /* 
+                      if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
                     */
                 }
             }
@@ -446,7 +444,6 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
 });
 
 // only admin
-// TODO: check
 mock.onPost(/\/api\/book\/add/).reply(config=>{
     //config like
     let request = {
@@ -454,23 +451,23 @@ mock.onPost(/\/api\/book\/add/).reply(config=>{
         headers:{
             token: ""
         },
-        body:{
-            name: "",
-            auth: ["", ""],
-            ISBN: "",
-            publisher: "",
-            CLC: "",
-            version: "",
-            description: "",
-            language: [""],
-            theme: [""],
-            amount: "",
-            image: {
-                data: "", //二进制格式。默认格式jpg
-                type: ""
-            } 
-
-        }
+        body:{ // body is a FormData
+            form: {
+                name: "",
+                auth: ["a1", "a2"], // backend get value like 'a1,a2'
+                ISBN: "",
+                publisher: "",
+                CLC: "",
+                version: "",
+                description: "",
+                language: [""],
+                theme: [""],
+                amount: "",
+            },
+            files:{ // files's item is a key-value, key is string, value is a Python FileStorage Object
+                "image": {}
+            }
+        },
     }
     //response
     return [
@@ -599,21 +596,18 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
 });
 
 
-// TODO: check
 // only customer
 mock.onPost(/\/api\/user\/editimage/).reply(config=>{
-    console.log(config);
-    console.log(config.data.get("name"));
-    console.log(config.data.get("image"));
     //config like
     let request = {
         url: "/api/user/editimage",
         headers:{
             token: ""
         },
-        body:{
-            image: "",
-            type: ""
+        body:{ // body is a FormData
+            files:{ // files's item is a key-value, key is string, value is a Python FileStorage Object
+                "image": {}
+            }
         }
     }
     //response
@@ -1047,7 +1041,6 @@ mock.onGet(/\/api\/user\/borrowlist/).reply(config=>{
     ];
 });
 
-"Overdue", "Invalid"
 mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
     //config like
     let request = {
