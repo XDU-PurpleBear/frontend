@@ -209,6 +209,27 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
                         },{
                             uuid: "222222",
                             status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
+                        },{
+                            uuid: "222222",
+                            status: "Borrowed"
                         }
                     ],
                 }
@@ -417,22 +438,22 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
                     name: "name1name1",
                     ISBN: "isbn1",
                     description: "name1nam",
-                    image: "",
+                    image: "/res/image/test2.jpg",
                 },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     description: "description",
-                    image: "",
+                    image: "/res/image/test2.jpg",
                 },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     description: "description",
-                    image: "aaaaaaa",
+                    image: "/res/image/test2.jpg",
                 },{
                     name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     description: "description",
-                    image: "aaaaaaa",
+                    image: "/res/image/test2.jpg",
                 }]
             }
         },
@@ -696,10 +717,12 @@ mock.onPost(/\/api\/user\/apply/).reply(config=>{
         //body
         {
             type: "succeed",
+            // type: "failed",
+            // errorReason: "eeeeeeeeeeee"
         },
         //headers
         {
-            tokendate: ""
+            tokendate: 300
         },
     ];
 });

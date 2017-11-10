@@ -1,4 +1,4 @@
-.detail {
+.preview {
     width: 100%;
     height: 100%;
     display: grid;
@@ -6,6 +6,8 @@
     grid-template-rows: 100%;
     background-image: url("/res/image/datailBackground.jpg");
     background-size: cover;
+    transform: scale(0.8, 0.8);
+    border: 4px blue solid;
 }
 
 .info {
@@ -20,8 +22,8 @@
 
 .command {
     width: 90%;
-    height: 80vh;
-    margin: 5vh 5%;
+    height: 89%;
+    margin: 5.5% 5%;
     grid-area: 1 / 3 / 2 / 4;
     display: flex;
     flex-direction: column;
@@ -61,6 +63,7 @@
                 grid-area: 1 / 1 / 3 / 2;
                 background-color: black;
                 color: #F4AE00;
+                overflow-x: hidden;
             }
             >span{
                 text-align: center;

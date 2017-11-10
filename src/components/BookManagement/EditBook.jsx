@@ -227,6 +227,8 @@ class EditBook extends React.Component {
         };
     }
     componentDidMount() {
+        const { ISBN } = this.props.match.params;
+        
         const { bookInfo } = this.props.location.state;
         this.references.name.value = bookInfo.name;
         this.references.author.value = bookInfo.auth.join();

@@ -1,8 +1,8 @@
 import React from "react";
 import { axios, getCookie, updateCookie } from "../containers/Root.js";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
-import { message, Popover} from "antd";
+import { Link, Redirect} from "react-router-dom";
+import { notification, Popover} from "antd";
 import { connect } from "react-redux";
 
 import styles from "./Detail.scss";
@@ -41,17 +41,12 @@ class Detail extends React.Component {
                 ],
             },
         };
-        this.initCommand = this.initCommand.bind(this);
         this.handleApply = this.handleApply.bind(this);
-        const { ISBN } = props.match.params;
     }
     handleApply(e) {
         const uuid = e.target.getAttribute("uuid");
-        const { token, userType, userName } = this.props;
-        if (!token || token.length === 0) {
-            this.props.history.push("/");
-            return;
-        }
+        const { token } = this.props;
+        let {bookInfo} = this.state;
         const url = "/api/user/apply";
         let options = {
             responsetype: "json",
@@ -61,13 +56,20 @@ class Detail extends React.Component {
             },
         };
         axios.post(url, {
-            uuids: [uuid],
+            uuid: uuid,
         }, options)
             .then((response) => {
                 if (response.data.type === "succeed") {
                     const { tokendate } = response.headers;
                     updateCookie(tokendate);
-                    message.success("Apply Book Success!.");
+                    bookInfo.copys = bookInfo.copys.filter(copy => copy.uuid!==uuid);
+                    this.setState({
+                        bookInfo: bookInfo,
+                    });
+                    notification.success({
+                        message: "Apply Book Success!.",
+                        duration: 2,
+                    });
                 }
                 else if (response.data.type === "failed") {
                     throw {
@@ -77,68 +79,11 @@ class Detail extends React.Component {
                 }
             })
             .catch((err) => {
-                message.error("Apply Book Error Because " + err.message);
+                notification.error({
+                    message: "Apply Book Error Because " + err.message,
+                    duration: 2,
+                });
             });
-    }
-    initCommand() {
-        if (Object.keys(this.state.bookInfo).length !== 0) {
-            const { userType } = this.props;
-            const { position, copys } = this.state.bookInfo;
-            if (userType === "admin") {
-                return (
-                    <div>
-                        <button>
-                            <Link to={{
-                                pathname: "/bookmanagement/edit",
-                                state: {
-                                    bookInfo: this.state.bookInfo,
-                                }
-                            }}><span>Edit</span></Link>
-                        </button>
-                        <span>Apply</span>
-                        <dl>
-                            {copys.map((copy, index) => {
-                                return (
-                                    <dd key={index}>
-                                        <div>
-                                            <span>{position.room + position.shelf}</span>
-                                            <button type="button" uuid={copy.uuid} onClick={this.handleApply}>Apply</button>
-                                            <div></div>
-                                        </div>
-                                    </dd>
-                                );
-                            })}
-                        </dl>
-                    </div>
-                );
-            }
-            else if (userType === "customer") {
-                return (
-                    <div className="apply">
-                        <span>Apply</span>
-                        <dl>
-                            {copys.map((copy, index) => {
-                                return (
-                                    <dd key={index}>
-                                        <div>
-                                            <span>{position.room + position.shelf}</span>
-                                            <button type="button" uuid={copy.uuid} onClick={this.handleApply}>Apply</button>
-                                            <div></div>
-                                        </div>
-                                    </dd>
-                                );
-                            })}
-                        </dl>
-                    </div>
-                );
-            }
-            else {
-                return <div></div>;
-            }
-        }
-        else {
-            return <div></div>;
-        }
     }
     componentDidMount() {
         const { ISBN } = this.props.match.params;
@@ -177,6 +122,10 @@ class Detail extends React.Component {
     }
     render() {
         const { bookInfo } = this.state;
+        const {userType} = this.props;
+        // if(userType === "admin"){
+        //     return <Redirect to="" />
+        // }
         return (
             <div className={styles.detail}>
                 <div className={styles.info}>
@@ -220,7 +169,7 @@ class Detail extends React.Component {
                                 <Popover content={copy.uuid} placement="top">
                                     <p>{copy.uuid}</p>
                                 </Popover>
-                                <button >Apply</button>
+                                {userType === "customer" ? <button uuid={copy.uuid} onClick={this.handleApply}>Apply</button> : <button uuid={copy.uuid} disabled>Apply</button>}
                             </dl>
                         ))};
                     </dd>

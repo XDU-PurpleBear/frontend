@@ -58,7 +58,7 @@ class Frame extends React.Component {
                             <Route exact path="/detail/:ISBN" component={Detail}/>
 
                             <Route exact path="/bookmanagement/add" render={() => userType==="visitor"?<Redirect to="/"/>:<AddBook />}/>
-                            <Route exact path="/bookmanagement/edit" component={EditBook}/>
+                            <Route exact path="/bookmanagement/edit/:ISBN" component={EditBook}/>
 
                             {<Route path="/usercenter/info" component={ReaderInfo}/>}
 
