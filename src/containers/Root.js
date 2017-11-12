@@ -465,6 +465,47 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
 });
 
 // only admin
+mock.onGet(/\/api\/book\/previewinfo/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/book/previewinfo",
+        headers:{
+            token: "",
+            ISBN: "",
+        },
+        body:{
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data:{
+                bookInfo:{
+                    name: "preview1",
+                    auth: ["preview1","preview2"],
+                    version: ["1", "2"],
+                    publisher: "",
+                    CLC: "",
+                    language: ["english"],
+                    theme: ["a"],
+                    image: "/res/image/test3.gif",
+                    description: "aaaaaaaa",
+                }
+            }
+        },
+        //headers
+        {
+            tokendate: 300 //?
+        },
+    ];
+});
+
+// only admin
 mock.onPost(/\/api\/book\/add/).reply(config=>{
     //config like
     let request = {
@@ -1163,6 +1204,8 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
         },
     ];
 });
+
+
 
 export {
     axios,
