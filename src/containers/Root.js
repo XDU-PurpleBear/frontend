@@ -190,14 +190,14 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
                     auth: ["bookinfo1","bookinfo1","bookinfo1"],
                     version: ["v1", "v2"],
                     ISBN: "bookinfo1",
-                    publisher: "",
+                    publisher: "ppppppp",
                     language: ["chiness","english"],
                     position: {
                         room: "bb",
                         shelf: "121212",
                     },
                     theme: ["a", "b", "c"],
-                    CLC: "",
+                    CLC: "aaaaaaaa",
                     amount: "3",
                     image: "/res/image/test3.gif",
                     description: "this is desc",
@@ -207,28 +207,28 @@ mock.onGet(/\/api\/book\/info\?ISBN=(.*)/).reply(config=>{
                             uuid: "11111111111111111111111111",
                             status: "Available" //Available, Borrowed, Unavailable, Reserved
                         },{
-                            uuid: "222222",
+                            uuid: "2222221",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222222",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222223",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222224",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222225",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222226",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222227",
                             status: "Borrowed"
                         },{
-                            uuid: "222222",
+                            uuid: "2222228",
                             status: "Borrowed"
                         }
                     ],
@@ -505,6 +505,36 @@ mock.onGet(/\/api\/book\/previewinfo/).reply(config=>{
     ];
 });
 
+
+// only admin
+mock.onPost(/\/api\/book\/addcopy/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/book/addcopy",
+        headers:{
+            token: ""
+        },
+        body:{
+            ISBN: "",
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data: {
+                uuid: "aaaaaaa",
+            }
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
 // only admin
 mock.onPost(/\/api\/book\/add/).reply(config=>{
     //config like
@@ -570,35 +600,7 @@ mock.onPost(/\/api\/book\/add/).reply(config=>{
     ];
 });
 
-// only admin
-mock.onPost(/\/api\/book\/addcopy/).reply(config=>{
-    //config like
-    let request = {
-        url: "/api/book/addcopy",
-        headers:{
-            token: ""
-        },
-        body:{
-            ISBN: "",
-        }
-    }
-    //response
-    return [
-        //status
-        200,
-        //body
-        {
-            type: "succeed",
-            data: {
-                uuid: "aaaaaaa",
-            }
-        },
-        //headers
-        {
-            tokendate: ""
-        },
-    ];
-});
+
 
 // only admin
 // borrowed can't be deleted
@@ -623,7 +625,7 @@ mock.onPost(/\/api\/book\/deletecopy/).reply(config=>{
         },
         //headers
         {
-            tokendate: ""
+            tokendate: "5000"
         },
     ];
 });
@@ -633,7 +635,7 @@ mock.onPost(/\/api\/book\/deletecopy/).reply(config=>{
 mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
     //config like
     let request = {
-        url: "/api/book/deletecopy",
+        url: "/api/book/editcopy",
         headers:{
             token: ""
         },
@@ -652,7 +654,7 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
         },
         //headers
         {
-            tokendate: ""
+            tokendate: "3000"
         },
     ];
 });

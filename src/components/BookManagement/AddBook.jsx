@@ -1,5 +1,5 @@
 import * as React from "react";
-import { message } from "antd";
+import { notification } from "antd";
 import { axios, getCookie, updateCookie } from "../../containers/Root.js";
 import { connect } from "react-redux";
 
@@ -74,84 +74,73 @@ class AddBook extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const { token, userType, userName } = this.props;
-        const name = this.references.name.value;
-        const author = this.references.author.value;
-        const ISBN = this.references.ISBN.value;
-        const edition = this.references.edition.value;
-        const publisher = this.references.publisher.value;
-        const CLC = this.references.CLC.value;
-        const version = this.references.version.value;
-        const description = this.references.description.value;
-        if (name.length === 0) {
-            message.error("Please input BookName!");
-            return;
+
+        let allChecksResult = this.allChecks.map(checkItem => checkItem());
+        let bookInfo = new FormData();
+        bookInfo.append("name", allChecksResult[1].name);
+        bookInfo.append("auth", allChecksResult[2].author);
+        bookInfo.append("ISBN", allChecksResult[0].ISBN);
+        bookInfo.append("publisher", allChecksResult[4].publisher);
+        bookInfo.append("CLC", allChecksResult[5].CLC);
+        bookInfo.append("version", allChecksResult[3].version);
+        bookInfo.append("description", this.references.description.value);
+        bookInfo.append("language", allChecksResult[7].language);
+        bookInfo.append("theme", allChecksResult[8].theme);
+        bookInfo.append("amount", allChecksResult[6].amount);
+        if(this.references.selectImage.files[0]){
+            bookInfo.append("image", this.references.selectImage.files[0]);
         }
-        if (ISBN.length === 0) {
-            message.error("Please input ISBN!");
-            return;
+        else{
+            bookInfo.append("image", this.references.image.src);
         }
-        if (this.references.selectImage.files.length === 0) {
-            message.error("Please select Image!");
-            return;
-        }
-        if (!token || token.length === 0) {
+
+        const { token } = this.props;
+        if (!token || token === "") {
+            notification.info({
+                message: "Please Log In.",
+                duration: 2,
+            })
             this.props.history.push("/");
             return;
         }
-        let reader = new FileReader();
-        reader.readAsBinaryString(this.references.selectImage.files[0]);
-        reader.onerror = e => {
-            message.error("Upload Error because: " + e.message);
-        }
-        reader.onload = e => {
-            const image = e.target.result;
-
-            console.log({ "image": image });
-            axios.post("/api/book/add", {
-                name: name,
-                auth: author,
-                ISBN: ISBN,
-                edition: edition,
-                publisher: publisher,
-                CLC: CLC,
-                version: version,
-                description: description,
-                image: {
-                    data: image
-                }
-            }, {
-                    responsetype: "json",
-                    headers: {
-                        "token": token
-                    }
-                }).then(response => {
-                    if (response.data.type === "succeed") {
-                        const { tokendate } = response.headers;
-                        updateCookie(tokendate)
-                        message.success("Add Book Success!");
-                    }
-                    else if (response.data.type === "failed") {
-                        throw {
-                            message: response.data.errorReason
-                        };
-                    }
-                    else {
-                        throw {
-                            message: "Network Error",
-                        };
-                    }
-                }).catch(err => {
-                    message.error("Add Book Error because " + err.message);
-                });
+        const url = "/api/book/add";
+        let options = {
+            responsetype: "json",
+            headers: {
+                "Cache-Control": "no-cache, no-store",
+                "token": token,
+            },
         };
+        axios.post(url, bookInfo, options)
+        .then((response)=>{
+                if (response.data.type === "succeed") {
+                    const {tokendate} = response.headers;
+                    updateCookie(tokendate);
+                    notification.success({
+                        message: "Upload Book Info Success!.",
+                        duration: 2
+                    });
+                    this.props.history.push("/bookmanagement/edit/" + allChecksResult[0].ISBN);
+                }
+                else if (response.data.type === "failed") {
+                    throw {
+                        name: "UPLOAD_BOOKINFO_ERROR",
+                        message: response.data.errorReason
+                    };
+                }
+            })
+            .catch((err) => {
+                notification.error({
+                    message: "Upload Book Info Error Because " + err.message,
+                    duration: 2
+                });
+            });
     }
 
     handleUpdatePreview(){
         let allChecksResult = this.allChecks.map(checkItem => checkItem());
         let previewButtonDisabled = allChecksResult.every(item => item.status);
         if(previewButtonDisabled){
-
             this.setState({
                 previewButtonDisabled,
                 previewInfo: {
@@ -175,18 +164,75 @@ class AddBook extends React.Component {
         });
     }
     handleTogglePreview(){
+        this.handleUpdatePreview();
         this.setState({
             previewVisibility: !this.state.previewVisibility,
         });
     }
 
     handleGetBookInfoFromOther(e){
-        if(e.key !== "Enter"){
+        const {ISBN} = this.references.ISBN.value;
+        if(e.key !== "Enter" || ISBN === ""){
             return;
         }
-        
-        const {ISBN} = this.references.ISBN.value;
-        console.log(e.key === "Enter");
+        const {token} = this.props;
+        if(!token || token === ""){
+            notification.info({
+                message: "Please Log In.",
+                duration: 2,
+            })
+            this.props.history.push("/");
+            return;
+        }
+        const url = "/api/book/previewinfo";
+        let options = {
+            responsetype: "json",
+            headers: {
+                "Cache-Control": "no-cache, no-store",
+                "token": token,
+                "ISBN": ISBN
+            },
+        };
+        axios.get(url, options)
+            .then((response)=>{
+                if (response.data.type === "succeed") {
+                    const {tokendate} = response.headers;
+                    const {bookInfo} = response.data.data;
+                    updateCookie(tokendate);
+                    notification.success({
+                        message: "Get Book Preview Info Success!.",
+                        duration: 2
+                    });
+                    this.references.name.value = bookInfo.name;
+                    this.handleBlurName();
+                    this.references.author.value = bookInfo.auth.join(",");
+                    this.handleBlurAuthor();
+                    this.references.version.value = bookInfo.version.join(",");
+                    this.handleBlurVersion();
+                    this.references.publisher.value = bookInfo.publisher;
+                    this.handleBlurPublisher();
+                    this.references.CLC.value = bookInfo.CLC;
+                    this.handleBlurCLC();
+                    this.references.language.value = bookInfo.language.join(",");
+                    this.handleBlurLanguage();
+                    this.references.theme.value = bookInfo.theme.join(",");
+                    this.handleBlurTheme();
+                    this.references.description.value = bookInfo.description;
+                    this.references.image.src = bookInfo.image;
+                }
+                else if (response.data.type === "failed") {
+                    throw {
+                        name: "GET_BOOKPREVIEWINFO_ERROR",
+                        message: response.data.errorReason
+                    };
+                }
+            })
+            .catch((err) => {
+                notification.error({
+                    message: "Get Book Preview Info Error Because " + err.message,
+                    duration: 2
+                });
+            });
     }
 
     handleChangeCopyPreview(){
@@ -325,17 +371,6 @@ class AddBook extends React.Component {
                 status: "Available"
             });
         }
-        // let bookInfo={
-        //     image: "/res/image/test2.jpg",
-        //     name: "previewName",
-        //     auth: ["previewAuth1", "previewAuth2"],
-        //     version: ["previewVersion1", "previewVersion2"],
-        //     ISBN: "previewISBN",
-        //     language: ["English", "Chinese"],
-        //     theme: ["previewTheme1", "previewTheme1"],
-        //     amount: 7,
-        //     description: "previewDescription"
-        // };
         return (
             <div className={styles.addBook} >
                 <div className={styles.imageSelectArea}>
@@ -344,7 +379,7 @@ class AddBook extends React.Component {
                 </div>
                 <div className={styles.description}>
                     <span>Description</span>
-                    <textarea ref={description=>this.references.description=description}></textarea>
+                    <textarea defaultValue="" ref={description=>this.references.description=description}></textarea>
                 </div>
                 <div className={styles.basicInfoArea}>
                     <span>Basic Info</span>
@@ -397,11 +432,11 @@ class AddBook extends React.Component {
                                 <div>From CLC</div>
                                 <span>{copy.status}</span>
                                 <p>SystemDefault</p>
-                                <button disabled >——</button>
+                                <button disabled>——</button>
                             </dl>
                         ))};
                     </dd>
-                    <button type="button"><div>+</div></button>
+                    <button type="button" disabled><div>+</div></button>
                 </div>
                 {
                     previewVisibility ? (
@@ -409,7 +444,13 @@ class AddBook extends React.Component {
                         <div className={styles.preview}>
                             <AddBookPreview bookInfo={previewInfo}/>
                         </div>
-                        <div className={styles.previewBefore}></div>
+                        <div className={styles.previewBefore}>
+                            <p>Preview</p>
+                            <div>
+                                <button type="button" onClick={this.handleSubmit}>Upload</button>
+                                <button type="button" onClick={this.handleTogglePreview}>Cancel</button>
+                            </div>
+                        </div>
                     </div>
                     ) : ""
                 }
