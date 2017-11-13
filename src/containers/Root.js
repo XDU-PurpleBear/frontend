@@ -88,7 +88,7 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             token:"testtoken",
             tokendate: 30000, 
-            usertype: "admin", //admin ,customer
+            usertype: "customer", //admin ,customer
             username: "testcustomer"
         },
     ];

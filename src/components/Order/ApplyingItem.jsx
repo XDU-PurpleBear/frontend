@@ -20,7 +20,7 @@ class ApplyingItem extends React.Component{
                 <div className={styles.header}>
                     <p className={styles.applyDate}>{order.applyDate}</p>
                     <p className={styles.orderId}>OrderID:{order.orderid}</p>
-                    <p className={styles.userName} onClick={clickUserName}>{order.studentID}</p>
+                    <p className={styles.userName} onClick={ command ? clickUserName : ()=>{}}>{order.studentID}</p>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.baseInfo}>

@@ -1,0 +1,24 @@
+.onetag{
+    width:20vw;
+    height:6vh;
+    display: grid;
+    grid-template-columns: 10% 60% 30%;
+    line-height: 6vh;
+    label{
+        font-size: 0.8rem;
+    }
+    span{
+        font-size: 0.8rem;
+    }
+}
+
+.checkbox{
+    vertical-align:middle;
+    grid-column: 1/1;
+    height: 1.5vh;
+    width: 1.5vh;
+    margin:auto 0;
+}
+.tag{
+    grid-column: 2/2;
+}

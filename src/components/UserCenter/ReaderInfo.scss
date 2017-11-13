@@ -1,8 +1,12 @@
+// *{
+//     font-family: Cambria;
+//     font-size: 0.7rem;
+// }
 .main{
     width: 100%;
     height: 100vh;
     //border: 1px solid #888888;
-    background: url('/../../res/image/background.jpg') no-repeat;
+    background: url('/res/image/mainbackground.jpg') no-repeat;
     -webkit-background-size:cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -10,10 +14,16 @@
     margin-top: -10vh;
 }
 
+.left{
+    width: 80%;
+    height: 100vh;
+    float: left;
+    //border: 1px solid #888888;
+}
 .img{
     float: left;
-    margin-left: 10%;
-    width: 10%;
+    margin-left: 12.5%;
+    width: 12.5%;
     margin-top: 15vh;
     //border: 1px solid #888888;
     text-align: center;
@@ -47,23 +57,24 @@
     position: absolute;
     top: 0;
     width: 100%;
-    height: 6vh;
+    height: 4vh;
+    margin-top: 2vh;
     filter:alpha(opacity=0);
     opacity: 0;
 }
 
 .info{
     border: 1px solid #888888;
-    margin-left: 2%;
+    margin-left: 2.5%;
     margin-top: 15vh;
-    width: 30%;
+    width: 37.5%;
     height: 36vh;
     background-color: white;
     float: left;
     margin-bottom: 5vh;
     display: grid;
     grid-template-columns: 15% 30% 10% 30% 15%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 2fr 1fr 1fr 2fr;
 }
 .userName{
     grid-area: 1/2/2/3;
@@ -102,8 +113,8 @@
 //}
 
 .overdue{
-    margin-left: 22%;
-    width: 50%;
+    margin-left: 27.5%;
+    width: 62.5%;
     height: 40vh;
     //border: 1px solid #888888;
     clear: both;
@@ -112,7 +123,6 @@
     grid-template-columns: 65% 20% 15%;
 }
 .dueTip{
-
     border: 1px solid #888888;
     grid-column-start: 1;
     grid-column-end: 4;
@@ -144,7 +154,7 @@
 
 .overdueListItem{
     width: 100%;
-    height: 13vh;
+    height: 14vh;
     box-sizing: border-box;
     padding: 1vh;
     display: grid;
@@ -152,6 +162,8 @@
     grid-template-columns: 10% 15% 20% 21% 20% 14%;
     background-color: white;
     margin-top: 1vh;
+    margin-bottom: 1vh;
+    border-bottom: 1px solid #888888;
 }
 
 .image{
@@ -160,17 +172,24 @@
     grid-row-start: 1;
     grid-row-end: 4;
     border: 1px solid #888888;
-    margin-top: 10%;
+    margin-top: 2vh;
+    width: 9vh;
+    height: 9vh;
 }
-.bookName{
+.bookNamePart{
     grid-column-start: 2;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
-    font-size: 1.1rem;
     margin-left: 4%;
-    color: blue;
-    font-weight: bold;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.bookName{
+    font-size: 0.8rem;
+    color: blueviolet;
+    font-weight: 500;
+    line-height: 4.5vh;
 }
 .ISBN{
     grid-column-start: 2;
@@ -178,6 +197,7 @@
     grid-row-start: 2;
     grid-row-end: 3;
     margin-left: 6.3%;
+    line-height: 5.3vh;
 }
 .position{
     grid-column-start: 2;
@@ -185,12 +205,14 @@
     grid-row-start: 3;
     grid-row-end: 4;
     margin-left: 14.6%;
+    line-height: 5.3vh;
 }
 .amount{
     grid-column-start: 3;
     grid-column-end: 4;
     grid-row-start: 3;
     grid-row-end: 4;
+    line-height: 5.3vh;
 }
 .time{
     grid-column-start: 5;
@@ -203,4 +225,57 @@
     grid-column-end: 7;
     grid-row-start: 2;
     grid-row-end: 3;
+}
+
+.right{
+    //border: 1px solid #888888;
+    width: 20%;
+    height: 90vh;
+    margin-top: 10vh;
+    float: left;
+}
+
+.recommend{
+    width: 20vw;
+    height: 90vh;
+    right: 0;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    grid-template-columns: 100%;
+    z-index: 3;
+    position: fixed;
+    //border: 1px solid #888888;
+}
+.recommendBack{
+    width: 20%;
+    height: 90vh;
+    position: fixed;
+    top: 10vh;
+    right: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.4);
+    filter: blur(5px);
+}
+
+.recommendTitle{
+    width: 100%;
+    height: 8vh;
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    text-align: center;
+    span{
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 1.5rem;
+        color: #F7BA00;
+        margin: auto;
+        background-color: #4A494A;
+    }
+}
+
+.recommendContent {
+    grid-area: 2 / 1 / 3 / 2;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
 }
