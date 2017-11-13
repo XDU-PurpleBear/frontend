@@ -140,35 +140,21 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
             type: "succeed",
             data:{
                 bookList:[{
-                    name: "name1",
+                    name: "name1name1name1name1name1name1.。。",
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
                     position: {
                         room: "B",
                         shelf: "22",
                     },
-                    language: ["Chinese"],
-                    theme: ["Data Science"],
+                    language: [""],
+                    theme: [""],
                     amount: 1,
                     image: "",
-                },
-                    {
-                        name: "name2",
-                        ISBN: "isbn2",
-                        auth: ["auth21", "auth22"],
-                        position: {
-                            room: "A",
-                            shelf: "13",
-                        },
-                        language: ["English"],
-                        theme: ["Computer Science"],
-                        amount: 1,
-                        image: "",
-                    }
-                ],
+                }],
                 filter:{
                     language: ["Chinese","English"],
-                    room: ["A", "B", "C"],
+                    floor: ["1th Floor", "2th Floor", "4th Floor" ,"3th Floor"],
                     theme: ["Data Science", "Computer Science", "Social Science"],
                 },
             }
@@ -515,6 +501,58 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
         },
     ];
 });
+
+mock.onGet(/\/api\/user\/browsehistory/).reply(config=>{
+    //bookType in [tags]
+    //config like
+    let request = {
+        url: "/api/user/browsehistory",
+        headers:{
+            token: "" //?
+        },
+        body:{
+
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+            data:{
+                bookList:[{
+                    name: "Thinking in C++",
+                    ISBN: "46546789",
+                    description: "This is a book about the study of C++,You can have a knowledge of using C++",
+                    image: "",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
+                },{
+                    name: "name1name1name1name1name1name1.。。",
+                    ISBN: "isbn1",
+                    description: "description",
+                    image: "aaaaaaa",
+                }]
+            }
+        },
+        //headers
+        {
+            tokendate: 300 //?
+        },
+    ];
+});
+
+
 
 // only admin
 // TODO: check
