@@ -140,18 +140,32 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
             type: "succeed",
             data:{
                 bookList:[{
-                    name: "name1name1name1name1name1name1.。。",
+                    name: "name1",
                     ISBN: "isbn1",
                     auth: ["auth11", "auth12"],
                     position: {
                         room: "B",
                         shelf: "22",
                     },
-                    language: [""],
-                    theme: [""],
+                    language: ["Chinese"],
+                    theme: ["Data Science"],
                     amount: 1,
                     image: "",
-                }],
+                },
+                    {
+                        name: "name2",
+                        ISBN: "isbn2",
+                        auth: ["auth21", "auth22"],
+                        position: {
+                            room: "A",
+                            shelf: "13",
+                        },
+                        language: ["English"],
+                        theme: ["Computer Science"],
+                        amount: 1,
+                        image: "",
+                    }
+                ],
                 filter:{
                     language: ["Chinese","English"],
                     room: ["1th Floor", "2th Floor", "4th Floor" ,"3th Floor"],
