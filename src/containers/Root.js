@@ -88,7 +88,7 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             token:"testtoken",
             tokendate: 30000, 
-            usertype: "customer", //admin ,customer
+            usertype: "admin", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -981,23 +981,100 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
             type: "succeed",
             data: {
                 orderList:[{
-                    orderid: "",
-                    applyDate: "",
-                    applyTime: "",
+                    orderid: "applyOrderID",
+                    applyDate: "applyOrderDate",
+                    applyTime: "applyOrderTime",
                     
-                    ISBN: "",
-                    bookName: "",
-                    auth: [""],
-                    image: "",
+                    ISBN: "applyOrderISBN",
+                    bookName: "applyOrderBookName",
+                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
+                    image: "/res/image/test3.gif",
                     position: {
-                        room: "",
-                        shelf: "",
+                        room: "applyOrderRoom",
+                        shelf: "applyOrderRoomSelf",
                     },
-                    bookid: "",
-                    amount: "",
+                    bookid: "applyOrderBookID",
+                    amount: "applyOrderBookAmount",
 
-                    userid: "",
-                    userName: "",
+                    userid: "applyOrderUserID",
+                    userName: "applyOrderUserName",
+                    studentID: "",
+                    balance: 250,
+                },{
+                    orderid: "applyOrderID",
+                    applyDate: "applyOrderDate",
+                    applyTime: "applyOrderTime",
+                    
+                    ISBN: "applyOrderISBN",
+                    bookName: "applyOrderBookName",
+                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
+                    image: "/res/image/test3.gif",
+                    position: {
+                        room: "applyOrderRoom",
+                        shelf: "applyOrderRoomSelf",
+                    },
+                    bookid: "applyOrderBookID",
+                    amount: "applyOrderBookAmount",
+
+                    userid: "applyOrderUserID",
+                    userName: "applyOrderUserName",
+                    balance: 250,
+                },{
+                    orderid: "applyOrderID",
+                    applyDate: "applyOrderDate",
+                    applyTime: "applyOrderTime",
+                    
+                    ISBN: "applyOrderISBN",
+                    bookName: "applyOrderBookName",
+                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
+                    image: "/res/image/test3.gif",
+                    position: {
+                        room: "applyOrderRoom",
+                        shelf: "applyOrderRoomSelf",
+                    },
+                    bookid: "applyOrderBookID",
+                    amount: "applyOrderBookAmount",
+
+                    userid: "applyOrderUserID",
+                    userName: "applyOrderUserName",
+                    balance: 250,
+                },{
+                    orderid: "applyOrderID",
+                    applyDate: "applyOrderDate",
+                    applyTime: "applyOrderTime",
+                    
+                    ISBN: "applyOrderISBN",
+                    bookName: "applyOrderBookName",
+                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
+                    image: "/res/image/test3.gif",
+                    position: {
+                        room: "applyOrderRoom",
+                        shelf: "applyOrderRoomSelf",
+                    },
+                    bookid: "applyOrderBookID",
+                    amount: "applyOrderBookAmount",
+
+                    userid: "applyOrderUserID",
+                    userName: "applyOrderUserName",
+                    balance: 250,
+                },{
+                    orderid: "applyOrderID",
+                    applyDate: "applyOrderDate",
+                    applyTime: "applyOrderTime",
+                    
+                    ISBN: "applyOrderISBN",
+                    bookName: "applyOrderBookName",
+                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
+                    image: "/res/image/test3.gif",
+                    position: {
+                        room: "applyOrderRoom",
+                        shelf: "applyOrderRoomSelf",
+                    },
+                    bookid: "applyOrderBookID",
+                    amount: "applyOrderBookAmount",
+
+                    userid: "applyOrderUserID",
+                    userName: "applyOrderUserName",
                     balance: 250,
                 }]
             }
@@ -1047,6 +1124,7 @@ mock.onGet(/\/api\/user\/returnlist/).reply(config=>{
 
                     userid: "",
                     userName: "",
+                    studentID: "",
                     balance: 250,
                 }]
             }
@@ -1096,6 +1174,7 @@ mock.onGet(/\/api\/user\/borrowlist/).reply(config=>{
 
                     userid: "",
                     userName: "",
+                    studentID: "",
                     balance: 250,
                 }]
             }
@@ -1146,7 +1225,8 @@ mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
 
                     userid: "",
                     userName: "",
-                    balance: 250,
+                    studentID: "",
+                    balance: 5,
                 }]
             }
         },
@@ -1196,6 +1276,7 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
 
                     userid: "",
                     userName: "",
+                    studentID: "",
                     balance: 250,
                 }]
             }

@@ -19,12 +19,11 @@ import Detail from "../views/Detail.jsx";
 import AddBook from "../components/BookManagement/AddBook.jsx";
 import EditBook from "../components/BookManagement/EditBook.jsx";
 
-import BookApply from "../components/UserCenter/BookApply.jsx";
-import BookBorrow from "../components/UserCenter/BookBorrow.jsx";
-import BookReturn from "../components/UserCenter/BookReturn.jsx";
+import UserOrderList from "../components/UserCenter/OrderList.jsx";
 
 import CreateReader from "../components/AdminCenter/CreateReader.jsx";
 import EditReader from "../components/AdminCenter/EditReader.jsx";
+import OrderManagement from "../components/AdminCenter/OrderManagement.jsx";
 
 import NotFound from "../views/NotFound.jsx";
 
@@ -57,17 +56,15 @@ class Frame extends React.Component {
                             <Route exact path="/booksearchresult/:searchType/:searchValue" component={BookSearchReault}/>
                             <Route exact path="/detail/:ISBN" component={Detail}/>
 
-                            <Route exact path="/bookmanagement/add" render={() => userType==="visitor"?<Redirect to="/"/>:<AddBook />}/>
+                            <Route exact path="/bookmanagement/add" component={AddBook} render={() => userType==="visitor"?<Redirect to="/"/>:<AddBook />}/>
                             <Route exact path="/bookmanagement/edit/:ISBN" component={EditBook}/>
 
-                            {<Route path="/usercenter/info" component={ReaderInfo}/>}
-
-                            <Route path="/usercenter/bookapply" component={BookApply}/>
-                            <Route path="/usercenter/bookreturn" component={BookReturn}/>
-                            <Route path="/usercenter/bookborrow" component={BookBorrow}/>
+                            <Route path="/usercenter/info" component={ReaderInfo}/>
+                            <Route path="/usercenter/orderlist" component={UserOrderList}/>
 
                             <Route path="/admincenter/createreader" component={CreateReader}/>
                             <Route path="/admincenter/editreader" component={EditReader}/>
+                            <Route path="/admincenter/ordermanagement" component={OrderManagement}/>
 
                             <Route component={NotFound} />
                         </Switch>

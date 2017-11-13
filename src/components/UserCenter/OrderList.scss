@@ -1,0 +1,19 @@
+.orderList{
+    width: 100vw;
+    height: 90vh;
+    background-image: url("/res/image/readerBackground.jpg");
+    background-size: cover;
+    padding: 5vh 5vw;
+    box-sizing: border-box;
+    >p{
+        font-size: 5vh;
+        height: 7.5vh;
+        color: white;
+    }
+}
+.content{
+    width: 90vw;
+    height: 67.5vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

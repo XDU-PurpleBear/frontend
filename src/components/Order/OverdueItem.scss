@@ -1,0 +1,116 @@
+.overdueItem{
+    width: 90vw;
+    height: 20vh;
+    margin: 10px 0;
+    display: grid;
+    grid-template-rows: 5vh 15vh;
+    grid-template-columns: 90vw;
+}
+
+.header{
+    grid-area: 1 / 1 / 2 / 2;
+    
+    display: grid;
+    grid-template-rows: 5vh;
+    grid-template-columns: 33% 44% 23%;
+    background-color: #D8D8D8;
+    
+}
+
+.applyDate{
+    grid-area: 1 / 1 / 2 / 2;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.orderId{
+    grid-area: 1 / 2 / 2 / 3;
+    font-size: 1.5rem;    
+}
+.userName{
+    grid-area: 1 / 3 / 2 / 4;
+    font-size: 1.5rem;    
+}
+
+
+
+.content{
+    grid-area: 2 / 1 / 3 / 2;
+
+    display: grid;
+    grid-template-rows: 15vh;
+    grid-template-columns: 50% 30% 20%;
+    background-color: white;
+}
+
+.baseInfo{
+    grid-area: 1 / 1 / 2 / 2;
+
+    display: grid;
+    grid-template-rows: 50% 25% 25%;
+    grid-template-columns: 20% 20% 60%;
+    .image{
+        grid-area: 1 / 1 / 4 / 2;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .bookName{
+        grid-area: 1 / 2 / 2 / 4;
+        >span{
+            font-size: 1.5rem;
+        }
+    }
+    .auth{
+        grid-area: 2 / 2 / 3 / 4;
+    }
+    .position{
+        grid-area: 3 / 2 / 4 / 3;
+    }
+    .amount{
+        grid-area: 3 / 3 / 4 / 4;
+        >span{
+            color: red;
+        }
+    }
+}
+
+.otherInfo{
+    grid-area: 1 / 2 / 2 / 3;
+    grid-area: 1 / 2 / 2 / 3;
+    display: flex;
+    flex-direction: column;
+    >p{
+        font-size: 1rem;
+        margin: auto;   
+    }
+    >span{
+        font-size: 1.5rem;
+        margin: auto;
+        color: red;  
+    }
+    >div{
+        margin: auto;
+        >label{
+            font-size: 1rem;        
+            color: red;
+        }
+        >input{
+            width: 5rem;
+            font-size: 1rem;
+            color: red;
+        }
+
+    }
+}
+
+.command{
+    grid-area: 1 / 3 / 2 / 4;
+    grid-area: 1 / 3 / 2 / 4;
+    display: flex;
+    >div{
+        margin: auto;
+        >button{
+            font-size: 1rem;
+            margin: 5px;
+        }
+    }
+}

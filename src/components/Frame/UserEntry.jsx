@@ -58,30 +58,12 @@ class UserEntry extends React.Component {
                         </Link>
                     </MenuItem>
                     <MenuDivider/>
-                    <MenuItem key="/usercenter/bookapply">
-                        <Link to="/usercenter/bookapply">
-                            <span>BookApply</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuDivider/>
-                    <MenuItem key="/usercenter/bookreturn">
-                        <Link to="/usercenter/bookreturn">
-                            <span>BookReturn</span>
+                    <MenuItem key="/usercenter/orderlist">
+                        <Link to="/usercenter/orderlist">
+                            <span>Order Page</span>
                         </Link>
                     </MenuItem>
                     <MenuDivider/>                    
-                    <MenuItem key="/usercenter/BookBorrow">
-                        <Link to="/usercenter/bookborrow">
-                            <span>BookBorrow</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuDivider/>
-                    {/* <MenuItem key="/usercenter/notify" disabled>
-                        <Link to="/usercenter/notify">
-                            <span>Notify</span>
-                        </Link>
-                    </MenuItem> */}
-                    <MenuDivider/>
                     <MenuItem>
                         <span onClick={this.handleLogOut}>Log Out</span>
                     </MenuItem>
@@ -92,6 +74,12 @@ class UserEntry extends React.Component {
         if(userType === "admin"){
             menu = (
                 <Menu>
+                    <MenuDivider/>
+                    <MenuItem key="/admincenter/ordermanagement">
+                        <Link to="/admincenter/ordermanagement">
+                            <span>Order Management</span>
+                        </Link>
+                    </MenuItem>
                     <MenuDivider/>
                     <MenuItem key="/admincenter/createreader">
                         <Link to="/admincenter/createreader">
@@ -104,24 +92,6 @@ class UserEntry extends React.Component {
                             <span>Edit Reader</span>
                         </Link>
                     </MenuItem>
-                    <MenuDivider/>
-                    <MenuItem key="/usercenter/bookreturn">
-                        <Link to="/usercenter/bookreturn">
-                            <span>BookReturn</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuDivider/>                    
-                    <MenuItem key="/usercenter/bookborrow">
-                        <Link to="/usercenter/bookborrow">
-                            <span>BookBorrow</span>
-                        </Link>
-                    </MenuItem>
-                    <MenuDivider/>
-                    {/* <MenuItem key="/usercenter/notify" disabled>
-                        <Link to="/usercenter/notify">
-                            <span>Notify</span>
-                        </Link>
-                    </MenuItem> */}
                     <MenuDivider/>
                     <MenuItem key="/bookmanagement/add">
                         <Link to="/bookmanagement/add">

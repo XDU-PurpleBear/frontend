@@ -123,9 +123,10 @@ class Detail extends React.Component {
     render() {
         const { bookInfo } = this.state;
         const {userType} = this.props;
-        // if(userType === "admin"){
-        //     return <Redirect to="" />
-        // }
+        const { ISBN } = this.props.match.params;
+        if(userType === "admin"){
+            return <Redirect to={"/bookmanagement/edit/" + ISBN} />
+        }
         return (
             <div className={styles.detail}>
                 <div className={styles.info}>

@@ -1,0 +1,56 @@
+.orderManagement{
+    width: 100vw;
+    height: 90vh;
+    background-image: url("/res/image/adminBackground.jpg");
+    background-size: cover;
+    padding: 5vh 5vw;
+    padding-top: 0;
+    box-sizing: border-box;
+    >.filter{
+        font-size: 5vh;
+        height: 12.5vh;
+        display: flex;
+        flex-direction: column;
+        // color: white;
+        >.bookId{
+            width: 100%;
+            margin: auto 0;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.0));
+            display: flex;
+            flex-direction: row;
+            >label{
+                display: inline-block;        
+                width: 12.5%;
+                font-size: 1.5rem;
+            }
+            >input{
+                height: 80%;
+                margin: auto 0;
+            }
+        }
+        >.userName{
+            margin: auto 0;
+            width: 100%;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.0));
+            display: flex;
+            flex-direction: row;
+            >label{
+                width: 12.5%;
+                display: inline-block;        
+                font-size: 1.5rem;
+            }
+            >input{
+                margin: auto 0;                
+            }
+        }
+    }
+}
+
+
+
+.content{
+    width: 90vw;
+    height: 67.5vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
