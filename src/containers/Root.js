@@ -168,7 +168,7 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                 ],
                 filter:{
                     language: ["Chinese","English"],
-                    room: ["1th Floor", "2th Floor", "4th Floor" ,"3th Floor"],
+                    room: ["A", "B", "C"],
                     theme: ["Data Science", "Computer Science", "Social Science"],
                 },
             }

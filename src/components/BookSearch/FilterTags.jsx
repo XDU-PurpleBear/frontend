@@ -11,10 +11,11 @@ import {getCookie} from "../../containers/Root.js";
 class FilterTags extends React.Component{
 
     render() {
-        const {item,count} = this.props;
+        const {item,count, command} = this.props;
+
         return(
                 <div className={styles.onetag}>
-                    <input type="checkbox" value="None" name="tag" className={styles.checkbox} />
+                    <input type="checkbox" value={item} className={styles.checkbox} onChange={command}/>
                     <label className={styles.tag}>{item}</label>
                     <span>{count}</span>
                 </div>
