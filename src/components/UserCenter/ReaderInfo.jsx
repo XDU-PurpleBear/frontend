@@ -2,6 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {axios, getCookie, updateCookie} from "../../containers/Root.js";
+import Cookies from "js-cookie";
 import {message, notification} from "antd";
 import RecommendItem from "../../components/Main/RecommendItem.jsx";
 
@@ -27,7 +28,7 @@ class ReaderInfo extends React.Component {
         this.references = {};
         this.handleSelectImage = this.handleSelectImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getRecommend = this.getRecommend.bind(this);
+        this.getBrowseHistory = this.getBrowseHistory.bind(this);
         this.getOverdueList = this.getOverdueList.bind(this);
     }
 
@@ -96,9 +97,9 @@ class ReaderInfo extends React.Component {
             });
     }
 
-    getRecommend(){
+    getBrowseHistory(){
         const {token, userType, userName} = this.props;
-        const url = "/api/book/recommend";
+        const url = "/api/user/browsehistory";
         let options = {
             responsetype: "json",
             headers: {
@@ -128,14 +129,14 @@ class ReaderInfo extends React.Component {
             })
             .catch((err) => {
                 notification.error({
-                    message: "Get Recommend Error because" + err.message,
+                    message: "Get BrowseHistory Error because" + err.message,
                     duration: 2,
                 });
             });
     }
 
     componentDidMount() {
-        this.getRecommend();
+        this.getBrowseHistory();
         this.getOverdueList();
         this.references.image.src = "../../res/icon/user.png";
         const { token, userType, userName } = this.props;
@@ -289,11 +290,11 @@ class ReaderInfo extends React.Component {
                 </div>
                 </div>
                 <div className={styles.right}>
-                    <div className={styles.recommend}>
-                        <div className={styles.recommendTitle}>
-                            <span>Recommend</span>
+                    <div className={styles.browseHistory}>
+                        <div className={styles.browseHistoryTitle}>
+                            <span>BrowseHistory</span>
                         </div>
-                        <dl className={styles.recommendContent}>
+                        <dl className={styles.browseHistoryContent}>
                         {bookList.map((book, index) => <RecommendItem key={index} bookInfo={book} />)}
                         </dl>
                     </div>
