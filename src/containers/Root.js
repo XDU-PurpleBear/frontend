@@ -55,7 +55,7 @@ function updateImage(image, tokendate){
     });
 }
 
-
+/*
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
 let orderStatus = ["Applying", "Borrowing ", "Finished", "Overdue", "Invalid"];
@@ -148,9 +148,9 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
             type: "succeed",
             data:{
                 bookList:[{
-                    name: "name1name1name1name1name1name1.。。",
+                    name: "name1name1name1name1name1name1.name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1name1",
                     ISBN: "isbn1",
-                    auth: ["auth11", "auth12"],
+                    auth: ["auth11", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12", "auth12"],
                     position: {
                         room: "B",
                         shelf: "22",
@@ -1322,7 +1322,7 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
     ];
 });
 
-
+*/
 export {
     axios,
     getCookie,

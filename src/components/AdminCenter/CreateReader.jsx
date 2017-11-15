@@ -129,7 +129,7 @@ class CreateReader extends React.Component {
         let balance = this.references.balance.value;
         return {
             balance,
-            status: /^[0-9]+$/.test(balance),
+            status: /^[0-9]{1,8}$/.test(balance),
         };
     }
     handleCheckPassword() {
@@ -157,7 +157,7 @@ class CreateReader extends React.Component {
         this.handleUpdateRegister();
     }
     handleBlurBalance() {
-        this.references.balanceAlert.innerText = this.handleCheckBalance().status ? "" : "The Balance is number and more than 0!";
+        this.references.balanceAlert.innerText = this.handleCheckBalance().status ? "" : "The Balance is number and more than 0, less than 100000000!";
         this.handleUpdateRegister();
     }
     handleBlurPassword() {

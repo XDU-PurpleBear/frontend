@@ -12,7 +12,7 @@ class LogInOrSignUp extends React.Component {
         return (
             <div className={styles.logInOrSignUp}>
                 <div className={styles.title}>
-                    <h2>XDU Libiary</h2>
+                    <h2>XDU Library</h2>
                     <h4>World's Best Online Library Management System</h4>
                 </div>
                 <Tabs defaultActiveKey="1" style={{

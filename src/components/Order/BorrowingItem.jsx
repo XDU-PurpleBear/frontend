@@ -27,7 +27,7 @@ class BorrowingItem extends React.Component{
                     <div className={styles.baseInfo}>
                         <img className={styles.image} src={order.image}/>
                         <Popover content={order.bookName} placement="topLeft"><Link className={styles.bookName} to={"/detail/" + order.ISBN}><span>{order.bookName}</span></Link></Popover>
-                        <Popover content={order.auth.join(",")} placement="topLeft"><p className={styles.auth}>{order.auth.join(",")}</p></Popover>
+                        <Popover content={order.auth.join(" ")} placement="topLeft"><p className={styles.auth}>{order.auth.join(" ")}</p></Popover>
                         <p className={styles.position}>{order.position.room}-{order.position.shelf}</p>
                         <p className={styles.amount}><span>{order.amount+" "}</span>Books Left</p>
                     </div>

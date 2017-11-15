@@ -24,17 +24,17 @@ class AddBookPreview extends React.Component {
                         <hr className={styles.hr2}/>
                         <dd className={styles.auth}>
                             Author:
-                            {bookInfo.auth.map((auther, index) => <dl key={index}><Link to={`/booksearchresult/authorName/${auther}`}>{auther},</Link></dl>)}
+                            {bookInfo.auth.map((auther, index) => <dl key={index}><Link to={`/booksearchresult/authorName/${auther}`}>{auther} </Link></dl>)}
                         </dd>
                         <dd className={styles.version}>
                             Version:
-                            {bookInfo.version.map((item, index) => <dl key={index}>{item},</dl>)}
+                            {bookInfo.version.map((item, index) => <dl key={index}>{item} </dl>)}
                         </dd>
                         <p className={styles.isbn}>ISBN: {bookInfo.ISBN}</p>
-                        <p className={styles.language}>Language: {bookInfo.language.join(", ")}</p>
+                        <p className={styles.language}>Language: {bookInfo.language.join(" ")}</p>
                         <dd className={styles.theme}>
                             Genre:
-                            {bookInfo.theme.map((theme, index) => <dl key={index}><Link to={`/booksearchresult/theme/${theme}`}>{theme},</Link></dl>)}
+                            {bookInfo.theme.map((theme, index) => <dl key={index}><Link to={`/booksearchresult/theme/${theme}`}>{theme} </Link></dl>)}
                         </dd>
                         <p>Position: SystemDefault</p>
                         <div className={styles.amount}><span>{bookInfo.amount} </span><p>Book Left</p></div>

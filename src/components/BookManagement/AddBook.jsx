@@ -123,6 +123,13 @@ class AddBook extends React.Component {
                     this.props.history.push("/bookmanagement/edit/" + allChecksResult[0].ISBN);
                 }
                 else if (response.data.type === "failed") {
+                    if(response.data.errorReason.includes("already exist")){
+                        notification.warn({
+                            message: "The Book Already Exist!",
+                            duration: 2
+                        });
+                        return;
+                    }
                     throw {
                         name: "UPLOAD_BOOKINFO_ERROR",
                         message: response.data.errorReason
@@ -270,7 +277,14 @@ class AddBook extends React.Component {
     }
     handleCheckVersion() {
         let version = this.references.version.value.trim();
+        if(!/[0-9]+(,[0-9]+)*$/.test(version)){
+            return {
+                version,
+                status: false,
+            };
+        }
         version = version.split(',');
+        console.log(version);
         return {
             version,
             status: version[0] !== "",

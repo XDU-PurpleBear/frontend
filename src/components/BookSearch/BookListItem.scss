@@ -20,6 +20,7 @@
 }
 .author {
     grid-area: 4 / 4 / 5 / 7;
+    overflow: hidden;
 }
 .position {
     grid-area: 5 / 4 / 7 / 5;
@@ -34,6 +35,9 @@
     grid-area: 4 / 6 / 5 / 7;
     background-color: #DDAC21;
     border: 0;
+    >a{
+        color: black;
+    }
 }
 .apply:disabled{
     color: white;

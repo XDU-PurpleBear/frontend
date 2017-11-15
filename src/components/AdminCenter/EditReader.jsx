@@ -73,7 +73,7 @@ class EditReader extends React.Component {
                     message: "Edit Account Success!",
                     duration: 2
                 });
-                // this.props.history.go(0);
+                this.props.history.go(0);
             }
             else if(response.data.type === "failed"){
                 throw {

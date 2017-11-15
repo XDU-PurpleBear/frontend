@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
+import {Popover} from "antd";
 
 import styles from "./BookListItem.scss";
 
@@ -20,9 +21,11 @@ class BookListItem extends React.Component {
                 <Link className={styles.bookName} to={"/detail/" + item.ISBN}>
                     <span>{item.name.length>30?item.name.substring(0,29)+"..." : item.name}</span>
                 </Link>
-                <span className={styles.author} >
-                    {item.auth.join()}
-                </span>
+                <Popover content={item.auth.join(" ")} lacement="top">
+                    <span className={styles.author} >
+                        {item.auth.join(" ")}
+                    </span>
+                </Popover>
                 <span className={styles.position}>{item.position.room + item.position.shelf}</span>
                 <span className={styles.number}>{item.amount} Books Left</span>
                 {

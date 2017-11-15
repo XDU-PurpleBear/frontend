@@ -324,7 +324,7 @@ class EditBook extends React.Component {
                                 <p>{copy.uuid}</p>
                                 <button type="button" onClick={this.handleDeleteCopy} uuid={copy.uuid}>——</button>
                             </dl>
-                        ))};
+                        ))}
                     </dd>
                     <button type="button" onClick={this.handleAddCopy}><div>+</div></button>
                 </div>
