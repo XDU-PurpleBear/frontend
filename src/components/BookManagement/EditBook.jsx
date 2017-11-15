@@ -314,7 +314,7 @@ class EditBook extends React.Component {
                 </div>
                 <div className={styles.copyCtrl}>
                     <div>
-                        <img src="/res/icon/bookCommandApplyTitle.png"/><span>{bookInfo.position.room + "-" + bookInfo.position.shelf}</span>
+                        <img src={require("../../res/icon/bookCommandApplyTitle.png")}/><span>{bookInfo.position.room + "-" + bookInfo.position.shelf}</span>
                     </div>
                     <dd>
                         {bookInfo.copys.map((copy, index) => (

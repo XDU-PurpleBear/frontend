@@ -2,7 +2,7 @@
     width: 100vw;
     height: 90vh;
     margin: 0;
-    background-image: url("/res/image/adminBackground.jpg");
+    background-image: url(../../res/image/adminBackground.jpg);
     background-size: cover;
     box-sizing: border-box;
     display: grid;
@@ -256,6 +256,7 @@
                 font-weight: bold;
                 color: #F4AE00;
                 font-size: 0.5rem;
+                border: 0;
             }
             >button:hover{
                 background-color: #a09f9f;

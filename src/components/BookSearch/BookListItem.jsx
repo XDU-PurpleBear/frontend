@@ -26,9 +26,11 @@ class BookListItem extends React.Component {
                 <span className={styles.position}>{item.position.room + item.position.shelf}</span>
                 <span className={styles.number}>{item.amount} Books Left</span>
                 {
-                    // userType === "visitor" ?
-                    // <button className={styles.apply} disabled>Apply</button>
-                    // :<button className={styles.apply}>Apply</button>
+                    userType === "visitor" ?
+                    <button className={styles.apply} disabled><Link to={"/detail/" + item.ISBN}>Enter</Link></button>
+                    : 
+                    <button className={styles.apply}><Link to={"/detail/" + item.ISBN}>Enter</Link></button>
+                    
                 }
             </dd>
         );

@@ -10,6 +10,10 @@
 }
 .image {
     grid-area: 2 / 2 / 7 / 3 ;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+
 }
 .bookName {
     grid-area: 2 / 4 / 4 / 7;
@@ -25,11 +29,17 @@
 }
 .apply {
     color: black;
-    grid-area: 3 / 6 / 6 / 7;
+    width: 50%;
+    margin-left: 30%;
+    grid-area: 4 / 6 / 5 / 7;
     background-color: #DDAC21;
+    border: 0;
 }
 .apply:disabled{
     color: white;
-    grid-area: 3 / 6 / 6 / 7;
+    margin-left: 30%;
+    width: 50%;
+    grid-area: 4 / 6 / 5 / 7;
     background-color: #D7D7D7;
+    border: 0;
 }

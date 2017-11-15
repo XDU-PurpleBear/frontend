@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Form, Input, Icon, Select, message, AutoComplete} from "antd";
+import {Form, Input, Icon, Select, message, AutoComplete, notification} from "antd";
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -53,7 +53,10 @@ class SearchForm extends React.Component{
             this.props.history.push(`/booksearchresult/${searchType}/${searchValue}`);
         }
         else{
-            message.error("Please input " + searchType);
+            notification.error({
+                message: "Please input " + searchType,
+                duration: 2,
+            });
         }
     }
 

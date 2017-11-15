@@ -48,6 +48,14 @@ function removeCookie(){
     });
 }
 
+function updateImage(image, tokendate){
+    Cookies.set("userImage", image, {
+        expires: tokendate/60/60/24,
+        path: "/",
+    });
+}
+
+
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
 let orderStatus = ["Applying", "Borrowing ", "Finished", "Overdue", "Invalid"];
@@ -61,6 +69,7 @@ let mock = new MockAdapter(axios);
 // all url is lower
 
 mock.onPost(/\/api\/login/).reply(config=>{
+    console.log(config);
     //config like
     let request = {
         url: "/api/login",
@@ -81,14 +90,14 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             "type": "succeed",
             data:{
-                image:"/res/icon/user.png",
+                image:"res/icon/search.png",
             }
         },
         //headers
         {
             token:"testtoken",
             tokendate: 30000, 
-            usertype: "customer", //admin ,customer
+            usertype: "admin", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -146,15 +155,28 @@ mock.onGet(/\/api\/book\/query\?(bookName|theme|authorName|ISBN)\=(.*)/).reply(c
                         room: "B",
                         shelf: "22",
                     },
-                    language: [""],
-                    theme: [""],
+                    language: ["chinese"],
+                    theme: ["aa","a"],
                     amount: 1,
-                    image: "",
+                    image: "/res/image/adminBackground.jpg",
+                },
+                {
+                    name: "e1name1.。。",
+                    ISBN: "isbn1",
+                    auth: ["auth11", "auth12"],
+                    position: {
+                        room: "B",
+                        shelf: "22",
+                    },
+                    language: ["chinese","english"],
+                    theme: ["aa"],
+                    amount: 1,
+                    image: "/res/image/adminBackground.jpg",
                 }],
                 filter:{
-                    language: ["",""],
-                    room: [""],
-                    theme: ["", ""],
+                    language: ["english","chinese"],
+                    room: ["aa"],
+                    theme: ["aa", "a"],
                 }
             }
         },
@@ -291,12 +313,10 @@ mock.onGet(/\/api\/user\/info/).reply(config=>{
                     studentID: "1123123123",
                     tel: "112313123",
                     balance: 300,
-                    userImage: "",
+                    userImage: "res/icon/user.png",
                     orderNumber: "2",
                     fine: 100,
-                    /* 
-                      if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
-                    */
+                      //if user is customer, the orderNumber is now Overdue order, if the orderNumber > 0, the fine > 0, if the orderNumber = 0, the fine 0;
                 }
             }
         },
@@ -384,6 +404,7 @@ mock.onPost(/\/api\/signup/).reply(config=>{
 // only admin
 mock.onPost(/\/api\/user\/editinfo/).reply(config=>{
     //config like
+    console.log(config);
     let request = {
         url: "/api/user/editinfo",
         headers:{
@@ -466,6 +487,7 @@ mock.onGet(/\/api\/book\/recommend/).reply(config=>{
 
 // only admin
 mock.onGet(/\/api\/book\/previewinfo/).reply(config=>{
+    console.log(config);
     //config like
     let request = {
         url: "/api/book/previewinfo",
@@ -662,6 +684,7 @@ mock.onPost(/\/api\/book\/editcopy/).reply(config=>{
 
 // only customer
 mock.onPost(/\/api\/user\/editimage/).reply(config=>{
+    console.log(config);
     //config like
     let request = {
         url: "/api/user/editimage",
@@ -684,7 +707,7 @@ mock.onPost(/\/api\/user\/editimage/).reply(config=>{
         },
         //headers
         {
-            tokendate: ""
+            tokendate: "300"
         },
     ];
 });
@@ -804,11 +827,39 @@ mock.onPost(/\/api\/admin\/return/).reply(config=>{
     let request = {
         url: "/api/admin/return",
         headers:{
+            token: "",
+            newBalance: "",
+        },
+        body:{
+            uuid: "", // order uuid
+        }
+    }
+    //response
+    return [
+        //status
+        200,
+        //body
+        {
+            type: "succeed",
+        },
+        //headers
+        {
+            tokendate: ""
+        },
+    ];
+});
+
+
+// only admin
+mock.onPost(/\/api\/admin\/refuseborrow/).reply(config=>{
+    //config like
+    let request = {
+        url: "/api/admin/refuseborrow",
+        headers:{
             token: ""
         },
         body:{
             uuid: "", // order uuid
-            newBalance: "",
         }
     }
     //response
@@ -998,7 +1049,7 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
 
                     userid: "applyOrderUserID",
                     userName: "applyOrderUserName",
-                    studentID: "",
+                    studentID: "123",
                     balance: 250,
                 },{
                     orderid: "applyOrderID",
@@ -1018,6 +1069,7 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
 
                     userid: "applyOrderUserID",
                     userName: "applyOrderUserName",
+                    studentID: "234",
                     balance: 250,
                 },{
                     orderid: "applyOrderID",
@@ -1037,6 +1089,7 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
 
                     userid: "applyOrderUserID",
                     userName: "applyOrderUserName",
+                    studentID: "345",
                     balance: 250,
                 },{
                     orderid: "applyOrderID",
@@ -1056,25 +1109,7 @@ mock.onGet(/\/api\/user\/applylist/).reply(config=>{
 
                     userid: "applyOrderUserID",
                     userName: "applyOrderUserName",
-                    balance: 250,
-                },{
-                    orderid: "applyOrderID",
-                    applyDate: "applyOrderDate",
-                    applyTime: "applyOrderTime",
-                    
-                    ISBN: "applyOrderISBN",
-                    bookName: "applyOrderBookName",
-                    auth: ["applyOrderAuth1", "applyOrderAuth1"],
-                    image: "/res/image/test3.gif",
-                    position: {
-                        room: "applyOrderRoom",
-                        shelf: "applyOrderRoomSelf",
-                    },
-                    bookid: "applyOrderBookID",
-                    amount: "applyOrderBookAmount",
-
-                    userid: "applyOrderUserID",
-                    userName: "applyOrderUserName",
+                    studentID: "456",
                     balance: 250,
                 }]
             }
@@ -1209,13 +1244,13 @@ mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
                     orderid: "",
                     applyDate: "",
                     
-                    ISBN: "",
+                    ISBN: "isbn",
                     borrowDate: "",
                     overDays: 12, //now - borrowDate - 30
                     fine: 12,
-                    bookName: "",
+                    bookName: "aaaaaaaaaaaa",
                     auth: [""],
-                    image: "",
+                    image: "/res/image/mainBackground.jpg",
                     position: {
                         room: "",
                         shelf: "",
@@ -1236,7 +1271,6 @@ mock.onGet(/\/api\/user\/overduelist/).reply(config=>{
         },
     ];
 });
-
 
 // fitst check apply, then check invaild
 mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
@@ -1264,7 +1298,7 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
                     
                     ISBN: "",
                     bookName: "",
-                    invaildDate: "",
+                    invalidDate: "aaaaaaaaaaaaaa",
                     auth: [""],
                     image: "",
                     position: {
@@ -1289,11 +1323,11 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
 });
 
 
-
 export {
     axios,
     getCookie,
     updateCookie,
-    removeCookie
+    removeCookie,
+    updateImage,
 };
 

@@ -2,7 +2,7 @@ import {combineReducers} from "redux";
 import {call, put, takeLatest} from "redux-saga/effects";
 import {axios, removeCookie, updateCookie} from "../containers/Root.js";
 import Cookies from "js-cookie";
-import {message} from "antd";
+import {message, notification} from "antd";
 
 const initialState = {
     userType: Cookies.get("userType") && Cookies.get("userType")!=="undefined"? Cookies.get("userType") : "visitor",
@@ -230,7 +230,10 @@ function* signUpSaga(){
 function userCenterReducer(state = initialState, action) {
     switch (action.type) {
         case USER_LOGIN_SUCCEED: {
-            message.success("Login Succeed.");
+            notification.success({
+                message: "Login Succeed.",
+                duration: 2,
+            });
             return {
                 error: false,
                 errorReason: null,
@@ -241,7 +244,10 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_LOGIN_ERROR: {
-            message.error("Login Error Because " + action.errorReason);
+            notification.error({
+                message:"Login Error Because " + action.errorReason,
+                duration: 2,
+            });
             return {
                 error: true,
                 errorReason: action.errorReason,
@@ -254,7 +260,6 @@ function userCenterReducer(state = initialState, action) {
         case USER_LOGOUT_SUCCEED: {
             const {history} = action;
             history.push("/");
-            // message.success("Logout Succeed.");
             
             return {
                 error: false,
@@ -266,7 +271,10 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_LOGOUT_ERROR: {
-            message.error("Logout Error Because " + action.errorReason);
+            notification.error({
+                message: "Logout Error Because " + action.errorReason,
+                duration: 2,
+            });
             return {
                 ...state,
                 error: true,
@@ -274,7 +282,10 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_SIGNUP_SUCCEED: {
-            message.success("SignUp Succeed.");
+            notification.success({
+                message: "SignUp Succeed.",
+                duration: 2
+            });
             return {
                 ...state,
                 error: false,
@@ -282,7 +293,10 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_SIGNUP_ERROR: {
-            message.error("SignUp Error Because " + action.errorReason);            
+            notification.error({
+                message: "SignUp Error Because " + action.errorReason,
+                duration: 2
+            });            
             return {
                 ...state,
                 error: true,

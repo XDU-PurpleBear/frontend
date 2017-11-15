@@ -73,7 +73,7 @@ class EditReader extends React.Component {
                     message: "Edit Account Success!",
                     duration: 2
                 });
-                this.props.history.go(0);
+                // this.props.history.go(0);
             }
             else if(response.data.type === "failed"){
                 throw {
@@ -156,9 +156,10 @@ class EditReader extends React.Component {
     }
     handleCheckBalance() {
         let balance = this.references.balance.value;
+        balance = parseFloat(balance);
         return {
             balance,
-            status: /^[0-9]+$/.test(balance),
+            status: !Number.isNaN(balance) && balance >= 0,
         };
     }
     handleCheckPassword() {
@@ -191,8 +192,8 @@ class EditReader extends React.Component {
         const {allCheckResult, userInfo} = this.state;
         return (
             <div className={styles.editReader}>
-                <img className={styles.image} src={userInfo.image} />
-                <div className={styles.title}><div>Create Account</div></div>
+                <img className={styles.image} src={userInfo.image && userInfo.image !== ""?userInfo.image:require("../../res/icon/user.png")} />
+                <div className={styles.title}><div>Edit Account</div></div>
 
                 <div className={styles.password}>
                     <label htmlFor="password">Password:</label> <input type="password" id="password" ref={password => { this.references.password = password; }} onBlur={this.handleBlurPassword} />
@@ -232,7 +233,7 @@ class EditReader extends React.Component {
         return (
             <div className={styles.search}>
                 <div>
-                    <input ref={searchId => {this.references.searchId=searchId;}} type="text" id="searchID" onKeyDown={e => {if(e.key === "Enter"){this.handleGetReaderInfo()}}}/><img src={searchImage} onClick={this.handleGetReaderInfo} />
+                    <input autoFocus="autofocus" ref={searchId => {this.references.searchId=searchId;}} type="text" id="searchID" onKeyDown={e => {if(e.key === "Enter"){this.handleGetReaderInfo()}}}/><img src={searchImage} onClick={this.handleGetReaderInfo} />
                 </div>
             </div>
         );

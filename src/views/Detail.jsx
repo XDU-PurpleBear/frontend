@@ -117,7 +117,10 @@ class Detail extends React.Component {
                 }
             })
             .catch(function (err) {
-                message.error("Load BookInfo Error Because" + err.message);
+                notification.error({
+                    message: "Load BookInfo Error Because" + err.message,
+                    duration: 2}
+                );
             });
     }
     render() {
@@ -160,7 +163,7 @@ class Detail extends React.Component {
                 </div>
                 <div className={styles.command}>
                     <div>
-                        <img src="/res/icon/bookCommandApplyTitle.png"/><span>{bookInfo.position.room}{bookInfo.position.shelf}</span>
+                        <img src={require("../res/icon/bookCommandApplyTitle.png")}/><span>{bookInfo.position.room}{bookInfo.position.shelf}</span>
                     </div>
                     <dd>
                         {bookInfo.copys.map((copy, index) => (

@@ -45,7 +45,7 @@ class AddBookPreview extends React.Component {
                 </div>
                 <div className={styles.command}>
                     <div>
-                        <img src="/res/icon/bookCommandApplyTitle.png"/><span>SystemDefault</span>
+                        <img src={require("../../res/icon/bookCommandApplyTitle.png")}/><span>SystemDefault</span>
                     </div>
                     <dd>
                         {

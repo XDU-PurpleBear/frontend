@@ -11,6 +11,7 @@
     height: 8vh;
     float: left;
     background-color: white;
+    background-image: url(../../res/icon/user.png);
     // background-size这个需要注意，大小需要看伸缩时是宽度会有富余还是高度会有富余，有富余者为auto，刚好填充满的就是100%
     //比如宽高分别： 容器是100px*100px的，图片是240px*200px，那么在缩小填充容器时图片的高度会先触及到容器的边缘，也就是填满容器时，宽度有富余为auto，高度为100%；
     background-size: auto 100%;  // 可以使用cover
@@ -19,6 +20,7 @@
     background-origin: border-box; //从border开始填充
     background-clip: border-box;
     border-radius: 50%;
+    margin-top: 0.5vh;
     margin-right: 2vh;
 }
 

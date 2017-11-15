@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import sha256 from "sha256";
 import {axios, getCookie, updateCookie} from "../../containers/Root.js";
 import {notification} from "antd";
+import ReaderIcon from "../../res/icon/user.png";
 
 import styles from "./CreateReader.scss";
 
@@ -107,14 +108,14 @@ class CreateReader extends React.Component {
         let userName = this.references.userName.value;
         return {
             userName,
-            status: userName.trim().length !== 0,
+            status:  /^[0-9a-zA-Z]+$/.test(userName),
         };
     }
     handleCheckStudentID() {
         let studentID = this.references.studentID.value;
         return {
             studentID,
-            status: /^[0-9]{11}$/.test(studentID),
+            status: /^1[0-9]{10}$/.test(studentID),
         };
     }
     handleCheckTel() {
@@ -172,7 +173,7 @@ class CreateReader extends React.Component {
         const {allCheckResult} = this.state;
         return (
             <div className={styles.createReader}>
-                <img className={styles.image} src="/res/icon/user.png" />
+                <img className={styles.image} src={require("../../res/icon/user.png")}/>
                 <div className={styles.title}><div>Create Account</div></div>
 
                 <div className={styles.password}>

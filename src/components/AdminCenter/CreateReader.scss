@@ -1,18 +1,25 @@
 .createReader{
     width: 100vw;
     height: 90vh;
-    background-image: url("/res/image/adminBackground.jpg");
+    background-image: url(../../res/image/mainBackground.jpg);
     background-size: cover;
     display: grid;
     grid-template-columns: 5% 15% 5% 30% 5% 15% 15% 10%;
     grid-template-rows: 5% 20% 20% 10% 10% 10% 10% 10% 5%;
-    >div, >span, >img{
+    >div, >span{
         width: 90%;
         height: 90%;
         margin: 5%;
         border: 0;
         padding: 0;
-        color: black;
+        color: white;        
+    }
+    >img{
+        width: 90%;
+        margin: auto;
+        border: 0;
+        padding: 0;
+        color: white;
     }
     >div{
         >span{
@@ -27,7 +34,7 @@
 }
 .title{
     grid-area: 2 / 4 / 3 / 5;
-    background-color: #E9D581;
+    background-color: #949494;
     display: flex;
     div{
         font-size: 2rem;
@@ -36,27 +43,30 @@
 }
 .userName{
     grid-area: 5 / 4 / 6 / 5;
-    background-color: #E7D69D;
     display: flex;
     flex-direction: column;
 }
 .studentID{
     grid-area: 6 / 4 / 7 / 5;
-    background-color: #E3DABB;
+    // background-color: #949494;
     display: flex;
     flex-direction: column;
 }
 .tel{
     grid-area: 7 / 4 / 8 / 5;
-    background-color: #EDE7D3;
+    // background-color: #949494;
     display: flex;
     flex-direction: column;
 }
 .inputContent{
     height: 70%;
     display: flex;
+    background-color: #949494;
     >label, >input{
         margin: auto;
+    }
+    >input{
+        color: black;
     }
     >label{
         font-size: 1rem;
@@ -64,14 +74,18 @@
 }
 .inputAlert{
     color: red;
+
 }
 .password{
     grid-area: 2 / 6 / 3 / 8;
-    background-color: #E9D581;
+    background-color: #949494;
     display: flex;
     flex-direction: column;
     >label, >input{
         margin: auto;
+    }
+    >input{
+        color: black;
     }
     >label{
         font-size: 1.5rem;
@@ -79,11 +93,14 @@
 }
 .confirm{
     grid-area: 3 / 6 / 4 / 8;
-    background-color: #EDD262;
+    background-color: #949494;
     display: flex;
     flex-direction: column;
     >label, >input{
         margin: auto;
+    }
+    >input{
+        color: black;
     }
     >label{
         font-size: 1.5rem;
@@ -91,7 +108,7 @@
 }
 .cash{
     grid-area: 5 / 6 / 7 / 7;
-    background-color: #FAD63C;
+    background-color: #949494;
     display: flex;
     flex-direction: column;
     >label, >input{
@@ -102,11 +119,12 @@
     }
     >input{
         width: 80%;
+        color: black;
     }
 }
 .balance{
     grid-area: 5 / 7 / 7 / 8;
-    background-color: #FAD63C;
+    background-color: #949494;
     display: flex;
     flex-direction: column;
     >label, >input{
@@ -117,13 +135,15 @@
     }
     >input{
         width: 80%;
+        color: black;
     }
 }
 .policy{
     grid-area: 7 / 6 / 8 / 8;
     >label, >input{
         margin: auto;
-        background-color: white;
+        // background-color: white;
+        margin-left: 1rem;
     }
     >label{
         font-size: 0.8rem;
@@ -135,6 +155,7 @@
     button{
         width: 50%;
         margin: auto;
+        color: black;
     }
 }
 .register{
@@ -143,5 +164,9 @@
     button{
         width: 50%;
         margin: auto;
+        color: black;
+    }
+    button:disabled{
+        cursor: not-allowed;
     }
 }

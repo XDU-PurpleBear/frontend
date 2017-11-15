@@ -82,10 +82,10 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             },
             {
-                test: /\.(png|jpg)$/,
+                test: /\.(png|jpg|gif|jpeg)$/,
                 loader: "url-loader",
                 options: {
-                    limit: 8192,
+                    limit: 8192000000,
                     name: "res/image/[name].[ext]"
                 }
             }

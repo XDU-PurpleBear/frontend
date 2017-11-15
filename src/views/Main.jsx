@@ -2,11 +2,10 @@ import * as React from "react";
 import {Route, Link} from "react-router-dom";
 import {axios, getCookie, updateCookie} from "../containers/Root.js";
 import {connect} from "react-redux";
+import {notification} from "antd";
 
 import RecommendItem from "../components/Main/RecommendItem.jsx";
 import styles from "./Main.scss";
-
-import background from"../res/image/mainBackground.jpg";
 
 @connect(state => {
     return {
@@ -51,7 +50,10 @@ class Main extends React.Component{
                 }
             })
             .catch((err) => {
-                message.error("Load Recommend Error Because" + err.message);
+                notification.error({
+                    message: "Load Recommend Error Because" + err.message,
+                    duration: 2
+                });
             });
     }
     render(){

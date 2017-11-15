@@ -11,7 +11,7 @@ class LogIn extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            selectValue: "userName",
+            selectValue: "studentID",
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
@@ -39,20 +39,19 @@ class LogIn extends React.Component {
             initialValue: selectValue,
         })(
             <Select onChange={this.handleSelectChange}>
-                <Option value="userName">User Name</Option>
+                <Option value="studentID">Student ID</Option>
                 <Option value="tel">Tel-number</Option>
             </Select>
         );
 
         const logInInfoType = this.props.form.getFieldValue("logInInfoType");
         let userKeyRules = null;
-        if(selectValue === "userName"){
+        if(selectValue === "studentID"){
             userKeyRules = {
                 rules: [{
                     required: true,
-                    message: "Please input your userName, userName's length less than 16 and more than 6!",
-                    min: 6,
-                    max: 16,
+                    message: "Please input your studentID, studentID's length is 11!",
+                    pattern: /^\d{11}$/,
                 }],
             }
         }

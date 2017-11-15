@@ -42,7 +42,10 @@ class OrderManagement extends React.Component {
 
         this.handleRefuse = this.handleRefuse.bind(this);
         this.handleApplyingAgree = this.handleApplyingAgree.bind(this);
+        
         this.handleBorrowingAgree = this.handleBorrowingAgree.bind(this);
+        this.handleRefuseBorrow = this.handleRefuseBorrow.bind(this);
+
         this.handleOverdueAgree = this.handleOverdueAgree.bind(this);
     }
     handleFilterByUserName(userName){
@@ -59,7 +62,7 @@ class OrderManagement extends React.Component {
     handleFilter(list, userName, bookId){
         let result = list;
         if(userName !== ""){
-            result = result.filter(item => item.userName.toLowerCase().includes(userName.toLowerCase()));
+            result = result.filter(item => item.studentID.toLowerCase().includes(userName.toLowerCase()));
         }
         if(bookId !== ""){
             result = result.filter(item => item.bookid.toLowerCase().includes(bookId.toLowerCase()));
@@ -75,6 +78,47 @@ class OrderManagement extends React.Component {
 
     handleRefuse(orderId){
         const url = "/api/admin/refuse";
+        const {token} = this.props;
+        let options = {
+            responsetype: "json",
+            headers: {
+                "Cache-Control": "no-cache, no-store",
+                "token": token,
+            },
+        };
+        axios.post(url, {
+            uuid: orderId,
+        }, options)
+            .then(response => {
+                if(response.data.type === "succeed"){
+                    const {tokendate} = response.headers;
+                    updateCookie(tokendate)
+                    notification.success({
+                        message: "Refuse Order Success!",
+                        duration: 2
+                    });
+                    this.handleChangeTab(this.state.activeKey);
+                }
+                else if(response.data.type === "failed"){
+                    throw {
+                        message: response.data.errorReason
+                    };
+                }
+                else{
+                    throw {
+                        message: "Network Error",
+                    };
+                }
+            })
+            .catch(err => {
+                notification.error({
+                    message: "Refuse Order Error Because " + err.message,
+                    duration: 2
+                });
+            });
+    }
+    handleRefuseBorrow(orderId){
+        const url = "/api/admin/refuseborrow";
         const {token} = this.props;
         let options = {
             responsetype: "json",
@@ -163,11 +207,11 @@ class OrderManagement extends React.Component {
             headers: {
                 "Cache-Control": "no-cache, no-store",
                 "token": token,
+                "newBalance": balance,
             },
         };
         axios.post(url, {
             uuid: orderId,
-            newBalance: balance,
         }, options)
             .then(response => {
                 if(response.data.type === "succeed"){
@@ -197,8 +241,17 @@ class OrderManagement extends React.Component {
                 });
             });
     }
-    handleOverdueAgree(orderId, fine, bios, balance){
-        if(balance - fine - bios<0){
+    handleOverdueAgree(orderId, fine, bias, balance){
+        const rex = /^-?[0-9]+(\.)?[0-9]*$/;
+        if(!rex.test(fine) || !rex.test(bias)){
+            notification.error({
+                message: "Number Format Error!",
+                duration: 2,
+            });
+            return;
+        }
+        if(balance - parseFloat(fine) - parseFloat(bias) < 0){
+
             notification.warning({
                 message: "Insufficient Balance",
                 duration: 2,
@@ -212,7 +265,7 @@ class OrderManagement extends React.Component {
             headers: {
                 "Cache-Control": "no-cache, no-store",
                 "token": token,
-                "newBalance": balance - fine - bios
+                "newBalance": balance - fine - bias
             },
         };
         axios.post(url, {
@@ -438,7 +491,6 @@ class OrderManagement extends React.Component {
         const {filterByBookId, filterByUserName} = this.state;
         let command = {
             clickUserName: this.handleChildClickUserName,
-            refuse: this.handleRefuse,
         };
         return (
             <div className={styles.orderManagement}>
@@ -453,12 +505,12 @@ class OrderManagement extends React.Component {
                 <Tabs defaultActiveKey="Applying" tabBarStyle={tabBarStyle} onChange={this.handleChangeTab} ref={tabs=>this.references.tabs=tabs}>
                     <TabPane tab="Applying" key="Applying" >
                         <dl className={styles.content}>
-                            {this.handleFilter(this.state.applyingList, filterByUserName, filterByBookId).map( (order, index) => <ApplyingItem order={order} key={index} command={{...command, agree: this.handleApplyingAgree}} />)}
+                            {this.handleFilter(this.state.applyingList, filterByUserName, filterByBookId).map( (order, index) => <ApplyingItem order={order} key={index} command={{...command, agree: this.handleApplyingAgree, refuse: this.handleRefuse}} />)}
                         </dl>
                     </TabPane>
                     <TabPane tab="Borrowing" key="Borrowing" >
                         <dl className={styles.content}>
-                            {this.handleFilter(this.state.borrowingList, filterByUserName, filterByBookId).map( (order, index) => <BorrowingItem order={order} key={index} command={{...command, agree: this.handleBorrowingAgree}}/>)}
+                            {this.handleFilter(this.state.borrowingList, filterByUserName, filterByBookId).map( (order, index) => <BorrowingItem order={order} key={index} command={{...command, agree: this.handleBorrowingAgree, refuse: this.handleRefuseBorrow}}/>)}
                         </dl>
                     </TabPane>
                     <TabPane tab="Finished" key="Finished" >

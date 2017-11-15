@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import {Popover} from "antd";
 
 import styles from "./ApplyingItem.scss";
 
@@ -7,7 +8,7 @@ class ApplyingItem extends React.Component{
     render(){
         let {order, command} = this.props;
         let clickUserName = () => {
-            command.clickUserName(order.userName);
+            command.clickUserName(order.studentID);
         };
         let refuse = () => {
             command.refuse(order.orderid);
@@ -18,15 +19,15 @@ class ApplyingItem extends React.Component{
         return (
             <dd className={styles.applyingItem}>
                 <div className={styles.header}>
-                    <p className={styles.applyDate}>{order.applyDate}</p>
-                    <p className={styles.orderId}>OrderID:{order.orderid}</p>
-                    <p className={styles.userName} onClick={ command ? clickUserName : ()=>{}}>{order.studentID}</p>
+                    <Popover content={order.applyDate} placement="topLeft"><p className={styles.applyDate}>{order.applyDate}</p></Popover>
+                    <Popover content={order.orderid} placement="topLeft"><p className={styles.orderId}>OrderID:{order.orderid}</p></Popover>
+                    <Popover content={order.studentID} placement="topLeft"><p className={styles.userName} onClick={ command ? clickUserName : ()=>{}}>{order.studentID}</p></Popover>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.baseInfo}>
                         <img className={styles.image} src={order.image}/>
-                        <Link className={styles.bookName} to={"/detail/" + order.ISBN}><span>{order.bookName}</span></Link>
-                        <p className={styles.auth}>{order.auth.join(",")}</p>
+                        <Popover content={order.bookName} placement="topLeft"><Link className={styles.bookName} to={"/detail/" + order.ISBN}><span>{order.bookName}</span></Link></Popover>
+                        <Popover content={order.auth.join(",")} placement="topLeft"><p className={styles.auth}>{order.auth.join(",")}</p></Popover>
                         <p className={styles.position}>{order.position.room}-{order.position.shelf}</p>
                         <p className={styles.amount}><span>{order.amount+" "}</span>Books Left</p>
                     </div>

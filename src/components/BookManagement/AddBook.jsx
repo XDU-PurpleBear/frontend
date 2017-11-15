@@ -171,7 +171,7 @@ class AddBook extends React.Component {
     }
 
     handleGetBookInfoFromOther(e){
-        const {ISBN} = this.references.ISBN.value;
+        const ISBN = this.references.ISBN.value;
         if(e.key !== "Enter" || ISBN === ""){
             return;
         }
@@ -293,9 +293,10 @@ class AddBook extends React.Component {
     handleCheckAmount() {
         let amount = this.references.amount.value;
         amount = parseInt(amount);
+
         return {
             amount,
-            status: !Number.isNaN(amount) && amount > 0,
+            status: !Number.isNaN(amount) && amount > 0 && amount < 50,
         };
     }
     handleCheckLanguage() {
@@ -362,6 +363,9 @@ class AddBook extends React.Component {
         this.handleUpdatePreview();
     }
 
+    componentDidMount(){
+        // this.references.ISBN.focus();
+    }
     render() {
         const {amount, previewVisibility, previewButtonDisabled, previewInfo} = this.state;
         let previewCopys = [];
@@ -385,7 +389,7 @@ class AddBook extends React.Component {
                     <span>Basic Info</span>
                     <div>
                         <div>
-                            <label htmlFor="ISBN">ISBN:</label><input type="text" id="ISBN" ref={ISBN=>this.references.ISBN=ISBN} onBlur={this.handleBlurISBN} onKeyPress={this.handleGetBookInfoFromOther}/><span ref={ISBNAlert=>this.references.ISBNAlert=ISBNAlert}></span>
+                            <label htmlFor="ISBN">ISBN:</label><input autoFocus="autofocus" type="text" id="ISBN" ref={ISBN=>this.references.ISBN=ISBN} onBlur={this.handleBlurISBN} onKeyPress={this.handleGetBookInfoFromOther}/><span ref={ISBNAlert=>this.references.ISBNAlert=ISBNAlert}></span>
                         </div>
                         <div>
                             <label htmlFor="name">Name:</label><input type="text" id="name" ref={name=>this.references.name=name} onBlur={this.handleBlurName}/><span ref={nameAlert=>this.references.nameAlert=nameAlert}></span>
@@ -424,7 +428,7 @@ class AddBook extends React.Component {
                 </div>
                 <div className={styles.copyCtrl}>
                     <div>
-                        <img src="/res/icon/bookCommandApplyTitle.png"/><span>From CLC</span>
+                        <img src={require("../../res/icon/bookCommandApplyTitle.png")}/><span>From CLC</span>
                     </div>
                     <dd>
                         {previewCopys.map((copy, index) => (

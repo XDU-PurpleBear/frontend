@@ -134,7 +134,7 @@ class UserEntry extends React.Component {
             display: visibility? "flex" : "none",
         }
         const userImageStyle = {
-            backgroundImage: userImage === "" ? "url(\"/res/icon/user.png\")" : `url(${userImage})`,
+            backgroundImage: userImage === "" ? "url(/res/icon/user.png)" : `url(${userImage})`,
             display: userType === "visitor" ? "none" : "inline-block"
         };
         return (

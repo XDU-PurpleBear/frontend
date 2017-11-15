@@ -1,8 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {axios, getCookie, updateCookie} from "../../containers/Root.js";
-import {message, notification} from "antd";
+import {axios, getCookie, updateCookie, updateImage} from "../../containers/Root.js";
+import {message, notification, Popover} from "antd";
 import RecommendItem from "../../components/Main/RecommendItem.jsx";
 
 import styles from "./ReaderInfo.scss";
@@ -46,7 +46,10 @@ class ReaderInfo extends React.Component {
         e.preventDefault();
         const {token, userType, userName} = this.props;
         if(this.references.selectImage.files.length === 0){
-            notification.error("Please select Image!");
+            notification.error({
+                message:"Please select Image!",
+                duration:2,
+            });
             return;
         }
         if (!token || token.length === 0) {
@@ -72,6 +75,7 @@ class ReaderInfo extends React.Component {
                         message: "Edit Image Success!.",
                         duration: 2
                     });
+                    this.props.history.go(0);
                 }
                 else if (response.data.type === "failed") {
                     throw {
@@ -94,7 +98,8 @@ class ReaderInfo extends React.Component {
         let options = {
             responsetype: "json",
             headers: {
-                "Cache-Control": "no-cache, no-store"
+                "Cache-Control": "no-cache, no-store",
+                token: token,
             },
         };
         if (token && token.length !== 0) {
@@ -127,8 +132,11 @@ class ReaderInfo extends React.Component {
     }
 
     getRecommend(){
-        const {token, userType, userName} = this.props;
-        const url = "/api/book/recommend";
+        const {token} = this.props;
+        const url = "/api/user/queryhistory";
+        if(!token || token === ""){
+            this.props.history.push("/");
+        }
         let options = {
             responsetype: "json",
             headers: {
@@ -141,13 +149,15 @@ class ReaderInfo extends React.Component {
         axios.get(url, options)
             .then((response)=>{
                 if (response.data.type === "succeed") {
-                    if (token && token.length !== 0) {
-                        const {tokendate} = response.headers;
-                        updateCookie(token, userName, userType, tokendate);
-                    }
+                    const {tokendate} = response.headers;
+                    updateCookie(tokendate);
+                    // notification.success({
+                    //     message: "Get History Succeed!",
+                    //     duration: 2,
+                    // });
                     this.setState({
                         bookList: response.data.data.bookList,
-                    })
+                    });
                 }
                 else if (response.data.type === "failed") {
                     throw {
@@ -158,7 +168,7 @@ class ReaderInfo extends React.Component {
             })
             .catch((err) => {
                 notification.error({
-                    message: "Get Recommend Error because" + err.message,
+                    message: "Get History Error because" + err.message,
                     duration: 2,
                 });
             });
@@ -167,13 +177,13 @@ class ReaderInfo extends React.Component {
     componentDidMount() {
         this.getRecommend();
         this.getOverdueList();
-        this.references.image.src = "../../res/icon/user.png";
+        this.references.image.src = "/res/icon/user.png";
         const { token, userType, userName } = this.props;
         if (!token || token.length === 0) {
             this.props.history.push("/");
             return;
         }
-        axios.get("/api/user/info", null, {
+        axios.get("/api/user/info", {
                 responsetype: "json",
                 headers: {
                     "token": token
@@ -181,14 +191,20 @@ class ReaderInfo extends React.Component {
             }).then(response => {
                 if (response.data.type === "succeed") {
                     const { tokendate } = response.headers;
+                    const userImage = response.data.data.userInfo.userImage;
+                    if(userImage && userImage!==""){
+                        this.references.image.src = userImage;
+                        updateImage(userImage, tokendate);
+                    }
+                    
                     updateCookie(tokendate);
                     this.setState({
                         userInfo: response.data.data.userInfo,
                     });
-                    notification.success({
-                        message: "Get user Info Success",
-                        duration: 2,
-                    });
+                    // notification.success({
+                    //     message: "Get user Info Success",
+                    //     duration: 2,
+                    // });
                 }
                 else if (response.data.type === "failed") {
                     throw {
@@ -211,11 +227,13 @@ class ReaderInfo extends React.Component {
     overdueListItem(item, index) {
         return (
             <dt className={styles.overdueListItem} key={index}>
-                <img className={styles.image} src={ReaderIcon} />
+                <img className={styles.image} src={item.image} />
                 <div className={styles.bookNamePart}>
-                    <Link to={"/detail/" + item.ISBN}>
-                        <span className={styles.bookName}>{item.bookName}</span>
-                    </Link>
+                    <Popover content={item.bookName} placement="topLeft">
+                        <Link to={"/detail/" + item.ISBN}>
+                            <span className={styles.bookName}>{item.bookName}</span>
+                        </Link>
+                    </Popover>
                     <div className={styles.emptyPart}>
                     </div>
                 </div>
@@ -241,12 +259,12 @@ class ReaderInfo extends React.Component {
             height: "4vh",
             lineHeight: "4vh",
             backgroundColor: "white",
-            fontSize: "0.7rem",
+            fontSize: "0.8rem",
         };
 
         const userinfoStyle = {
             lineHeight: "9vh",
-            fontSize: "0.8rem",
+            fontSize: "0.9rem",
         };
 
         const aStyle = {
@@ -267,11 +285,7 @@ class ReaderInfo extends React.Component {
                     </div>
                     <div className={styles.button} >
                         <input type="button" value="Select Image" style={btn}/>
-                        {/*<label htmlFor="file" className={styles.select}>Select Image</label>*/}
                         <input type="file" name="pic" accept="image/*" className={styles.file} onChange={this.handleSelectImage} ref={selectImage => this.references.selectImage = selectImage} />
-                        {/*<input type="file" name="pic" accept="image/*" className="file"*/}
-                               {/*onChange={this.handleSelectImage}*/}
-                               {/*ref={selectImage => this.references.selectImage = selectImage} />*/}
                         <input type="submit" value="Upload" style={btn}
                                onClick={this.handleSubmit}/>
                     </div>
@@ -287,22 +301,6 @@ class ReaderInfo extends React.Component {
                     <span className={styles.balance} style={userinfoStyle}>Balance:</span>
                     <span className={styles.balanceValue} style={userinfoStyle}>{this.state.userInfo.balance}</span>
                 </div>
-                {/*<div className={styles.table}>*/}
-                    {/*<table>*/}
-                        {/*<tr>*/}
-                            {/*<td>User Name:</td> <td className="name">{userinfo.username}</td>*/}
-                        {/*</tr>*/}
-                        {/*<tr>*/}
-                            {/*<td>Student ID:</td> <td>{userinfo.studentID}</td>*/}
-                        {/*</tr>*/}
-                        {/*<tr>*/}
-                            {/*<td>Telphone:</td> <td>Telphone:</td>*/}
-                        {/*</tr>*/}
-                        {/*<tr>*/}
-                            {/*<td>Balance:</td> <td>{userinfo.balance}</td>*/}
-                        {/*</tr>*/}
-                    {/*</table>*/}
-                {/*</div>*/}
 
                 <div className={styles.overdue}>
                     <div className={styles.dueTip}><h3 style={h3Style}>Overdue Order Remain: &nbsp;&nbsp;<a href="/usercenter/orderlist" style={aStyle}>{this.state.userInfo.orderNumber}</a></h3></div>
@@ -321,7 +319,7 @@ class ReaderInfo extends React.Component {
                 <div className={styles.right}>
                     <div className={styles.recommend}>
                         <div className={styles.recommendTitle}>
-                            <span>Recommend</span>
+                            <span>History</span>
                         </div>
                         <dl className={styles.recommendContent}>
                         {bookList.map((book, index) => <RecommendItem key={index} bookInfo={book} />)}
