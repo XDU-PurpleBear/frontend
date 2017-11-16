@@ -46,7 +46,7 @@ class ReaderInfo extends React.Component {
         e.preventDefault();
         const {token, userType, userName} = this.props;
         if(this.references.selectImage.files.length === 0){
-            notification.error({
+            notification.warn({
                 message:"Please select Image!",
                 duration:2,
             });
@@ -85,7 +85,7 @@ class ReaderInfo extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Edit Image Error Because " + err.message,
                     duration: 2
                 });
@@ -124,7 +124,7 @@ class ReaderInfo extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Load OverdueList Error because" + err.message,
                     duration: 2,
                 });
@@ -167,7 +167,7 @@ class ReaderInfo extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Get History Error because" + err.message,
                     duration: 2,
                 });
@@ -217,7 +217,7 @@ class ReaderInfo extends React.Component {
                     };
                 }
             }).catch(err => {
-               notification.error({
+               notification.warn({
                    message: "Get user Info Error because" + err.message,
                    duration: 2,
                });

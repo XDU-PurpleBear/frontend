@@ -244,7 +244,7 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_LOGIN_ERROR: {
-            notification.error({
+            notification.warn({
                 message:"Login Error Because " + action.errorReason,
                 duration: 2,
             });
@@ -271,7 +271,7 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_LOGOUT_ERROR: {
-            notification.error({
+            notification.warn({
                 message: "Logout Error Because " + action.errorReason,
                 duration: 2,
             });
@@ -293,7 +293,7 @@ function userCenterReducer(state = initialState, action) {
             };
         } break;
         case USER_SIGNUP_ERROR: {
-            notification.error({
+            notification.warn({
                 message: "SignUp Error Because " + action.errorReason,
                 duration: 2
             });            

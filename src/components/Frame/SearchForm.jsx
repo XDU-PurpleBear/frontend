@@ -53,7 +53,7 @@ class SearchForm extends React.Component{
             this.props.history.push(`/booksearchresult/${searchType}/${searchValue}`);
         }
         else{
-            notification.error({
+            notification.warn({
                 message: "Please input " + searchType,
                 duration: 2,
             });

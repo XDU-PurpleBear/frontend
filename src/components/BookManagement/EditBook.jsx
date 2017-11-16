@@ -86,7 +86,7 @@ class EditBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Add Book Copy Error Because " + err.message,
                     duration: 2
                 });
@@ -138,7 +138,7 @@ class EditBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Delete Book Copy Error Because " + err.message,
                     duration: 2
                 });
@@ -196,7 +196,7 @@ class EditBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Change Book Copy Status Error Because " + err.message,
                     duration: 2
                 });
@@ -254,7 +254,7 @@ class EditBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Load Book Info Error Because " + err.message,
                     duration: 2
                 });

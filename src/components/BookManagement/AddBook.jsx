@@ -137,7 +137,7 @@ class AddBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Upload Book Info Error Because " + err.message,
                     duration: 2
                 });
@@ -235,7 +235,7 @@ class AddBook extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Get Book Preview Info Error Because " + err.message,
                     duration: 2
                 });

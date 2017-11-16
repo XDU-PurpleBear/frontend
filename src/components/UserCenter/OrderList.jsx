@@ -56,7 +56,7 @@ class OrderList extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get BorrowingList Error Because " + err.message,
                             duration: 2
                         });
@@ -88,7 +88,7 @@ class OrderList extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get FinishedList Error Because " + err.message,
                             duration: 2
                         });
@@ -123,7 +123,7 @@ class OrderList extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get OverdueList Error Because " + err.message,
                             duration: 2
                         });
@@ -152,7 +152,7 @@ class OrderList extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get InvalidList Error Because " + err.message,
                             duration: 2
                         });
@@ -184,7 +184,7 @@ class OrderList extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get ApplyingList Error Because " + err.message,
                             duration: 2
                         });

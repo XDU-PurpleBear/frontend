@@ -111,7 +111,7 @@ class OrderManagement extends React.Component {
                 }
             })
             .catch(err => {
-                notification.error({
+                notification.warn({
                     message: "Refuse Order Error Because " + err.message,
                     duration: 2
                 });
@@ -152,7 +152,7 @@ class OrderManagement extends React.Component {
                 }
             })
             .catch(err => {
-                notification.error({
+                notification.warn({
                     message: "Refuse Order Error Because " + err.message,
                     duration: 2
                 });
@@ -193,7 +193,7 @@ class OrderManagement extends React.Component {
                 }
             })
             .catch(err => {
-                notification.error({
+                notification.warn({
                     message: "Agree Apply Error Because " + err.message,
                     duration: 2
                 });
@@ -235,7 +235,7 @@ class OrderManagement extends React.Component {
                 }
             })
             .catch(err => {
-                notification.error({
+                notification.warn({
                     message: "Agree Borrow Error Because " + err.message,
                     duration: 2
                 });
@@ -244,7 +244,7 @@ class OrderManagement extends React.Component {
     handleOverdueAgree(orderId, fine, bias, balance){
         const rex = /^-?[0-9]+(\.)?[0-9]*$/;
         if(!rex.test(fine) || !rex.test(bias)){
-            notification.error({
+            notification.warn({
                 message: "Number Format Error!",
                 duration: 2,
             });
@@ -293,7 +293,7 @@ class OrderManagement extends React.Component {
                 }
             })
             .catch(err => {
-                notification.error({
+                notification.warn({
                     message: "Agree Overdue Error Because " + err.message,
                     duration: 2
                 });
@@ -325,7 +325,7 @@ class OrderManagement extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get BorrowingList Error Because " + err.message,
                             duration: 2
                         });
@@ -357,7 +357,7 @@ class OrderManagement extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get FinishedList Error Because " + err.message,
                             duration: 2
                         });
@@ -392,7 +392,7 @@ class OrderManagement extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get OverdueList Error Because " + err.message,
                             duration: 2
                         });
@@ -421,7 +421,7 @@ class OrderManagement extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get InvalidList Error Because " + err.message,
                             duration: 2
                         });
@@ -453,7 +453,7 @@ class OrderManagement extends React.Component {
                         }
                     })
                     .catch(err => {
-                        notification.error({
+                        notification.warn({
                             message: "Get ApplyingList Error Because " + err.message,
                             duration: 2
                         });

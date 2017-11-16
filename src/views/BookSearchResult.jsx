@@ -73,7 +73,7 @@ class BookSearchResult extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Load BookList Error Because" + err.message,
                     duration: 2,
                 });
@@ -150,7 +150,7 @@ class BookSearchResult extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Load BookList Error Because" + err.message,
                     duration: 2
                 });

@@ -89,7 +89,7 @@ class CreateReader extends React.Component {
             }
         })
         .catch(err => {
-            notification.error({
+            notification.warn({
                 message: "Create Account Failed Because " + err.message,
                 duration: 2
             });

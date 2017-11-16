@@ -79,7 +79,7 @@ class Detail extends React.Component {
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Apply Book Error Because " + err.message,
                     duration: 2,
                 });
@@ -117,7 +117,7 @@ class Detail extends React.Component {
                 }
             })
             .catch(function (err) {
-                notification.error({
+                notification.warn({
                     message: "Load BookInfo Error Because" + err.message,
                     duration: 2}
                 );

@@ -50,7 +50,7 @@ class Main extends React.Component{
                 }
             })
             .catch((err) => {
-                notification.error({
+                notification.warn({
                     message: "Load Recommend Error Because" + err.message,
                     duration: 2
                 });

@@ -87,7 +87,7 @@ class EditReader extends React.Component {
             }
         })
         .catch(err => {
-            notification.error({
+            notification.warn({
                 message: "Edit Account Failed Because " + err.message,
                 duration: 2
             });
@@ -142,7 +142,7 @@ class EditReader extends React.Component {
             }
         })
         .catch(err => {
-            notification.error({
+            notification.warn({
                 message: "Load Reader Info Failed Because " + err.message,
                 duration: 2
             });
