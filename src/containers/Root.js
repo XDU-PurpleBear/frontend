@@ -55,7 +55,7 @@ function updateImage(image, tokendate){
     });
 }
 
-/*
+
 let theme = ["Arts","Business", "Computer Science", "Data Science", "Engineering", "Language Skills", "Life Science", "Mathematics", "Personal Development", "Physics", "Social Science"];
 
 let orderStatus = ["Applying", "Borrowing ", "Finished", "Overdue", "Invalid"];
@@ -90,14 +90,14 @@ mock.onPost(/\/api\/login/).reply(config=>{
         {
             "type": "succeed",
             data:{
-                image:"res/icon/search.png",
+                image:"res/icon/user.png",
             }
         },
         //headers
         {
-            token:"testtoken",
+            token:"John",
             tokendate: 30000, 
-            usertype: "admin", //admin ,customer
+            usertype: "customer", //admin ,customer
             username: "testcustomer"
         },
     ];
@@ -1322,7 +1322,7 @@ mock.onGet(/\/api\/user\/invalidlist/).reply(config=>{
     ];
 });
 
-*/
+
 export {
     axios,
     getCookie,
