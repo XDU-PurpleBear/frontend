@@ -1,6 +1,6 @@
 {
   "name": "test-react",
-  "version": "0.1",
+  "version": "v1.0.0",
   "main": "./src/index.html",
   "author": "starsriver",
   "license": "GPL-3.0",

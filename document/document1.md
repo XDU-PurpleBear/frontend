@@ -95,7 +95,7 @@ User can view recommend books, click card can jump to Book Detail Page(Librarian
 
 # Login Page
 ## Description
-User can login system in Login Page .
+User can login system in Login Page.
 
 ## Login Require
 No, only visitor can enter this page.
